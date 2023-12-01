@@ -1,4 +1,4 @@
-import { sidebarContents } from '@/constant';
+import { sidebarContents } from '@/constants';
 import Image from 'next/image';
 import { SelectItem } from '@/components/ui/select';
 

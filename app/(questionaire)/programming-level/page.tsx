@@ -1,5 +1,5 @@
 import { Contents } from '@/components/index';
-import { programmingLevels } from '@/constant';
+import { programmingLevels } from '@/constants';
 
 export default function ProgrammingLevel() {
 	return (

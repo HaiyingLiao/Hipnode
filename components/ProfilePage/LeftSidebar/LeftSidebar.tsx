@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { socialIcons } from '@/constant';
+import { socialIcons } from '@/constants';
 import ContactBtns from './ContactBtns';
 import Following from './Following';
 

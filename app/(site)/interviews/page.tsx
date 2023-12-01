@@ -5,7 +5,7 @@ import {
   HostMeetupCard,
   InterviewPostCard,
 } from '@/components/index';
-import { interviewCards } from '@/constant';
+import { interviewCards } from '@/constants';
 
 export default function Interviews() {
   return (

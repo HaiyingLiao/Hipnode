@@ -12,3 +12,8 @@ export { socialIcons, demoPerformance, optionBar } from './profileData';
 export { interviewCards } from './interviews';
 export { cardBtns } from './hostMeetupCard';
 export { createPostData } from './create-post';
+export { postDummyData } from './home';
+export { navLinks } from './navLinks';
+export { messageDropDownNav } from './messageDropDownNav';
+export { notifications } from './notifications';
+export { loggedIn, loggedOut } from './profileDropDowns';

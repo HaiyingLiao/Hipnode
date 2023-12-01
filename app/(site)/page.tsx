@@ -14,7 +14,7 @@ import {
   newAndPopularMobile,
   pinnedGroups,
   popularTags,
-} from '@/constant/homeLeftSidebar';
+} from '@/constants/homeLeftSidebar';
 import { MeetupChip } from '@/components/index';
 
 type URLProps = {
@@ -170,9 +170,9 @@ export default function Home({ searchParams }: URLProps) {
             <div className='pb-2'>
               {activePosts?.map((post) => (
                 <PostCard
+                  slug=''
                   key={post.id}
                   name={post.name}
-                  slug={post.slug}
                   title={post.title}
                   tags={post.tags}
                   views={post.views}

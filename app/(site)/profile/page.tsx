@@ -6,7 +6,7 @@ import {
   HostMeetupCard,
   Pagination,
 } from '@/components/index';
-import { cardBtns } from '@/constant';
+import { cardBtns } from '@/constants';
 import { postDummyData } from '@/constants/index';
 
 export default function ProfilePage() {

@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { CreatePostSchema } from '@/lib/validations';
-import { createPostData } from '@/constant';
+import { createPostData } from '@/constants';
 import GroupSelectContent from './GroupSelectContent';
 
 const CreatePost = () => {

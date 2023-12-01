@@ -1,16 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import  { ChangeEvent, useState } from 'react';
 
-import { categoryData } from '@/constant/categories';
-// import { useRouter } from 'next/navigation';
+import { categoryData } from '@/constants/categories';
 
 const Filter = () => {
   const [selected, setSelected] = useState<string[]>([]);
 
-  //   const router = useRouter();
-
-  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const value = (e.target as HTMLInputElement).value;
     const isChecked = (e.target as HTMLInputElement).checked;
     if (isChecked) {
