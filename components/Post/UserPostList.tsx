@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 import { postDummyData } from '@/constants';
-import { Post } from '@/types/home';
 import { Separator } from '../ui/separator';
 
 interface userPostListProps {
@@ -10,12 +9,12 @@ interface userPostListProps {
 }
 
 const UserPostList = ({ user, id }: userPostListProps) => {
-  function getThreeRandomArticles(arr: Post[], num: number): Post[] {
-    const result: Post[] = [];
+  function getThreeRandomArticles(arr: typeof postDummyData, num: number) {
+    const result = [];
 
     const articlesExcludingCurrent = arr.filter((article) => article.id !== id);
     const arrCopy = articlesExcludingCurrent.filter(
-      (article: Post) => article.user === user,
+      (article) => article.name === user,
     );
 
     for (let i = 0; i < num; i++) {
@@ -35,11 +34,11 @@ const UserPostList = ({ user, id }: userPostListProps) => {
 
       <Separator />
 
-      {getThreeRandomArticles(postDummyData, 3).map((post: Post) => (
+      {getThreeRandomArticles(postDummyData, 3).map((post) => (
         <div key={post?.id}>
           <div className='py-[15px]'>
             <Link
-              href={`/post/${post?.slug}`}
+              href={`/post/${post?.id}`}
               className='bodyMd-semibold cursor-pointer pb-1 text-darkSecondary-900 dark:text-white-800'
             >
               {post?.title}

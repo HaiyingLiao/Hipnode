@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { podcasts } from '@/public/constants';
+import { podcasts } from '@/constants';
 import { PodcastsCard } from '../index';
 
 const SidePodcasts = () => {
@@ -22,7 +22,7 @@ const SidePodcasts = () => {
           key={item.id}
           cardData={{
             img: item.image,
-            alt: item.id,
+            alt: item.title,
             title: item.title,
             author: item.author,
           }}
