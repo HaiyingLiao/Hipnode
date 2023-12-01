@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang='en'>
       <ClerkProvider>
         <body
-          className={`${sourceSansPro.className} max-container bg-white-800 dark:bg-darkPrimary-2`}
+          className={`${sourceSansPro.style} max-container bg-white-800 dark:bg-darkPrimary-2`}
         >
           <main>{children}</main>
         </body>
