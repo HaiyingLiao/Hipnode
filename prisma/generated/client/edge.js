@@ -120,7 +120,6 @@ const config = {
       {
         "fromEnvVar": null,
         "value": "windows",
-        "value": "windows",
         "native": true
       }
     ],
@@ -128,7 +127,8 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": "../../../.env",
+    "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
   "clientVersion": "5.6.0",
@@ -137,7 +137,7 @@ const config = {
     "db"
   ],
   "activeProvider": "mongodb",
-  "postinstall": true,
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -146,8 +146,6 @@ const config = {
       }
     }
   },
-  "inlineSchema": "ZGF0YXNvdXJjZSBkYiB7DQogIHByb3ZpZGVyID0gIm1vbmdvZGIiDQogIHVybCAgICAgID0gZW52KCJEQVRBQkFTRV9VUkwiKQ0KfQ0KDQpnZW5lcmF0b3IgY2xpZW50IHsNCiAgcHJvdmlkZXIgPSAicHJpc21hLWNsaWVudC1qcyINCiAgb3V0cHV0ICAgPSAiLi9nZW5lcmF0ZWQvY2xpZW50Ig0KfQ0KDQptb2RlbCBVc2VyIHsNCiAgaWQgICAgU3RyaW5nICBAaWQgQGRlZmF1bHQoYXV0bygpKSBAbWFwKCJfaWQiKSBAZGIuT2JqZWN0SWQNCiAgZW1haWwgU3RyaW5nICBAdW5pcXVlDQogIG5hbWUgIFN0cmluZz8NCn0NCg==",
-  "inlineSchemaHash": "3e9751d7bb23d1e4e9e6df4067f83adedf97b2d9639496097385e82572dd1909",
   "inlineSchema": "ZGF0YXNvdXJjZSBkYiB7DQogIHByb3ZpZGVyID0gIm1vbmdvZGIiDQogIHVybCAgICAgID0gZW52KCJEQVRBQkFTRV9VUkwiKQ0KfQ0KDQpnZW5lcmF0b3IgY2xpZW50IHsNCiAgcHJvdmlkZXIgPSAicHJpc21hLWNsaWVudC1qcyINCiAgb3V0cHV0ICAgPSAiLi9nZW5lcmF0ZWQvY2xpZW50Ig0KfQ0KDQptb2RlbCBVc2VyIHsNCiAgaWQgICAgU3RyaW5nICBAaWQgQGRlZmF1bHQoYXV0bygpKSBAbWFwKCJfaWQiKSBAZGIuT2JqZWN0SWQNCiAgZW1haWwgU3RyaW5nICBAdW5pcXVlDQogIG5hbWUgIFN0cmluZz8NCn0NCg==",
   "inlineSchemaHash": "3e9751d7bb23d1e4e9e6df4067f83adedf97b2d9639496097385e82572dd1909",
   "noEngine": false
