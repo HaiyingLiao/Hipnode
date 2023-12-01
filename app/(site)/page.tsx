@@ -1,21 +1,23 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import SidePodcasts from '@/components/SidePodcasts/SidePodcasts';
-import SidebarListItem from '@/components/Home/SidebarListItem';
-import PostCard from '../../components/shared/PostCard';
-import Pagination from '../../components/shared/Pagination';
+import {
+  Pagination,
+  PostCard,
+  SidebarListItem,
+  SidePodcasts,
+  MeetupChip,
+} from '@/components/index';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { postDummyData } from '@/constants';
 import {
+  postDummyData,
   newAndPopular,
   newAndPopularMobile,
   pinnedGroups,
   popularTags,
-} from '@/constants/homeLeftSidebar';
-import { MeetupChip } from '@/components/index';
+} from '@/constants';
 
 type URLProps = {
   searchParams: {

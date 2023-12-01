@@ -31,3 +31,4 @@ export { default as UserPostList } from '@/components/Post/UserPostList';
 export { default as NotFound } from '@/components/shared/NotFound';
 export { default as CreateGroupForm } from '@/components/group/CreateForm/CreateForm';
 export { default as HostMeetupCard } from './shared/HostMeetupCard';
+export { default as SidebarListItem } from '@/components/Home/SidebarListItem';

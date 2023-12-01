@@ -17,3 +17,10 @@ export { navLinks } from './navLinks';
 export { messageDropDownNav } from './messageDropDownNav';
 export { notifications } from './notifications';
 export { loggedIn, loggedOut } from './profileDropDowns';
+export { reportTags, comments, createComment, postStats } from './post';
+export {
+  newAndPopular,
+  newAndPopularMobile,
+  pinnedGroups,
+  popularTags,
+} from './homeLeftSidebar';

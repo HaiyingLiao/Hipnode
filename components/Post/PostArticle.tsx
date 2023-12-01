@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { ReactNode, useState } from 'react';
 
-import { comments as commentsData, createComment } from '@/constants/post';
+import { comments as commentsData, createComment } from '@/constants';
 import { CommentType } from '@/types/post';
 import { CommentInput, PostStats, Comment } from '@/components/index';
 
@@ -40,8 +40,10 @@ const PostArticle = ({
           src={postHeader}
           alt={alt}
           width={1000}
+          priority
+          fetchPriority='high'
           height={273}
-          className='rounded-t-lg border-2 border-blue-100 object-cover'
+          className='max-h-96 rounded-t-lg border-2 border-blue-100 object-cover'
         />
         <div>
           <div className='flex items-start justify-center px-[15px] md:px-[30px]'>
