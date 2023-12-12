@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { introductionItems } from '@/constant';
+import { introductionItems } from '@/constants';
 import { Contents } from '@/components/index';
 
 export default function RootLayout({ children }: { children: ReactNode }) {

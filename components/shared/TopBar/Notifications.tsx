@@ -9,7 +9,7 @@ import { GoMention } from 'react-icons/go';
 
 import { NavigationMenuLink } from '@/components/ui/navigation-menu';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { notifications } from '@/constants/notifications';
+import { notifications } from '@/constants';
 import NotificationItem from './NotificationItem';
 
 const Notifications = () => {

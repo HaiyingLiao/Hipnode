@@ -9,7 +9,7 @@ import {
   NavigationMenuContent,
   NavigationMenuLink,
 } from '@/components/ui/navigation-menu';
-import { messageDropDownNav } from '@/constants/messageDropDownNav';
+import { messageDropDownNav } from '@/constants';
 import Notifications from './Notifications';
 
 const MessageDropDown = () => {

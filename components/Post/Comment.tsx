@@ -6,7 +6,8 @@ import clsx from 'clsx';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { CommentInput } from '@/components/index';
-import { createComment, CommentType } from '@/constants/post';
+import { createComment } from '@/constants';
+import { CommentType } from '@/types/post';
 
 interface CommentProps {
   id: number | string;

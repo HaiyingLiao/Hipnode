@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { interests } from '@/constant';
+import { interests } from '@/constants';
 import InterestItem from './InterestItem';
 
 export default function Wrapper() {

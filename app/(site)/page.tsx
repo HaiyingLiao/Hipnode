@@ -1,21 +1,23 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import SidePodcasts from '@/components/SidePodcasts/SidePodcasts';
-import SidebarListItem from '@/components/Home/SidebarListItem';
-import PostCard from '../../components/shared/PostCard';
-import Pagination from '../../components/shared/Pagination';
+import {
+  Pagination,
+  PostCard,
+  SidebarListItem,
+  SidePodcasts,
+  MeetupChip,
+} from '@/components/index';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { postDummyData } from '@/constants';
 import {
+  postDummyData,
   newAndPopular,
   newAndPopularMobile,
   pinnedGroups,
   popularTags,
-} from '@/constant/homeLeftSidebar';
-import { MeetupChip } from '@/components/index';
+} from '@/constants';
 
 type URLProps = {
   searchParams: {
@@ -129,7 +131,7 @@ export default function Home({ searchParams }: URLProps) {
           <ul className='asideContainerSmall mb-5 flex pr-4 md:hidden'>
             {newAndPopularMobile.map((item) => (
               <li key={item.id} className='w-full'>
-                <Link href='#' className='asideListItemLink justify-center'>
+                <Link href='/' className='asideListItemLink justify-center'>
                   <div className='asideImageDiv h-[28px] w-[28px] p-1'>
                     <Image src={item.icon} alt='Icon' width={15} height={15} />
                   </div>
@@ -170,9 +172,9 @@ export default function Home({ searchParams }: URLProps) {
             <div className='pb-2'>
               {activePosts?.map((post) => (
                 <PostCard
+                  slug={post.id.toString()}
                   key={post.id}
                   name={post.name}
-                  slug={post.slug}
                   title={post.title}
                   tags={post.tags}
                   views={post.views}

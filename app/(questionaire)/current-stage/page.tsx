@@ -1,5 +1,5 @@
 import { Contents } from '@/components/index';
-import { userCurrentStage } from '@/constant';
+import { userCurrentStage } from '@/constants';
 
 export default function CurrentStage() {
 	return (

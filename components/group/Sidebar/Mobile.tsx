@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 import Card from './Card';
 import SidebarItem from './Item';
-import { sidebarContents } from '@/constant';
+import { sidebarContents } from '@/constants';
 
 export default function Mobile() {
   const [selectedContent, setSelectedContent] = useState<

@@ -30,12 +30,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.5.2
- * Query Engine version: aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a
+ * Prisma Client JS version: 5.6.0
+ * Query Engine version: e95e739751f42d8ca026f6b910f5a2dc5adeaeee
  */
 Prisma.prismaVersion = {
-  client: "5.5.2",
-  engine: "aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a"
+  client: "5.6.0",
+  engine: "e95e739751f42d8ca026f6b910f5a2dc5adeaeee"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -111,7 +111,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/hanna/projects/Hipnode/prisma/generated/client",
+      "value": "C:\\Users\\USER\\Documents\\JSM_projects\\Cohort5_CodeFam_Hipnode\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -120,7 +120,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin",
+        "value": "windows",
         "native": true
       }
     ],
@@ -132,8 +132,8 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
-  "clientVersion": "5.5.2",
-  "engineVersion": "aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a",
+  "clientVersion": "5.6.0",
+  "engineVersion": "e95e739751f42d8ca026f6b910f5a2dc5adeaeee",
   "datasourceNames": [
     "db"
   ],
@@ -147,8 +147,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "ZGF0YXNvdXJjZSBkYiB7CiAgcHJvdmlkZXIgPSAibW9uZ29kYiIKICB1cmwgICAgICA9IGVudigiREFUQUJBU0VfVVJMIikKfQoKZ2VuZXJhdG9yIGNsaWVudCB7CiAgcHJvdmlkZXIgPSAicHJpc21hLWNsaWVudC1qcyIKICBvdXRwdXQgICA9ICIuL2dlbmVyYXRlZC9jbGllbnQiCn0KCm1vZGVsIFVzZXIgewogIGlkICAgIFN0cmluZyAgQGlkIEBkZWZhdWx0KGF1dG8oKSkgQG1hcCgiX2lkIikgQGRiLk9iamVjdElkCiAgZW1haWwgU3RyaW5nICBAdW5pcXVlCiAgbmFtZSAgU3RyaW5nPwp9Cg==",
-  "inlineSchemaHash": "7107104d3233cd44b29cef2faa62892d636b13987630b668ae02464c1d8885aa",
+  "inlineSchema": "ZGF0YXNvdXJjZSBkYiB7DQogIHByb3ZpZGVyID0gIm1vbmdvZGIiDQogIHVybCAgICAgID0gZW52KCJEQVRBQkFTRV9VUkwiKQ0KfQ0KDQpnZW5lcmF0b3IgY2xpZW50IHsNCiAgcHJvdmlkZXIgPSAicHJpc21hLWNsaWVudC1qcyINCiAgb3V0cHV0ICAgPSAiLi9nZW5lcmF0ZWQvY2xpZW50Ig0KfQ0KDQptb2RlbCBVc2VyIHsNCiAgaWQgICAgU3RyaW5nICBAaWQgQGRlZmF1bHQoYXV0bygpKSBAbWFwKCJfaWQiKSBAZGIuT2JqZWN0SWQNCiAgZW1haWwgU3RyaW5nICBAdW5pcXVlDQogIG5hbWUgIFN0cmluZz8NCn0NCg==",
+  "inlineSchemaHash": "3e9751d7bb23d1e4e9e6df4067f83adedf97b2d9639496097385e82572dd1909",
   "noEngine": false
 }
 
@@ -171,7 +171,7 @@ if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
 
 config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"dbName\":null,\"fields\":[{\"name\":\"id\",\"dbName\":\"_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"default\":{\"name\":\"auto\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"email\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":true,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"name\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
-
+config.getQueryEngineWasmModule = undefined
 
 
 const { warnEnvConflicts } = require('./runtime/library')
@@ -186,8 +186,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-darwin.dylib.node");
-path.join(process.cwd(), "prisma/generated/client/libquery_engine-darwin.dylib.node")
+path.join(__dirname, "query_engine-windows.dll.node");
+path.join(process.cwd(), "prisma/generated/client/query_engine-windows.dll.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/client/schema.prisma")

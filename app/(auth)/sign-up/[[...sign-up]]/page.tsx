@@ -1,7 +1,7 @@
 import { SignUp } from '@clerk/nextjs';
 
 import { Contents } from '@/components/index';
-import { signupContents } from '@/constant';
+import { signupContents } from '@/constants';
 
 export default function Signup() {
   return (

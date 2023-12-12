@@ -5,7 +5,7 @@ import {
   Pagination,
   PodcastChip,
 } from '@/components/index';
-import { podcastDatas } from '@/constant';
+import { podcastDatas } from '@/constants';
 
 const Podcasts = () => {
   const cardBtns = [

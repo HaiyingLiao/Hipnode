@@ -1,4 +1,4 @@
-import { optionBar } from '@/constant';
+import { optionBar } from '@/constants';
 
 const OptionBar = () => {
   return (

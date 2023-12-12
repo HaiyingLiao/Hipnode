@@ -6,8 +6,7 @@ import {
   HostMeetupCard,
   Pagination,
 } from '@/components/index';
-import { cardBtns } from '@/constant';
-import { postDummyData } from '@/constants/index';
+import { cardBtns, postDummyData } from '@/constants';
 
 export default function ProfilePage() {
   return (
@@ -23,6 +22,7 @@ export default function ProfilePage() {
         <div>
           {postDummyData?.map((post) => (
             <PostCard
+              slug={post.id.toString()}
               key={post.id}
               name={post.name}
               title={post.title}

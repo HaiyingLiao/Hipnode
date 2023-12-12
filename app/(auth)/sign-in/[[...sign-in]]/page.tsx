@@ -1,7 +1,7 @@
 import { SignIn } from '@clerk/nextjs';
 
 import { Contents } from '@/components/index';
-import { signInContents } from '@/constant';
+import { signInContents } from '@/constants';
 
 export default function Signin() {
   return (

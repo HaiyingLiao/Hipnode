@@ -54,7 +54,8 @@ export default function CreateGroupForm() {
   const handleSubmit = async (data: InferedFormSchema) => {
     try {
       setIsSubmit(true);
-      const [cover, profile] = await Promise.all([
+      // eslint-disable-next-line no-unused-vars
+      const [, profile] = await Promise.all([
         uploadImageToS3(file?.cover!),
         uploadImageToS3(file?.profile!),
       ]);

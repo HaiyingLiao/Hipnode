@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { demoPerformance } from '@/constant';
+import { demoPerformance } from '@/constants';
 
 const Performance = () => {
   return (

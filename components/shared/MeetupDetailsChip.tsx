@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { meetupsData } from '@/constant';
+import { meetupsData } from '@/constants';
 import { Badge } from '../ui/badge';
 
 const MeetupDetailsChip = () => {

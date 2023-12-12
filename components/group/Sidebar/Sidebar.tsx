@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import SidebarItem from './Item';
-import { sidebarContents } from '@/constant';
+import { sidebarContents } from '@/constants';
 import { GroupSidebar } from '@/types/group-sidebar';
 
 export default function Sidebar() {
