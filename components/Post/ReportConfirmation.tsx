@@ -14,7 +14,7 @@ import {
 
 interface ReportConfirmationProps {
   closeParentModal: () => void;
-  selectedReportItems: number[];
+  selectedReportItems: string[];
 }
 
 const ReportConfirmation = ({

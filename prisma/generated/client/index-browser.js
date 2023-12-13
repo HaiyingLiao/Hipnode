@@ -100,10 +100,71 @@ Prisma.NullTypes = {
  * Enums
  */
 
+exports.Prisma.PostScalarFieldEnum = {
+  id: 'id',
+  authorEmail: 'authorEmail',
+  title: 'title',
+  body: 'body',
+  role: 'role',
+  createdAt: 'createdAt',
+  views: 'views',
+  likes: 'likes',
+  authorName: 'authorName',
+  avatar: 'avatar',
+  postImage: 'postImage',
+  postImageKey: 'postImageKey',
+  altText: 'altText',
+  tags: 'tags',
+  groupId: 'groupId',
+  share: 'share',
+  country: 'country'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  authorImage: 'authorImage',
+  comment: 'comment',
+  likes: 'likes',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt',
+  postId: 'postId',
+  parentId: 'parentId',
+  type: 'type'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  name: 'name',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
+};
+
+exports.Prisma.ReportScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  postId: 'postId',
+  reasons: 'reasons',
+  reportedBy: 'reportedBy'
+};
+
+exports.Prisma.TagScalarFieldEnum = {
+  title: 'title',
+  postIds: 'postIds'
+};
+
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  postTitle: 'postTitle',
+  authorName: 'authorName',
+  authorImage: 'authorImage',
+  message: 'message',
+  isRead: 'isRead',
+  typeText: 'typeText',
+  postId: 'postId',
+  type: 'type',
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {
@@ -115,10 +176,20 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.NotificationType = exports.$Enums.NotificationType = {
+  reactions: 'reactions',
+  comment: 'comment',
+  publish: 'publish',
+  mentions: 'mentions'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  Post: 'Post',
+  Comment: 'Comment',
+  User: 'User',
+  Report: 'Report',
+  Tag: 'Tag',
+  Notification: 'Notification'
 };
 
 /**

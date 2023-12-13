@@ -1,42 +1,43 @@
-'use client';
-
 import Image from 'next/image';
-import { useState } from 'react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
-import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
+import { likePost } from '@/lib/actions/post.action';
 
 interface isLikedProps {
   avatar: string;
+  id: string;
+  likes: string[];
+  emailAddress: string;
+  username: string;
 }
 
-export const IsLiked = ({ avatar }: isLikedProps) => {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+export const IsLiked = ({
+  avatar,
+  id,
+  likes,
+  emailAddress,
+  username,
+}: isLikedProps) => {
+  const isLikedByCurrentUser = likes.includes(emailAddress);
+  const heartIcon = isLikedByCurrentUser
+    ? '/orange-heart.svg'
+    : '/gray-heart.svg';
+
   return (
-    <div className='postCardGridItem3 md:pl-6'>
-      {/* Show gray heart if not liked, orange heart if liked */}
-      {isLiked ? (
-        <div className='orangeHeart'>
-          <Image
-            src='/orange-heart.png'
-            alt='Heart'
-            width={25}
-            height={25}
-            className='mt-[8px]'
-            onClick={() => setIsLiked(!isLiked)}
-          />
-        </div>
-      ) : (
-        <div className='grayHeart'>
-          <Image
-            src='/gray-heart.png'
-            alt='Heart'
-            width={23}
-            height={23}
-            className='mt-[1px]'
-            onClick={() => setIsLiked(!isLiked)}
-          />
-        </div>
-      )}
+    <div
+      className='postCardGridItem3 cursor-pointer md:pl-6'
+      onClick={() => likePost(id)}
+    >
+      <button className='heart'>
+        <Image
+          src={heartIcon}
+          alt='Heart icon'
+          width={25}
+          height={25}
+          className='mt-[1px]'
+        />
+      </button>
+
       {/* Avatar shows on mobile view instead of heart */}
       <Avatar className='avatarMobile md:hidden'>
         <AvatarImage
@@ -46,7 +47,7 @@ export const IsLiked = ({ avatar }: isLikedProps) => {
           height={25}
           className='rounded-full'
         />
-        <AvatarFallback className='m-1'>HN</AvatarFallback>
+        <AvatarFallback className='m-1'>{username}</AvatarFallback>
       </Avatar>
     </div>
   );

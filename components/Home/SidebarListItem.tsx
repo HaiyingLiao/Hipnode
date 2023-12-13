@@ -1,6 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
+import { formUrlQuery } from '@/lib/utils';
 interface SidebarListItemProps {
   id: number;
   icon: string;
@@ -9,9 +13,10 @@ interface SidebarListItemProps {
   isFollowingNumberHidden?: boolean;
   bgColor?: string;
   hashtag?: boolean;
-  noOfPosts?: number;
+  totalPosts?: number;
   dimensionsOuterSquare?: number;
   dimensionsInnerSquare?: number;
+  label: string;
 }
 
 const colors: {
@@ -38,52 +43,108 @@ const SidebarListItem = ({
   text,
   isFollowingNumberHidden = true,
   bgColor,
-  noOfPosts,
+  totalPosts,
   hashtag = false,
   dimensionsOuterSquare,
   dimensionsInnerSquare,
+  label,
 }: SidebarListItemProps) => {
+  const params = useSearchParams();
+  const path = formUrlQuery(params.toString(), 'sort', label ?? '');
+  const sort = params.get('sort');
+
   return (
     <li key={id} className='mb-2.5 w-full'>
-      <Link href='#' className='asideListItemLink'>
-        <div
-          className={`asideImageDiv ${bgColor && colors[bgColor]} ${
-            dimensionsOuterSquare && dimensions[dimensionsOuterSquare]
+      {!label || label === 'following' ? (
+        <button
+          className={`asideListItemLink ${
+            sort === label ? 'bg-white-800 dark:bg-darkPrimary-4' : ''
           }`}
         >
-          <Image
-            src={icon}
-            alt='Icon'
-            width={32}
-            height={32}
-            className={`${
-              dimensionsInnerSquare && dimensions[dimensionsInnerSquare]
+          <div
+            className={`asideImageDiv ${bgColor && colors[bgColor]} ${
+              dimensionsOuterSquare && dimensions[dimensionsOuterSquare]
             }`}
-          />
-        </div>
-
-        <div>
-          <div className='flex items-center gap-[6px]'>
-            <h6
-              className={`bodyMd-semibold dark:text-white ${
-                hashtag ? 'text-darkSecondary-800' : 'text-darkSecondary-900'
-              }`}
-            >
-              {hashtag ? `#${title}` : title}
-            </h6>
-            <p
+          >
+            <Image
+              src={icon}
+              alt='Icon'
+              width={32}
+              height={32}
               className={`${
-                isFollowingNumberHidden ? 'hidden' : ''
-              } asideFollowingNumber`}
-            >
-              24
+                dimensionsInnerSquare && dimensions[dimensionsInnerSquare]
+              }`}
+            />
+          </div>
+
+          <div>
+            <div className='flex items-center gap-[6px]'>
+              <h6
+                className={`bodyMd-semibold dark:text-white ${
+                  hashtag ? 'text-darkSecondary-800' : 'text-darkSecondary-900'
+                }`}
+              >
+                {hashtag ? `#${title}` : title}
+              </h6>
+              <p
+                className={`${
+                  isFollowingNumberHidden ? 'hidden' : ''
+                } asideFollowingNumber`}
+              >
+                24
+              </p>
+            </div>
+            <p className='bodyXs-regular text-darkSecondary-800'>
+              {totalPosts} {text}
             </p>
           </div>
-          <p className='bodyXs-regular text-darkSecondary-800'>
-            {noOfPosts} {text}
-          </p>
-        </div>
-      </Link>
+        </button>
+      ) : (
+        <Link
+          href={label !== 'following' ? `/${path}` : '#'}
+          className={`asideListItemLink ${
+            sort === label ? 'bg-white-800 dark:bg-darkPrimary-4' : ''
+          }`}
+        >
+          <div
+            className={`asideImageDiv ${bgColor && colors[bgColor]} ${
+              dimensionsOuterSquare && dimensions[dimensionsOuterSquare]
+            }`}
+          >
+            <Image
+              src={icon}
+              alt='Icon'
+              width={32}
+              height={32}
+              className={`${
+                dimensionsInnerSquare && dimensions[dimensionsInnerSquare]
+              }`}
+            />
+          </div>
+
+          <div>
+            <div className='flex items-center gap-[6px]'>
+              <h6
+                className={`bodyMd-semibold dark:text-white ${
+                  hashtag ? 'text-darkSecondary-800' : 'text-darkSecondary-900'
+                }`}
+              >
+                {hashtag ? `#${title}` : title}
+              </h6>
+              <p
+                className={`${
+                  isFollowingNumberHidden ? 'hidden' : ''
+                } asideFollowingNumber`}
+              >
+                24
+              </p>
+            </div>
+            <p className='bodyXs-regular text-darkSecondary-800'>
+              {totalPosts} {text}
+            </p>
+          </div>
+        </Link>
+      )}
     </li>
   );
 };
