@@ -100,10 +100,24 @@ Prisma.NullTypes = {
  * Enums
  */
 
+exports.Prisma.InterviewsScalarFieldEnum = {
+  id: 'id',
+  image: 'image',
+  createdAt: 'createdAt',
+  title: 'title',
+  post: 'post',
+  revenue: 'revenue',
+  updates: 'updates',
+  website: 'website',
+  category: 'category',
+  authorId: 'authorId'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  name: 'name',
+  image: 'image'
 };
 
 exports.Prisma.SortOrder = {
@@ -118,6 +132,7 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
+  Interviews: 'Interviews',
   User: 'User'
 };
 

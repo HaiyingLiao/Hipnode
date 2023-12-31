@@ -1,6 +1,6 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import prisma from '@/prisma';
 
 import { InterviewsSchema, InterviewsType } from '../validations';
 
@@ -10,7 +10,7 @@ export async function createInterview(interviewData: InterviewsType) {
     if (!validation.success) throw new Error(validation.error.message);
 
     const {
-      postImage,
+      image,
       title,
       post,
       revenue,
@@ -21,7 +21,7 @@ export async function createInterview(interviewData: InterviewsType) {
     } = interviewData;
     const interview = await prisma.interviews.create({
       data: {
-        postImage,
+        image,
         title,
         post,
         revenue,
@@ -60,7 +60,7 @@ export async function getInterviews(
         },
       },
       orderBy: {
-        createAt: 'desc',
+        createdAt: 'desc',
       },
       where: {
         category,
@@ -107,7 +107,7 @@ export async function updateInterview(id: string, updateData: InterviewsType) {
       },
       data: {
         title: updateData.title,
-        postImage: updateData.postImage,
+        image: updateData.image,
         post: updateData.post,
         revenue: updateData.revenue,
         updates: updateData.updates,
@@ -124,7 +124,7 @@ export async function updateInterview(id: string, updateData: InterviewsType) {
   }
 }
 
-export async function deleteInterviews(id: String) {
+export async function deleteInterviews(id: string) {
   try {
     const deleteinterview = await prisma.interviews.delete({
       where: {

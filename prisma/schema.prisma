@@ -13,7 +13,7 @@ model Interviews {
   image     String
   createdAt DateTime @default(now())
   title     String
-  content   String
+  post      String
   revenue   Int
   updates   Int
   website   String
