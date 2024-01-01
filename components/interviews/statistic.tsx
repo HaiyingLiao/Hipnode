@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 type statisticProps = {
   revenue: number;
@@ -37,9 +38,12 @@ export default function Statistic({
           height={20}
           alt='web icon'
         />
-        <p className='text-xs font-normal leading-18 text-neutral-400'>
+        <Link
+          className='text-xs font-normal leading-18 text-neutral-400'
+          href={website}
+        >
           Website
-        </p>
+        </Link>
       </div>
     </div>
   );
