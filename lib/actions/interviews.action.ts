@@ -48,6 +48,9 @@ export async function getInterviews(
     if (page < 1 || pageSize < 1)
       throw new Error('Invalid pagination parameters.');
 
+    const totalPosts = await prisma.interviews.count();
+    const totalPages = Math.ceil(totalPosts / pageSize);
+
     const interviews = await prisma.interviews.findMany({
       take: pageSize,
       skip: pageSize * (page - 1),
@@ -66,7 +69,7 @@ export async function getInterviews(
         category,
       },
     });
-    return interviews;
+    return { interviews, totalPages };
   } catch (error) {
     console.error('Error in getInterviews:', error);
     throw new Error('Failed to retrieve interviews. Please try again later.');
