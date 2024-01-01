@@ -19,3 +19,13 @@ export const formUrlQuery = (params: string, key: string, value: string) => {
     { skipNull: true },
   );
 };
+
+export const formatDate = (originalDate: Date) => {
+  const formattedDate = new Date(originalDate).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+
+  return formattedDate;
+};
