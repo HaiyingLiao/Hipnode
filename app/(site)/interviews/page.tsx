@@ -26,7 +26,11 @@ export default async function Interviews() {
               createdAt={formatDate(post.createdAt)}
               name={post.author.name}
               authorImage={post.author.image}
-              captions={post.post.slice(0, 80)}
+              captions={post.title}
+              revenue={post.revenue}
+              updates={post.updates}
+              website={post.website}
+              id={post.id}
             />
           ))}
           <Pagination totalPages={totalPages} />

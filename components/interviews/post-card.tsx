@@ -1,6 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
-import { Button } from '../ui/button';
 import Statistic from './statistic';
 
 type InterviewPostCardProps = {
@@ -9,6 +9,10 @@ type InterviewPostCardProps = {
   createdAt: string;
   captions: string;
   image: string;
+  revenue: number;
+  updates: number;
+  website: string;
+  id: string;
 };
 
 export default function InterviewsPostCard({
@@ -17,6 +21,10 @@ export default function InterviewsPostCard({
   createdAt,
   image,
   name,
+  revenue,
+  updates,
+  website,
+  id,
 }: InterviewPostCardProps) {
   return (
     <div className='flex w-full flex-col gap-2.5 rounded-2xl bg-white p-5 dark:bg-darkPrimary-4 max-lg:max-w-full'>
@@ -50,12 +58,15 @@ export default function InterviewsPostCard({
             {captions}
           </p>
           <div className='flex w-full flex-wrap items-center justify-between gap-5'>
-            <Statistic />
-            <Button className=' flex items-center justify-center gap-2.5 rounded !bg-secondary-blue'>
+            <Statistic revenue={revenue} updates={updates} website={website} />
+            <Link
+              className=' flex items-center justify-center gap-2.5 rounded !bg-secondary-blue px-[14px] py-2'
+              href={`/interviews/${id}`}
+            >
               <span className='text-sm font-semibold leading-snug text-white'>
                 Full Details
               </span>
-            </Button>
+            </Link>
           </div>
         </div>
         <Image

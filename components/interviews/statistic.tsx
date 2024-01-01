@@ -1,11 +1,21 @@
 import Image from 'next/image';
 
-export default function Statistic() {
+type statisticProps = {
+  revenue: number;
+  updates: number;
+  website: string;
+};
+
+export default function Statistic({
+  revenue,
+  updates,
+  website,
+}: statisticProps) {
   return (
     <div className='flex items-center justify-start gap-[25px]'>
       <div>
         <p className='text-sm font-bold leading-snug text-darkSecondary-900 dark:text-white-800'>
-          $23k/mo
+          {`$${revenue}k/mo`}
         </p>
         <span className='block text-xs font-normal leading-18 text-neutral-400'>
           Revenue
@@ -13,7 +23,7 @@ export default function Statistic() {
       </div>
       <div>
         <p className='text-sm font-bold leading-snug text-darkSecondary-900 dark:text-white-800'>
-          27
+          {updates}
         </p>
         <span className='block text-xs font-normal leading-18 text-neutral-400'>
           Updates
