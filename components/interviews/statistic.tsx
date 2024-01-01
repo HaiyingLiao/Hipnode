@@ -13,7 +13,7 @@ export default function Statistic({
   website,
 }: statisticProps) {
   return (
-    <div className='flex items-center justify-start gap-[25px]'>
+    <div className='flex items-center justify-start gap-5 lg:gap-[25px]'>
       <div>
         <p className='text-sm font-bold leading-snug text-darkSecondary-900 dark:text-white-800'>
           {`$${revenue}k/mo`}
@@ -22,6 +22,9 @@ export default function Statistic({
           Revenue
         </span>
       </div>
+
+      <div className='h-[30px] w-[1px] bg-darkSecondary-800 dark:bg-darkSecondary-600' />
+
       <div>
         <p className='text-sm font-bold leading-snug text-darkSecondary-900 dark:text-white-800'>
           {updates}
@@ -30,6 +33,9 @@ export default function Statistic({
           Updates
         </span>
       </div>
+
+      <div className='h-[30px] w-[1px] bg-darkSecondary-800  dark:bg-darkSecondary-600' />
+
       <div className='inline-flex flex-col items-start justify-start'>
         <Image
           className='invert dark:invert-0'

@@ -17,8 +17,9 @@ export default async function Interviews() {
       <section className=' w-full max-w-[210px] max-lg:max-w-full lg:sticky lg:top-28 lg:h-screen'>
         <Filter />
       </section>
+
       <div className='flex flex-wrap gap-5'>
-        <section className='w-full max-w-[700px] space-y-5 pb-5 max-[1350px]:max-w-full'>
+        <section className='space-y-5 pb-5 max-[1350px]:w-full lg:max-w-[700px]'>
           {interviews.map((post) => (
             <InterviewPostCard
               key={post.title}
@@ -36,7 +37,7 @@ export default async function Interviews() {
           <Pagination totalPages={totalPages} />
         </section>
 
-        <section className='no-scrollbar w-full space-y-5 max-[1350px]:min-w-full lg:sticky lg:top-28 lg:h-screen lg:max-w-[325px] lg:overflow-y-auto'>
+        <section className='no-scrollbar space-y-5 max-[1350px]:min-w-full lg:sticky lg:top-28 lg:h-screen lg:max-w-[325px] lg:overflow-y-auto'>
           <HostMeetupCard cardBtns={interviewCards} />
           <SidePodcasts />
         </section>
