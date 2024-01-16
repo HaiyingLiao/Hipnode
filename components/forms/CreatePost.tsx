@@ -28,6 +28,7 @@ import {
 import { CreatePostSchema } from '@/lib/validations';
 import { createPostData, categoryItems } from '@/constants';
 import GroupSelectContent from './GroupSelectContent';
+import { createInterview } from '@/lib/actions/interviews.action';
 
 const CreatePost = () => {
   const { theme } = useTheme();
@@ -256,7 +257,7 @@ const CreatePost = () => {
             control={form.control}
             name='category'
             render={({ field }) => (
-              <FormItem className='w-[50%]'>
+              <FormItem className='w-full md:w-[50%]'>
                 <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
                   Category
                 </FormLabel>
@@ -294,7 +295,7 @@ const CreatePost = () => {
             control={form.control}
             name='revenue'
             render={({ field }) => (
-              <FormItem className='w-[50%]'>
+              <FormItem className='w-full md:w-[50%]'>
                 <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
                   Revenue
                 </FormLabel>
@@ -316,7 +317,7 @@ const CreatePost = () => {
             control={form.control}
             name='website'
             render={({ field }) => (
-              <FormItem className='w-[50%]'>
+              <FormItem className='w-full md:w-[50%]'>
                 <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
                   Website
                 </FormLabel>
@@ -336,7 +337,7 @@ const CreatePost = () => {
             control={form.control}
             name='updates'
             render={({ field }) => (
-              <FormItem className='w-[50%]'>
+              <FormItem className='w-full md:w-[50%]'>
                 <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
                   Updates
                 </FormLabel>
