@@ -11,8 +11,8 @@ export const PostSchema = z.object({
 
 export const CreatePostSchema = PostSchema.extend({
   // postImageKey: z.string(),
-  revenue: z.number().optional(),
-  updates: z.number().optional(),
+  revenue: z.coerce.number().optional(),
+  updates: z.coerce.number().optional(),
   website: z.string().optional(),
   authorId: z.string().optional(),
   category: z.string().optional(),

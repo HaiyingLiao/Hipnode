@@ -301,6 +301,7 @@ const CreatePost = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
+                    type='number'
                     placeholder='Add revenue...'
                     {...field}
                     className='inputStyle'
@@ -343,6 +344,7 @@ const CreatePost = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
+                    type='number'
                     placeholder='Add updates...'
                     {...field}
                     className='inputStyle'
