@@ -7,6 +7,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -33,6 +34,7 @@ import { createInterview } from '@/lib/actions/interviews.action';
 const CreatePost = () => {
   const { theme } = useTheme();
   const editorRef = useRef(null);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
@@ -45,13 +47,42 @@ const CreatePost = () => {
       revenue: 0,
       updates: 0,
       website: '',
-      authorId: '',
       category: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof CreatePostSchema>) {
+  async function onSubmit(values: z.infer<typeof CreatePostSchema>) {
     console.log(values);
+    const {
+      title,
+      post,
+      tags,
+      revenue,
+      updates,
+      website,
+      category,
+      createType,
+    } = values;
+
+    try {
+      switch (createType) {
+        case 'interviews':
+          await createInterview({
+            image: 'demo Image',
+            authorId: '657ddd2e3647ac6914ff58c7',
+            title,
+            post,
+            tags,
+            revenue: revenue || 0,
+            updates: updates || 0,
+            website: website || '',
+            category: category || 'free',
+          });
+          router.push('/interviews');
+      }
+    } catch (error) {
+      console.error('Error in form:', error);
+    }
   }
 
   const handleInput = (
