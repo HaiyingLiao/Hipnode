@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { CreatePostSchema } from '@/lib/validations';
-import { createPostData } from '@/constants';
+import { createPostData, categoryItems } from '@/constants';
 import GroupSelectContent from './GroupSelectContent';
 
 const CreatePost = () => {
@@ -41,6 +41,11 @@ const CreatePost = () => {
       group: '',
       createType: '',
       tags: [],
+      revenue: 0,
+      updates: 0,
+      website: '',
+      authorId: '',
+      category: '',
     },
   });
 
@@ -116,7 +121,7 @@ const CreatePost = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className='bodyXs-regular md:body-semibold flex items-center gap-2 rounded border-none bg-white-800 text-darkSecondary-900 dark:bg-darkPrimary-4 dark:text-white-800'>
+                    <SelectTrigger className='selectStyle'>
                       <SelectValue placeholder='Select Group' />
                       <Image
                         src='form-down-arrow.svg'
@@ -146,7 +151,7 @@ const CreatePost = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className='bodyXs-regular md:body-semibold flex items-center gap-2 rounded border-none bg-white-800 text-darkSecondary-900 dark:bg-darkPrimary-4 dark:text-white-800'>
+                    <SelectTrigger className='selectStyle'>
                       <SelectValue placeholder='Create - Post' />
                       <Image
                         src='form-down-arrow.svg'
@@ -246,6 +251,108 @@ const CreatePost = () => {
           )}
         />
 
+        <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
+          <FormField
+            control={form.control}
+            name='category'
+            render={({ field }) => (
+              <FormItem className='w-[50%]'>
+                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
+                  Category
+                </FormLabel>
+
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className='inputStyle'>
+                      <SelectValue placeholder='Select or create a category...' />
+                      <Image
+                        src='form-down-arrow.svg'
+                        alt='icon'
+                        width={15}
+                        height={15}
+                        className='h-2.5 w-2.5 dark:brightness-0 dark:invert md:h-3.5 md:w-3.5'
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className='dark:bg-darkPrimary-4'>
+                    {categoryItems.map((item) => (
+                      <SelectItem value={item} key={item}>
+                        <p className='bodyMd-semibold p-2'>{item}</p>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='revenue'
+            render={({ field }) => (
+              <FormItem className='w-[50%]'>
+                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                  Revenue
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Add revenue...'
+                    {...field}
+                    className='inputStyle'
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
+          <FormField
+            control={form.control}
+            name='website'
+            render={({ field }) => (
+              <FormItem className='w-[50%]'>
+                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                  Website
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Add website link ...'
+                    {...field}
+                    className='inputStyle'
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='updates'
+            render={({ field }) => (
+              <FormItem className='w-[50%]'>
+                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                  Updates
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Add updates...'
+                    {...field}
+                    className='inputStyle'
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name='tags'
@@ -259,7 +366,7 @@ const CreatePost = () => {
                 <>
                   <Input
                     placeholder='Add a tag...'
-                    className='bodyMd-regular md:body-regular min-h-[50px] rounded-lg border-2 border-white-800 bg-white px-5 py-3 text-darkSecondary-800 dark:border-darkPrimary-4 dark:bg-darkPrimary-3'
+                    className='inputStyle'
                     onKeyDown={(e) => handleInput(e, field)}
                   />
                   {field.value.length > 0 && (

@@ -1001,6 +1001,7 @@ export namespace Prisma {
     updates: number
     website: number
     category: number
+    tags: number
     authorId: number
     _all: number
   }
@@ -1052,6 +1053,7 @@ export namespace Prisma {
     updates?: true
     website?: true
     category?: true
+    tags?: true
     authorId?: true
     _all?: true
   }
@@ -1152,6 +1154,7 @@ export namespace Prisma {
     updates: number
     website: string
     category: string
+    tags: string[]
     authorId: string
     _count: InterviewsCountAggregateOutputType | null
     _avg: InterviewsAvgAggregateOutputType | null
@@ -1184,6 +1187,7 @@ export namespace Prisma {
     updates?: boolean
     website?: boolean
     category?: boolean
+    tags?: boolean
     authorId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["interviews"]>
@@ -1198,6 +1202,7 @@ export namespace Prisma {
     updates?: boolean
     website?: boolean
     category?: boolean
+    tags?: boolean
     authorId?: boolean
   }
 
@@ -1221,6 +1226,7 @@ export namespace Prisma {
       updates: number
       website: string
       category: string
+      tags: string[]
       authorId: string
     }, ExtArgs["result"]["interviews"]>
     composites: {}
@@ -1653,6 +1659,7 @@ export namespace Prisma {
     readonly updates: FieldRef<"Interviews", 'Int'>
     readonly website: FieldRef<"Interviews", 'String'>
     readonly category: FieldRef<"Interviews", 'String'>
+    readonly tags: FieldRef<"Interviews", 'String[]'>
     readonly authorId: FieldRef<"Interviews", 'String'>
   }
     
@@ -3010,6 +3017,7 @@ export namespace Prisma {
     updates: 'updates',
     website: 'website',
     category: 'category',
+    tags: 'tags',
     authorId: 'authorId'
   };
 
@@ -3119,6 +3127,7 @@ export namespace Prisma {
     updates?: IntFilter<"Interviews"> | number
     website?: StringFilter<"Interviews"> | string
     category?: StringFilter<"Interviews"> | string
+    tags?: StringNullableListFilter<"Interviews">
     authorId?: StringFilter<"Interviews"> | string
     author?: XOR<UserRelationFilter, UserWhereInput>
   }
@@ -3133,6 +3142,7 @@ export namespace Prisma {
     updates?: SortOrder
     website?: SortOrder
     category?: SortOrder
+    tags?: SortOrder
     authorId?: SortOrder
     author?: UserOrderByWithRelationInput
   }
@@ -3150,6 +3160,7 @@ export namespace Prisma {
     updates?: IntFilter<"Interviews"> | number
     website?: StringFilter<"Interviews"> | string
     category?: StringFilter<"Interviews"> | string
+    tags?: StringNullableListFilter<"Interviews">
     authorId?: StringFilter<"Interviews"> | string
     author?: XOR<UserRelationFilter, UserWhereInput>
   }, "id">
@@ -3164,6 +3175,7 @@ export namespace Prisma {
     updates?: SortOrder
     website?: SortOrder
     category?: SortOrder
+    tags?: SortOrder
     authorId?: SortOrder
     _count?: InterviewsCountOrderByAggregateInput
     _avg?: InterviewsAvgOrderByAggregateInput
@@ -3185,6 +3197,7 @@ export namespace Prisma {
     updates?: IntWithAggregatesFilter<"Interviews"> | number
     website?: StringWithAggregatesFilter<"Interviews"> | string
     category?: StringWithAggregatesFilter<"Interviews"> | string
+    tags?: StringNullableListFilter<"Interviews">
     authorId?: StringWithAggregatesFilter<"Interviews"> | string
   }
 
@@ -3248,6 +3261,7 @@ export namespace Prisma {
     updates: number
     website: string
     category: string
+    tags?: InterviewsCreatetagsInput | string[]
     author: UserCreateNestedOneWithoutInterviewsInput
   }
 
@@ -3261,6 +3275,7 @@ export namespace Prisma {
     updates: number
     website: string
     category: string
+    tags?: InterviewsCreatetagsInput | string[]
     authorId: string
   }
 
@@ -3273,6 +3288,7 @@ export namespace Prisma {
     updates?: IntFieldUpdateOperationsInput | number
     website?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
     author?: UserUpdateOneRequiredWithoutInterviewsNestedInput
   }
 
@@ -3285,6 +3301,7 @@ export namespace Prisma {
     updates?: IntFieldUpdateOperationsInput | number
     website?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
     authorId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -3298,6 +3315,7 @@ export namespace Prisma {
     updates: number
     website: string
     category: string
+    tags?: InterviewsCreatetagsInput | string[]
     authorId: string
   }
 
@@ -3310,6 +3328,7 @@ export namespace Prisma {
     updates?: IntFieldUpdateOperationsInput | number
     website?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
   }
 
   export type InterviewsUncheckedUpdateManyInput = {
@@ -3321,6 +3340,7 @@ export namespace Prisma {
     updates?: IntFieldUpdateOperationsInput | number
     website?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
     authorId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -3410,6 +3430,14 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type UserRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -3425,6 +3453,7 @@ export namespace Prisma {
     updates?: SortOrder
     website?: SortOrder
     category?: SortOrder
+    tags?: SortOrder
     authorId?: SortOrder
   }
 
@@ -3543,6 +3572,10 @@ export namespace Prisma {
     image?: SortOrder
   }
 
+  export type InterviewsCreatetagsInput = {
+    set: string[]
+  }
+
   export type UserCreateNestedOneWithoutInterviewsInput = {
     create?: XOR<UserCreateWithoutInterviewsInput, UserUncheckedCreateWithoutInterviewsInput>
     connectOrCreate?: UserCreateOrConnectWithoutInterviewsInput
@@ -3563,6 +3596,11 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type InterviewsUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UserUpdateOneRequiredWithoutInterviewsNestedInput = {
@@ -3761,6 +3799,7 @@ export namespace Prisma {
     updates: number
     website: string
     category: string
+    tags?: InterviewsCreatetagsInput | string[]
   }
 
   export type InterviewsUncheckedCreateWithoutAuthorInput = {
@@ -3773,6 +3812,7 @@ export namespace Prisma {
     updates: number
     website: string
     category: string
+    tags?: InterviewsCreatetagsInput | string[]
   }
 
   export type InterviewsCreateOrConnectWithoutAuthorInput = {
@@ -3813,6 +3853,7 @@ export namespace Prisma {
     updates?: IntFilter<"Interviews"> | number
     website?: StringFilter<"Interviews"> | string
     category?: StringFilter<"Interviews"> | string
+    tags?: StringNullableListFilter<"Interviews">
     authorId?: StringFilter<"Interviews"> | string
   }
 
@@ -3826,6 +3867,7 @@ export namespace Prisma {
     updates: number
     website: string
     category: string
+    tags?: InterviewsCreatetagsInput | string[]
   }
 
   export type InterviewsUpdateWithoutAuthorInput = {
@@ -3837,6 +3879,7 @@ export namespace Prisma {
     updates?: IntFieldUpdateOperationsInput | number
     website?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
   }
 
   export type InterviewsUncheckedUpdateWithoutAuthorInput = {
@@ -3848,6 +3891,7 @@ export namespace Prisma {
     updates?: IntFieldUpdateOperationsInput | number
     website?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
   }
 
   export type InterviewsUncheckedUpdateManyWithoutAuthorInput = {
@@ -3859,6 +3903,7 @@ export namespace Prisma {
     updates?: IntFieldUpdateOperationsInput | number
     website?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
   }
 
 

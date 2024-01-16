@@ -18,6 +18,7 @@ model Interviews {
   updates   Int
   website   String
   category  String
+  tags      String[]
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String   @db.ObjectId
 }

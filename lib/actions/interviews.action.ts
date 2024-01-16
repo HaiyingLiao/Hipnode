@@ -18,6 +18,7 @@ export async function createInterview(interviewData: InterviewsType) {
       website,
       authorId,
       category,
+      tags,
     } = interviewData;
     const interview = await prisma.interviews.create({
       data: {
@@ -29,6 +30,7 @@ export async function createInterview(interviewData: InterviewsType) {
         website,
         authorId,
         category,
+        tags,
       },
     });
 
@@ -117,6 +119,7 @@ export async function updateInterview(id: string, updateData: InterviewsType) {
         website: updateData.website,
         authorId: updateData.authorId,
         category: updateData.category,
+        tags: updateData.tags,
       },
     });
 

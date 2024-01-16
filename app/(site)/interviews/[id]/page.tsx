@@ -11,6 +11,7 @@ type Params = {
 export default async function InterviewDetail({ params: { id } }: Params) {
   const interview = await getInterviewById(id);
 
+  // fetch tags from database later
   const tags = ['#technology', '#diversity', '#hr'];
 
   return (

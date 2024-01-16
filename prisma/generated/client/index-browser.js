@@ -110,6 +110,7 @@ exports.Prisma.InterviewsScalarFieldEnum = {
   updates: 'updates',
   website: 'website',
   category: 'category',
+  tags: 'tags',
   authorId: 'authorId'
 };
 

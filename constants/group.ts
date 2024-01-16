@@ -20,21 +20,6 @@ export const sidebarContents = [
         title: 'Paid Virtual Coworking',
         text: 'Share how to succeed and w...',
       },
-      {
-        icon: '/assets/icons/bootstrap.svg',
-        title: 'Looking to Partner Up',
-        text: 'Share how to succeed and w...',
-      },
-      {
-        icon: '/assets/icons/bootstrap.svg',
-        title: 'Looking to Partner Up',
-        text: 'Share how to succeed and w...',
-      },
-      {
-        icon: '/assets/icons/bootstrap.svg',
-        title: 'Looking to Partner Up',
-        text: 'Share how to succeed and w...',
-      },
     ],
   },
   {
@@ -58,16 +43,6 @@ export const sidebarContents = [
         title: 'Landing Page UIHUT',
         text: 'Hipnode building their prod...',
       },
-      {
-        icon: '/assets/icons/building.svg',
-        title: 'Looking to Partner Up',
-        text: 'Hipnode building their prod...',
-      },
-      {
-        icon: '/assets/icons/building.svg',
-        title: 'Looking to Partner Up',
-        text: 'Hipnode building their prod...',
-      },
     ],
   },
   {
@@ -89,21 +64,6 @@ export const sidebarContents = [
       {
         icon: '/assets/icons/hipnoder.svg',
         title: 'Ideas and Validation',
-        text: 'Everything related to the sta...',
-      },
-      {
-        icon: '/assets/icons/hipnoder.svg',
-        title: 'European Hipnoder',
-        text: 'Everything related to the sta...',
-      },
-      {
-        icon: '/assets/icons/hipnoder.svg',
-        title: 'European Hipnoder',
-        text: 'Everything related to the sta...',
-      },
-      {
-        icon: '/assets/icons/hipnoder.svg',
-        title: 'European Hipnoder',
         text: 'Everything related to the sta...',
       },
     ],

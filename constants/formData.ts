@@ -20,3 +20,12 @@ export const createPostData = [
     icon: 'form-interviews.svg',
   },
 ];
+
+export const categoryItems = [
+  'Full time',
+  'Part time',
+  'Internship',
+  'Remote',
+  'Contact',
+  'Free',
+];
