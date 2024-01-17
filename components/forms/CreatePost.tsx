@@ -26,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useToast } from '@/components/ui/use-toast';
 import { CreatePostSchema } from '@/lib/validations';
 import { createPostData, categoryItems } from '@/constants';
 import GroupSelectContent from './GroupSelectContent';
@@ -35,6 +36,7 @@ const CreatePost = () => {
   const { theme } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
@@ -78,10 +80,19 @@ const CreatePost = () => {
             website: website || '',
             category: category || 'free',
           });
+          toast({
+            title: 'Success!🎉 Your post has been uploaded.',
+          });
           router.push('/interviews');
       }
     } catch (error) {
       console.error('Error in form:', error);
+      if (error instanceof Error) {
+        toast({
+          title: error.message,
+          variant: 'destructive',
+        });
+      }
     }
   }
 
