@@ -3,24 +3,28 @@
 import prisma from '@/prisma';
 
 interface ParamsType {
+  id?: string;
   name?: string;
   email: string;
 }
 
-export async function createUser(params: ParamsType) {
+interface CreateUserParams {
+  name: string;
+  email: string;
+  clerkId: string;
+}
+
+export async function createUser(userData: CreateUserParams) {
   try {
-    const { email, name } = params;
+    const { email, name, clerkId } = userData;
 
     const user = await prisma.user.create({
-      data: {
-        email,
-        name,
-      },
+      data: { email, name, clerkId },
     });
 
     return user;
   } catch (error) {
-    console.log('Error with create user', error);
+    console.log('Error creating user!', error);
     throw error;
   }
 }

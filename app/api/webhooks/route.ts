@@ -55,10 +55,11 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === 'user.created') {
-    const { email_addresses, first_name, last_name } = evt.data;
+    const { email_addresses, first_name, last_name, id: clerkId } = evt.data;
 
     // create user in db.
     const user = await createUser({
+      clerkId,
       email: email_addresses[0].email_address,
       name: `${first_name} ${last_name || ''}`,
     });
