@@ -1,25 +1,25 @@
 'use client';
 
-import  { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { categoryData } from '@/constants/categories';
+import { formUrlQuery } from '@/lib/utils';
 
 const Filter = () => {
-  const [selected, setSelected] = useState<string[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const value = (e.target as HTMLInputElement).value;
-    const isChecked = (e.target as HTMLInputElement).checked;
-    if (isChecked) {
-      setSelected((prevVal) =>
-        prevVal.includes(value) ? prevVal : [...prevVal, value],
-      );
-    } else {
-      const uncheckedData = selected?.filter((valueUncheck) => {
-        return valueUncheck !== value;
-      });
-      return setSelected(uncheckedData);
-    }
+
+    const newUrl = formUrlQuery(
+      searchParams.toString(),
+      'category',
+      value.toString(),
+    );
+
+    router.push(newUrl);
   };
 
   return (

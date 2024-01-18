@@ -50,7 +50,9 @@ export async function getInterviews(
     if (page < 1 || pageSize < 1)
       throw new Error('Invalid pagination parameters.');
 
-    const totalPosts = await prisma.interviews.count();
+    const totalPosts = (
+      await prisma.interviews.findMany({ where: { category } })
+    ).length;
     const totalPages = Math.ceil(totalPosts / pageSize);
 
     const interviews = await prisma.interviews.findMany({

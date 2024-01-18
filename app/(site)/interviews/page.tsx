@@ -9,8 +9,17 @@ import { interviewCards } from '@/constants';
 import { getInterviews } from '@/lib/actions/interviews.action';
 import { formatDate } from '@/lib/utils';
 
-export default async function Interviews() {
-  const { interviews, totalPages } = await getInterviews(1, 10, 'remote');
+interface SearchParamsProps {
+  searchParams: {
+    page: string;
+    category: string;
+  };
+}
+
+export default async function Interviews({ searchParams }: SearchParamsProps) {
+  const page = Number(searchParams.page) || 1;
+  const category = searchParams.category;
+  const { interviews, totalPages } = await getInterviews(page, 10, category);
 
   return (
     <div className='mt-28 flex h-full w-full flex-col gap-5 lg:flex-row '>
