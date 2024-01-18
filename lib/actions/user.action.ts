@@ -25,11 +25,11 @@ export async function createUser(userData: CreateUserParams) {
 
     const { email, name, clerkId } = userData;
 
-    const user = await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: { email, name, clerkId },
     });
 
-    return user;
+    return newUser;
   } catch (error) {
     console.log('Error creating user!', error);
     throw error;
@@ -56,8 +56,8 @@ export async function updateUser(userData: UserParams) {
     });
     return updatedUser;
   } catch (error) {
-    console.log('User not updated', error);
-    return NextResponse.json({ error: 'User not updated', status: 500 });
+    console.log('User not updated!', error);
+    return NextResponse.json({ error: 'User not updated!', status: 500 });
   }
 }
 
@@ -77,7 +77,7 @@ export async function deleteUser(clerkId: string) {
 
     return deletedUserFromMongoDb;
   } catch (error) {
-    console.log('User not deleted', error);
-    return NextResponse.json({ error: 'User not deleted', status: 500 });
+    console.log('User not deleted!', error);
+    return NextResponse.json({ error: 'User not deleted!', status: 500 });
   }
 }
