@@ -1,7 +1,9 @@
 import Link from 'next/link';
+import { currentUser } from '@clerk/nextjs';
 
 import { cn } from '@/lib/utils';
 import ContentCard from './Card';
+import { updateOnboardingProgress } from '@/lib/actions/user.action';
 
 type ContentsTypes = {
   background: string;
@@ -19,7 +21,7 @@ type HeroContentsProps = {
   path?: string;
 };
 
-export default function HeroContents({
+export default async function HeroContents({
   contents,
   title,
   bg,
@@ -27,6 +29,9 @@ export default function HeroContents({
   position,
   path,
 }: HeroContentsProps) {
+  const user = await currentUser();
+  if (!user) return;
+
   return (
     <section
       className={cn(
@@ -51,6 +56,7 @@ export default function HeroContents({
             <Link
               href={path!}
               className='mt-5 block w-min rounded bg-secondary-red-60 px-10 py-3 text-white-700'
+              onClick={async () => await updateOnboardingProgress(user.id)}
             >
               Next
             </Link>

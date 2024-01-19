@@ -103,7 +103,11 @@ Prisma.NullTypes = {
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  name: 'name',
+  onboardingProgress: 'onboardingProgress',
+  currentStage: 'currentStage',
+  programmingLevel: 'programmingLevel',
+  interests: 'interests'
 };
 
 exports.Prisma.SortOrder = {

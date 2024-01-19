@@ -826,46 +826,84 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    onboardingProgress: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    onboardingProgress: number | null
   }
 
   export type UserMinAggregateOutputType = {
     id: string | null
     email: string | null
     name: string | null
+    onboardingProgress: number | null
+    currentStage: string | null
+    programmingLevel: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     email: string | null
     name: string | null
+    onboardingProgress: number | null
+    currentStage: string | null
+    programmingLevel: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     email: number
     name: number
+    onboardingProgress: number
+    currentStage: number
+    programmingLevel: number
+    interests: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    onboardingProgress?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    onboardingProgress?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
     email?: true
     name?: true
+    onboardingProgress?: true
+    currentStage?: true
+    programmingLevel?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     email?: true
     name?: true
+    onboardingProgress?: true
+    currentStage?: true
+    programmingLevel?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     email?: true
     name?: true
+    onboardingProgress?: true
+    currentStage?: true
+    programmingLevel?: true
+    interests?: true
     _all?: true
   }
 
@@ -907,6 +945,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -937,6 +987,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -945,7 +997,13 @@ export namespace Prisma {
     id: string
     email: string
     name: string | null
+    onboardingProgress: number
+    currentStage: string
+    programmingLevel: string
+    interests: string[]
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -968,12 +1026,20 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    onboardingProgress?: boolean
+    currentStage?: boolean
+    programmingLevel?: boolean
+    interests?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     email?: boolean
     name?: boolean
+    onboardingProgress?: boolean
+    currentStage?: boolean
+    programmingLevel?: boolean
+    interests?: boolean
   }
 
 
@@ -984,6 +1050,10 @@ export namespace Prisma {
       id: string
       email: string
       name: string | null
+      onboardingProgress: number
+      currentStage: string
+      programmingLevel: string
+      interests: string[]
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1408,6 +1478,10 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
+    readonly onboardingProgress: FieldRef<"User", 'Int'>
+    readonly currentStage: FieldRef<"User", 'String'>
+    readonly programmingLevel: FieldRef<"User", 'String'>
+    readonly interests: FieldRef<"User", 'String[]'>
   }
     
 
@@ -1731,7 +1805,11 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     email: 'email',
-    name: 'name'
+    name: 'name',
+    onboardingProgress: 'onboardingProgress',
+    currentStage: 'currentStage',
+    programmingLevel: 'programmingLevel',
+    interests: 'interests'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1784,6 +1862,20 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
   /**
    * Deep Input Types
    */
@@ -1796,12 +1888,20 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
+    onboardingProgress?: IntFilter<"User"> | number
+    currentStage?: StringFilter<"User"> | string
+    programmingLevel?: StringFilter<"User"> | string
+    interests?: StringNullableListFilter<"User">
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    onboardingProgress?: SortOrder
+    currentStage?: SortOrder
+    programmingLevel?: SortOrder
+    interests?: SortOrder
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -1811,15 +1911,25 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
+    onboardingProgress?: IntFilter<"User"> | number
+    currentStage?: StringFilter<"User"> | string
+    programmingLevel?: StringFilter<"User"> | string
+    interests?: StringNullableListFilter<"User">
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    onboardingProgress?: SortOrder
+    currentStage?: SortOrder
+    programmingLevel?: SortOrder
+    interests?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -1829,44 +1939,76 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    onboardingProgress?: IntWithAggregatesFilter<"User"> | number
+    currentStage?: StringWithAggregatesFilter<"User"> | string
+    programmingLevel?: StringWithAggregatesFilter<"User"> | string
+    interests?: StringNullableListFilter<"User">
   }
 
   export type UserCreateInput = {
     id?: string
     email: string
     name?: string | null
+    onboardingProgress?: number
+    currentStage: string
+    programmingLevel: string
+    interests?: UserCreateinterestsInput | string[]
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
     email: string
     name?: string | null
+    onboardingProgress?: number
+    currentStage: string
+    programmingLevel: string
+    interests?: UserCreateinterestsInput | string[]
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    onboardingProgress?: IntFieldUpdateOperationsInput | number
+    currentStage?: StringFieldUpdateOperationsInput | string
+    programmingLevel?: StringFieldUpdateOperationsInput | string
+    interests?: UserUpdateinterestsInput | string[]
   }
 
   export type UserUncheckedUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    onboardingProgress?: IntFieldUpdateOperationsInput | number
+    currentStage?: StringFieldUpdateOperationsInput | string
+    programmingLevel?: StringFieldUpdateOperationsInput | string
+    interests?: UserUpdateinterestsInput | string[]
   }
 
   export type UserCreateManyInput = {
     id?: string
     email: string
     name?: string | null
+    onboardingProgress?: number
+    currentStage: string
+    programmingLevel: string
+    interests?: UserCreateinterestsInput | string[]
   }
 
   export type UserUpdateManyMutationInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    onboardingProgress?: IntFieldUpdateOperationsInput | number
+    currentStage?: StringFieldUpdateOperationsInput | string
+    programmingLevel?: StringFieldUpdateOperationsInput | string
+    interests?: UserUpdateinterestsInput | string[]
   }
 
   export type UserUncheckedUpdateManyInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    onboardingProgress?: IntFieldUpdateOperationsInput | number
+    currentStage?: StringFieldUpdateOperationsInput | string
+    programmingLevel?: StringFieldUpdateOperationsInput | string
+    interests?: UserUpdateinterestsInput | string[]
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -1900,22 +2042,59 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    onboardingProgress?: SortOrder
+    currentStage?: SortOrder
+    programmingLevel?: SortOrder
+    interests?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    onboardingProgress?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    onboardingProgress?: SortOrder
+    currentStage?: SortOrder
+    programmingLevel?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    onboardingProgress?: SortOrder
+    currentStage?: SortOrder
+    programmingLevel?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    onboardingProgress?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -1955,6 +2134,26 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type UserCreateinterestsInput = {
+    set: string[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -1962,6 +2161,19 @@ export namespace Prisma {
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
     unset?: boolean
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateinterestsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -1993,6 +2205,17 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -2008,17 +2231,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -2049,6 +2261,33 @@ export namespace Prisma {
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
     isSet?: boolean
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
 
