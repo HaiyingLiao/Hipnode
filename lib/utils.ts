@@ -6,10 +6,19 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formUrlQuery = (params: string, key: string, value: string) => {
+export const formUrlQuery = (
+  params: string,
+  key: string,
+  value: string | string[],
+) => {
   const currentUrl = queryString.parse(params as string);
 
-  currentUrl[key] = value;
+  if (Array.isArray(value)) {
+    const newVal = value.join('_');
+    currentUrl[key] = newVal;
+  } else {
+    currentUrl[key] = value;
+  }
 
   return queryString.stringifyUrl(
     {

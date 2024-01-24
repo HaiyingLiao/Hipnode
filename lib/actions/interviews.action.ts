@@ -37,21 +37,29 @@ export async function createInterview(interviewData: InterviewsType) {
     return interview;
   } catch (error) {
     console.error('Error in createInterview:', error);
-    throw new Error('Failed to create interview. Please try again later.');
+    throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
 
 export async function getInterviews(
   page: number = 1,
   pageSize: number = 10,
-  category: string,
+  category: string = '',
 ) {
   try {
     if (page < 1 || pageSize < 1)
       throw new Error('Invalid pagination parameters.');
 
+    const categories: string[] =
+      category.trim() !== '' ? category.split('_') : [];
+
+    const whereClause =
+      categories.length > 0 ? { category: { in: categories } } : {};
+
     const totalPosts = (
-      await prisma.interviews.findMany({ where: { category } })
+      await prisma.interviews.findMany({
+        where: whereClause,
+      })
     ).length;
     const totalPages = Math.ceil(totalPosts / pageSize);
 
@@ -69,14 +77,12 @@ export async function getInterviews(
       orderBy: {
         createdAt: 'desc',
       },
-      where: {
-        category,
-      },
+      where: whereClause,
     });
     return { interviews, totalPages };
   } catch (error) {
     console.error('Error in getInterviews:', error);
-    throw new Error('Failed to retrieve interviews. Please try again later.');
+    throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
 
@@ -99,7 +105,7 @@ export async function getInterviewById(id: string) {
     return foundInterview;
   } catch (error) {
     console.error('Error in getInterviewById:', error);
-    throw new Error('Failed to retrieve interview. Please try again later.');
+    throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
 
@@ -128,7 +134,7 @@ export async function updateInterview(id: string, updateData: InterviewsType) {
     return updatedInterview;
   } catch (error) {
     console.error('Error in updateInterview:', error);
-    throw new Error('Failed to update interview. Please try again later.');
+    throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
 
@@ -145,6 +151,6 @@ export async function deleteInterviews(id: string) {
     }
   } catch (error) {
     console.error('Error in deleteInterview:', error);
-    throw new Error('Failed to delete interview. Please try again later.');
+    throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }

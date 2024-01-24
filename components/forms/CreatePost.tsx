@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -37,6 +37,8 @@ const CreatePost = () => {
   const editorRef = useRef(null);
   const router = useRouter();
   const { toast } = useToast();
+
+  const [selectType, setSelectType] = useState<String>('');
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
@@ -190,7 +192,10 @@ const CreatePost = () => {
             render={({ field }) => (
               <FormItem>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(newValue) => {
+                    field.onChange(newValue);
+                    setSelectType(newValue);
+                  }}
                   defaultValue={field.value}
                 >
                   <FormControl>
@@ -294,109 +299,112 @@ const CreatePost = () => {
           )}
         />
 
-        <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
-          <FormField
-            control={form.control}
-            name='category'
-            render={({ field }) => (
-              <FormItem className='w-full md:w-[50%]'>
-                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
-                  Category
-                </FormLabel>
+        {selectType === 'interviews' && (
+          <>
+            <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
+              <FormField
+                control={form.control}
+                name='category'
+                render={({ field }) => (
+                  <FormItem className='w-full md:w-[50%]'>
+                    <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
+                      Category
+                    </FormLabel>
 
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger className='inputStyle'>
-                      <SelectValue placeholder='Select or create a category...' />
-                      <Image
-                        src='form-down-arrow.svg'
-                        alt='icon'
-                        width={15}
-                        height={15}
-                        className='h-2.5 w-2.5 dark:brightness-0 dark:invert md:h-3.5 md:w-3.5'
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className='inputStyle'>
+                          <SelectValue placeholder='Select or create a category...' />
+                          <Image
+                            src='form-down-arrow.svg'
+                            alt='icon'
+                            width={15}
+                            height={15}
+                            className='h-2.5 w-2.5 dark:brightness-0 dark:invert md:h-3.5 md:w-3.5'
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className='dark:bg-darkPrimary-4'>
+                        {categoryItems.map((item) => (
+                          <SelectItem value={item} key={item}>
+                            <p className='bodyMd-semibold p-2'>{item}</p>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name='revenue'
+                render={({ field }) => (
+                  <FormItem className='w-full md:w-[50%]'>
+                    <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                      Revenue
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type='number'
+                        placeholder='Add revenue...'
+                        {...field}
+                        className='inputStyle'
                       />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className='dark:bg-darkPrimary-4'>
-                    {categoryItems.map((item) => (
-                      <SelectItem value={item} key={item}>
-                        <p className='bodyMd-semibold p-2'>{item}</p>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
+              <FormField
+                control={form.control}
+                name='website'
+                render={({ field }) => (
+                  <FormItem className='w-full md:w-[50%]'>
+                    <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                      Website
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder='Add website link ...'
+                        {...field}
+                        className='inputStyle'
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <FormField
-            control={form.control}
-            name='revenue'
-            render={({ field }) => (
-              <FormItem className='w-full md:w-[50%]'>
-                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
-                  Revenue
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type='number'
-                    placeholder='Add revenue...'
-                    {...field}
-                    className='inputStyle'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
-          <FormField
-            control={form.control}
-            name='website'
-            render={({ field }) => (
-              <FormItem className='w-full md:w-[50%]'>
-                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
-                  Website
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='Add website link ...'
-                    {...field}
-                    className='inputStyle'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='updates'
-            render={({ field }) => (
-              <FormItem className='w-full md:w-[50%]'>
-                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
-                  Updates
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type='number'
-                    placeholder='Add updates...'
-                    {...field}
-                    className='inputStyle'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+              <FormField
+                control={form.control}
+                name='updates'
+                render={({ field }) => (
+                  <FormItem className='w-full md:w-[50%]'>
+                    <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                      Updates
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type='number'
+                        placeholder='Add updates...'
+                        {...field}
+                        className='inputStyle'
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </>
+        )}
 
         <FormField
           control={form.control}
