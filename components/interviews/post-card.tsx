@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Statistic from './statistic';
+import { Statistic, SeeMore } from '@/components/index';
 
 type InterviewPostCardProps = {
   authorImage: string;
@@ -30,22 +30,26 @@ export default function InterviewsPostCard({
     <div className='flex w-full flex-col gap-2.5 rounded-2xl bg-white p-5 dark:bg-darkPrimary-4 max-lg:max-w-full'>
       <div className='flex w-full items-start justify-between gap-[30px]'>
         <div className='flex w-full flex-col gap-5'>
-          <header className='flex items-center gap-4'>
-            <Image
-              className='h-11 w-11 rounded-full'
-              src={authorImage}
-              alt='author image'
-              width={44}
-              height={44}
-            />
-            <div className='flex flex-col'>
-              <h3 className='text-sm font-semibold leading-normal text-darkSecondary-900 dark:text-white-800 md:text-base'>
-                {name}
-              </h3>
-              <p className='text-xs font-normal leading-snug text-neutral-400 md:text-sm'>
-                {createdAt}
-              </p>
+          <header className='flex justify-between'>
+            <div className='flex items-center gap-4'>
+              <Image
+                className='h-11 w-11 rounded-full'
+                src={authorImage}
+                alt='author image'
+                width={44}
+                height={44}
+              />
+              <div className='flex flex-col'>
+                <h3 className='text-sm font-semibold leading-normal text-darkSecondary-900 dark:text-white-800 md:text-base'>
+                  {name}
+                </h3>
+                <p className='text-xs font-normal leading-snug text-neutral-400 md:text-sm'>
+                  {createdAt}
+                </p>
+              </div>
             </div>
+
+            <SeeMore />
           </header>
           <Image
             alt='post'
