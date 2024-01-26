@@ -9,21 +9,21 @@ export function cn(...inputs: ClassValue[]) {
 export const formUrlQuery = (
   params: string,
   key: string,
-  value: string | string[],
+  value: string | string[] | null,
 ) => {
-  const currentUrl = queryString.parse(params as string);
+  const currentQuery = queryString.parse(params as string);
 
   if (Array.isArray(value)) {
     const newVal = value.join('_');
-    currentUrl[key] = newVal;
+    currentQuery[key] = newVal;
   } else {
-    currentUrl[key] = value;
+    currentQuery[key] = value;
   }
 
   return queryString.stringifyUrl(
     {
       url: window.location.pathname,
-      query: currentUrl,
+      query: currentQuery,
     },
     { skipNull: true },
   );

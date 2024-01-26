@@ -11,20 +11,27 @@ const Filter = () => {
   const searchParams = useSearchParams();
 
   const [values, setValues] = useState<string[]>([]);
+  const [uncheckedValue, setUncheckValues] = useState<null | boolean>();
   const [checkvalues, setCheckValues] = useState<string[]>([]);
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const value = (e.target as HTMLInputElement).value;
 
-    localStorage.setItem(`checkbox-${value}`, String(e.target.checked));
-
-    setValues((prevValues) => {
-      if (e.target.checked) {
-        return [...prevValues, value];
+    if (e.target.checked) {
+      setValues((prevValues) => [...prevValues, value]);
+      setUncheckValues(false);
+      localStorage.setItem(`checkbox-${value}`, String(e.target.checked));
+    } else {
+      setCheckValues((prevValues) => prevValues.filter((val) => val !== value));
+      if (values.length === 1 && values[0] === value) {
+        setValues((prevValues) => prevValues.filter((val) => val !== value));
+        setUncheckValues(null);
       } else {
-        return prevValues.filter((val) => val !== value);
+        setValues((prevValues) => prevValues.filter((val) => val !== value));
       }
-    });
+
+      localStorage.removeItem(`checkbox-${value}`);
+    }
   };
 
   useEffect(() => {
@@ -36,11 +43,18 @@ const Filter = () => {
       }
     });
 
-    if (values.length > 0) {
+    if (uncheckedValue === null) {
+      const newUrl = formUrlQuery(
+        searchParams.toString(),
+        'category',
+        uncheckedValue,
+      );
+      router.push(newUrl);
+    } else if (values.length > 0) {
       const newUrl = formUrlQuery(searchParams.toString(), 'category', values);
       router.push(newUrl);
     }
-  }, [values, router, searchParams]);
+  }, [values, uncheckedValue, router, searchParams]);
 
   return (
     <aside className='rounded-2xl bg-white p-5 dark:bg-darkPrimary-3'>
