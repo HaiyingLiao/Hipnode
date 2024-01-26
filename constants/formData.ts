@@ -22,10 +22,10 @@ export const createPostData = [
 ];
 
 export const categoryItems = [
-  'Full time',
-  'Part time',
-  'Internship',
-  'Remote',
-  'Contact',
-  'Free',
+  'full time',
+  'part time',
+  'internship',
+  'remote',
+  'contract',
+  'free',
 ];

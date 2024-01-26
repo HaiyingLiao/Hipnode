@@ -49,7 +49,7 @@ export default function InterviewsPostCard({
               </div>
             </div>
 
-            <SeeMore />
+            <SeeMore postId={id} />
           </header>
           <Image
             alt='post'
