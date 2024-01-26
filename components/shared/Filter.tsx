@@ -11,9 +11,12 @@ const Filter = () => {
   const searchParams = useSearchParams();
 
   const [values, setValues] = useState<string[]>([]);
+  const [checkvalues, setCheckValues] = useState<string[]>([]);
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const value = (e.target as HTMLInputElement).value;
+
+    localStorage.setItem(`checkbox-${value}`, String(e.target.checked));
 
     setValues((prevValues) => {
       if (e.target.checked) {
@@ -25,6 +28,14 @@ const Filter = () => {
   };
 
   useEffect(() => {
+    categoryData?.forEach((category) => {
+      const isChecked = localStorage.getItem(`checkbox-${category.key}`);
+
+      if (isChecked === 'true') {
+        setCheckValues((prevValues) => [...prevValues, category.key]);
+      }
+    });
+
     if (values.length > 0) {
       const newUrl = formUrlQuery(searchParams.toString(), 'category', values);
       router.push(newUrl);
@@ -51,6 +62,7 @@ const Filter = () => {
             id={category.item}
             onChange={(e) => handleChange(e)}
             value={category.key}
+            checked={checkvalues.includes(category.key)}
           />
         </div>
       ))}
