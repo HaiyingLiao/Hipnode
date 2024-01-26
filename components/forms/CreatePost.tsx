@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -38,8 +38,6 @@ const CreatePost = () => {
   const router = useRouter();
   const { toast } = useToast();
 
-  const [selectType, setSelectType] = useState<String>('');
-
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
     defaultValues: {
@@ -55,8 +53,10 @@ const CreatePost = () => {
     },
   });
 
+  // interview post related field show up based on selectedType
+  const selectedType = form.watch('createType');
+
   async function onSubmit(values: z.infer<typeof CreatePostSchema>) {
-    console.log(values);
     const {
       title,
       post,
@@ -67,12 +67,14 @@ const CreatePost = () => {
       category,
       createType,
     } = values;
+    const modifiedCategory = category?.replace(/\W/g, '');
 
     try {
       switch (createType) {
         case 'interviews':
           await createInterview({
-            image: 'demo Image',
+            // replace image path when implement image function
+            image: '/assets/images/illustration.png',
             authorId: '657ddd2e3647ac6914ff58c7',
             title,
             post,
@@ -80,10 +82,10 @@ const CreatePost = () => {
             revenue: revenue || 0,
             updates: updates || 0,
             website: website || '',
-            category: category || 'free',
+            category: modifiedCategory || 'free',
           });
           toast({
-            title: 'Success!🎉 Your post has been uploaded.',
+            title: 'Success!🎉 Your interview post has been uploaded.',
           });
           router.push('/interviews');
       }
@@ -192,10 +194,7 @@ const CreatePost = () => {
             render={({ field }) => (
               <FormItem>
                 <Select
-                  onValueChange={(newValue) => {
-                    field.onChange(newValue);
-                    setSelectType(newValue);
-                  }}
+                  onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
@@ -299,7 +298,7 @@ const CreatePost = () => {
           )}
         />
 
-        {selectType === 'interviews' && (
+        {selectedType === 'interviews' && (
           <>
             <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
               <FormField

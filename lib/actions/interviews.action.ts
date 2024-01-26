@@ -3,6 +3,7 @@
 import prisma from '@/prisma';
 
 import { InterviewsSchema, InterviewsType } from '../validations';
+import { revalidatePath } from 'next/cache';
 
 export async function createInterview(interviewData: InterviewsType) {
   try {
@@ -56,11 +57,9 @@ export async function getInterviews(
     const whereClause =
       categories.length > 0 ? { category: { in: categories } } : {};
 
-    const totalPosts = (
-      await prisma.interviews.findMany({
-        where: whereClause,
-      })
-    ).length;
+    const totalPosts = await prisma.interviews.count({
+      where: whereClause,
+    });
     const totalPages = Math.ceil(totalPosts / pageSize);
 
     const interviews = await prisma.interviews.findMany({
@@ -138,7 +137,7 @@ export async function updateInterview(id: string, updateData: InterviewsType) {
   }
 }
 
-export async function deleteInterviews(id: string) {
+export async function deleteInterviewById(id: string) {
   try {
     const deleteinterview = await prisma.interviews.delete({
       where: {
@@ -149,6 +148,7 @@ export async function deleteInterviews(id: string) {
     if (!deleteinterview) {
       throw new Error('Interview not found or could not be deleted.');
     }
+    revalidatePath('/interviews');
   } catch (error) {
     console.error('Error in deleteInterview:', error);
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
