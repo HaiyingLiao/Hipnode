@@ -6,7 +6,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formUrlQuery = (params: string, key: string, value: string) => {
+export const formUrlQuery = (
+  params: string,
+  key: string,
+  value: null | string,
+) => {
   const currentUrl = queryString.parse(params as string);
 
   currentUrl[key] = value;

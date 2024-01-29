@@ -1,10 +1,11 @@
 import Link from 'next/link';
 
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+// import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import ProfileDropDown from './ProfileDropDown';
 import { Button } from '@/components/ui/button';
 import DarkModeToggle from './DarkModeToggle';
 import MessageDropDown from './MessageDropDown';
+import { UserButton } from '@clerk/nextjs';
 
 const NavProfileMenu = () => {
   // For testing
@@ -22,7 +23,7 @@ const NavProfileMenu = () => {
             <div className='profileIconContainer'>
               <MessageDropDown />
             </div>
-            <Avatar className='navProfileAvatarContainer rounded-lg'>
+            {/* <Avatar className='navProfileAvatarContainer rounded-lg'>
               <AvatarImage
                 src={testUser.avatar}
                 alt='Avatar'
@@ -31,7 +32,8 @@ const NavProfileMenu = () => {
                 className='navProfileAvatarImage'
               />
               <AvatarFallback className='rounded-lg'>HN</AvatarFallback>
-            </Avatar>
+            </Avatar> */}
+            <UserButton afterSignOutUrl='' />
             <div className='flex items-center justify-between gap-[5px] lg:gap-2.5'>
               <h6 className='navProfileName'>{testUser.name}</h6>
               <ProfileDropDown />

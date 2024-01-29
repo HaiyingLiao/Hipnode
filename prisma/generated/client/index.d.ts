@@ -826,36 +826,26 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
-  }
-
-  export type UserAvgAggregateOutputType = {
-    onboardingProgress: number | null
-  }
-
-  export type UserSumAggregateOutputType = {
-    onboardingProgress: number | null
   }
 
   export type UserMinAggregateOutputType = {
     id: string | null
     email: string | null
     name: string | null
-    onboardingProgress: number | null
-    currentStage: string | null
-    programmingLevel: string | null
+    onboardingProgress: string | null
+    businessStage: string | null
+    codingLevel: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     email: string | null
     name: string | null
-    onboardingProgress: number | null
-    currentStage: string | null
-    programmingLevel: string | null
+    onboardingProgress: string | null
+    businessStage: string | null
+    codingLevel: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -863,28 +853,20 @@ export namespace Prisma {
     email: number
     name: number
     onboardingProgress: number
-    currentStage: number
-    programmingLevel: number
-    interests: number
+    businessStage: number
+    codingLevel: number
+    businessTypes: number
     _all: number
   }
 
-
-  export type UserAvgAggregateInputType = {
-    onboardingProgress?: true
-  }
-
-  export type UserSumAggregateInputType = {
-    onboardingProgress?: true
-  }
 
   export type UserMinAggregateInputType = {
     id?: true
     email?: true
     name?: true
     onboardingProgress?: true
-    currentStage?: true
-    programmingLevel?: true
+    businessStage?: true
+    codingLevel?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -892,8 +874,8 @@ export namespace Prisma {
     email?: true
     name?: true
     onboardingProgress?: true
-    currentStage?: true
-    programmingLevel?: true
+    businessStage?: true
+    codingLevel?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -901,9 +883,9 @@ export namespace Prisma {
     email?: true
     name?: true
     onboardingProgress?: true
-    currentStage?: true
-    programmingLevel?: true
-    interests?: true
+    businessStage?: true
+    codingLevel?: true
+    businessTypes?: true
     _all?: true
   }
 
@@ -945,18 +927,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: UserAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -987,8 +957,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
-    _avg?: UserAvgAggregateInputType
-    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -997,13 +965,11 @@ export namespace Prisma {
     id: string
     email: string
     name: string | null
-    onboardingProgress: number
-    currentStage: string
-    programmingLevel: string
-    interests: string[]
+    onboardingProgress: string
+    businessStage: string
+    codingLevel: string
+    businessTypes: string[]
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1027,9 +993,9 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     onboardingProgress?: boolean
-    currentStage?: boolean
-    programmingLevel?: boolean
-    interests?: boolean
+    businessStage?: boolean
+    codingLevel?: boolean
+    businessTypes?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1037,9 +1003,9 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     onboardingProgress?: boolean
-    currentStage?: boolean
-    programmingLevel?: boolean
-    interests?: boolean
+    businessStage?: boolean
+    codingLevel?: boolean
+    businessTypes?: boolean
   }
 
 
@@ -1050,10 +1016,10 @@ export namespace Prisma {
       id: string
       email: string
       name: string | null
-      onboardingProgress: number
-      currentStage: string
-      programmingLevel: string
-      interests: string[]
+      onboardingProgress: string
+      businessStage: string
+      codingLevel: string
+      businessTypes: string[]
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1478,10 +1444,10 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
-    readonly onboardingProgress: FieldRef<"User", 'Int'>
-    readonly currentStage: FieldRef<"User", 'String'>
-    readonly programmingLevel: FieldRef<"User", 'String'>
-    readonly interests: FieldRef<"User", 'String[]'>
+    readonly onboardingProgress: FieldRef<"User", 'String'>
+    readonly businessStage: FieldRef<"User", 'String'>
+    readonly codingLevel: FieldRef<"User", 'String'>
+    readonly businessTypes: FieldRef<"User", 'String[]'>
   }
     
 
@@ -1807,9 +1773,9 @@ export namespace Prisma {
     email: 'email',
     name: 'name',
     onboardingProgress: 'onboardingProgress',
-    currentStage: 'currentStage',
-    programmingLevel: 'programmingLevel',
-    interests: 'interests'
+    businessStage: 'businessStage',
+    codingLevel: 'codingLevel',
+    businessTypes: 'businessTypes'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1862,20 +1828,6 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
   /**
    * Deep Input Types
    */
@@ -1888,10 +1840,10 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
-    onboardingProgress?: IntFilter<"User"> | number
-    currentStage?: StringFilter<"User"> | string
-    programmingLevel?: StringFilter<"User"> | string
-    interests?: StringNullableListFilter<"User">
+    onboardingProgress?: StringFilter<"User"> | string
+    businessStage?: StringFilter<"User"> | string
+    codingLevel?: StringFilter<"User"> | string
+    businessTypes?: StringNullableListFilter<"User">
   }
 
   export type UserOrderByWithRelationInput = {
@@ -1899,9 +1851,9 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     onboardingProgress?: SortOrder
-    currentStage?: SortOrder
-    programmingLevel?: SortOrder
-    interests?: SortOrder
+    businessStage?: SortOrder
+    codingLevel?: SortOrder
+    businessTypes?: SortOrder
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -1911,10 +1863,10 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
-    onboardingProgress?: IntFilter<"User"> | number
-    currentStage?: StringFilter<"User"> | string
-    programmingLevel?: StringFilter<"User"> | string
-    interests?: StringNullableListFilter<"User">
+    onboardingProgress?: StringFilter<"User"> | string
+    businessStage?: StringFilter<"User"> | string
+    codingLevel?: StringFilter<"User"> | string
+    businessTypes?: StringNullableListFilter<"User">
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -1922,14 +1874,12 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     onboardingProgress?: SortOrder
-    currentStage?: SortOrder
-    programmingLevel?: SortOrder
-    interests?: SortOrder
+    businessStage?: SortOrder
+    codingLevel?: SortOrder
+    businessTypes?: SortOrder
     _count?: UserCountOrderByAggregateInput
-    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
-    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -1939,76 +1889,76 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
-    onboardingProgress?: IntWithAggregatesFilter<"User"> | number
-    currentStage?: StringWithAggregatesFilter<"User"> | string
-    programmingLevel?: StringWithAggregatesFilter<"User"> | string
-    interests?: StringNullableListFilter<"User">
+    onboardingProgress?: StringWithAggregatesFilter<"User"> | string
+    businessStage?: StringWithAggregatesFilter<"User"> | string
+    codingLevel?: StringWithAggregatesFilter<"User"> | string
+    businessTypes?: StringNullableListFilter<"User">
   }
 
   export type UserCreateInput = {
     id?: string
     email: string
     name?: string | null
-    onboardingProgress?: number
-    currentStage: string
-    programmingLevel: string
-    interests?: UserCreateinterestsInput | string[]
+    onboardingProgress: string
+    businessStage: string
+    codingLevel: string
+    businessTypes?: UserCreatebusinessTypesInput | string[]
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
     email: string
     name?: string | null
-    onboardingProgress?: number
-    currentStage: string
-    programmingLevel: string
-    interests?: UserCreateinterestsInput | string[]
+    onboardingProgress: string
+    businessStage: string
+    codingLevel: string
+    businessTypes?: UserCreatebusinessTypesInput | string[]
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    onboardingProgress?: IntFieldUpdateOperationsInput | number
-    currentStage?: StringFieldUpdateOperationsInput | string
-    programmingLevel?: StringFieldUpdateOperationsInput | string
-    interests?: UserUpdateinterestsInput | string[]
+    onboardingProgress?: StringFieldUpdateOperationsInput | string
+    businessStage?: StringFieldUpdateOperationsInput | string
+    codingLevel?: StringFieldUpdateOperationsInput | string
+    businessTypes?: UserUpdatebusinessTypesInput | string[]
   }
 
   export type UserUncheckedUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    onboardingProgress?: IntFieldUpdateOperationsInput | number
-    currentStage?: StringFieldUpdateOperationsInput | string
-    programmingLevel?: StringFieldUpdateOperationsInput | string
-    interests?: UserUpdateinterestsInput | string[]
+    onboardingProgress?: StringFieldUpdateOperationsInput | string
+    businessStage?: StringFieldUpdateOperationsInput | string
+    codingLevel?: StringFieldUpdateOperationsInput | string
+    businessTypes?: UserUpdatebusinessTypesInput | string[]
   }
 
   export type UserCreateManyInput = {
     id?: string
     email: string
     name?: string | null
-    onboardingProgress?: number
-    currentStage: string
-    programmingLevel: string
-    interests?: UserCreateinterestsInput | string[]
+    onboardingProgress: string
+    businessStage: string
+    codingLevel: string
+    businessTypes?: UserCreatebusinessTypesInput | string[]
   }
 
   export type UserUpdateManyMutationInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    onboardingProgress?: IntFieldUpdateOperationsInput | number
-    currentStage?: StringFieldUpdateOperationsInput | string
-    programmingLevel?: StringFieldUpdateOperationsInput | string
-    interests?: UserUpdateinterestsInput | string[]
+    onboardingProgress?: StringFieldUpdateOperationsInput | string
+    businessStage?: StringFieldUpdateOperationsInput | string
+    codingLevel?: StringFieldUpdateOperationsInput | string
+    businessTypes?: UserUpdatebusinessTypesInput | string[]
   }
 
   export type UserUncheckedUpdateManyInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    onboardingProgress?: IntFieldUpdateOperationsInput | number
-    currentStage?: StringFieldUpdateOperationsInput | string
-    programmingLevel?: StringFieldUpdateOperationsInput | string
-    interests?: UserUpdateinterestsInput | string[]
+    onboardingProgress?: StringFieldUpdateOperationsInput | string
+    businessStage?: StringFieldUpdateOperationsInput | string
+    codingLevel?: StringFieldUpdateOperationsInput | string
+    businessTypes?: UserUpdatebusinessTypesInput | string[]
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2042,17 +1992,6 @@ export namespace Prisma {
     isSet?: boolean
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
@@ -2066,13 +2005,9 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     onboardingProgress?: SortOrder
-    currentStage?: SortOrder
-    programmingLevel?: SortOrder
-    interests?: SortOrder
-  }
-
-  export type UserAvgOrderByAggregateInput = {
-    onboardingProgress?: SortOrder
+    businessStage?: SortOrder
+    codingLevel?: SortOrder
+    businessTypes?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -2080,8 +2015,8 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     onboardingProgress?: SortOrder
-    currentStage?: SortOrder
-    programmingLevel?: SortOrder
+    businessStage?: SortOrder
+    codingLevel?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -2089,12 +2024,8 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     onboardingProgress?: SortOrder
-    currentStage?: SortOrder
-    programmingLevel?: SortOrder
-  }
-
-  export type UserSumOrderByAggregateInput = {
-    onboardingProgress?: SortOrder
+    businessStage?: SortOrder
+    codingLevel?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2134,23 +2065,7 @@ export namespace Prisma {
     isSet?: boolean
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type UserCreateinterestsInput = {
+  export type UserCreatebusinessTypesInput = {
     set: string[]
   }
 
@@ -2163,15 +2078,7 @@ export namespace Prisma {
     unset?: boolean
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type UserUpdateinterestsInput = {
+  export type UserUpdatebusinessTypesInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -2205,17 +2112,6 @@ export namespace Prisma {
     isSet?: boolean
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -2231,6 +2127,17 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -2261,33 +2168,6 @@ export namespace Prisma {
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
     isSet?: boolean
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
 

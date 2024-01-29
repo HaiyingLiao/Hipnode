@@ -1,25 +1,21 @@
 'use server';
 
 import prisma from '@/prisma';
-import { Prisma } from '@/prisma/generated/client';
-import { group } from 'console';
-import { id } from 'date-fns/locale';
 import { revalidatePath } from 'next/cache';
-import { string } from 'zod';
 
 interface ParamsType {
-  name?: string;
+  name: string;
   email: string;
 }
 
 export async function createUser(params: ParamsType) {
   try {
-    const { email, name } = params;
+    const { name, email } = params;
 
     const user = await prisma.user.create({
       data: {
-        email,
         name,
+        email,
       },
     });
 
@@ -42,6 +38,7 @@ export async function updateUser(params: ParamsType) {
         name,
       },
     });
+    revalidatePath('/');
     return updatedUser;
   } catch (error) {
     console.log('Error with update user', error);
@@ -57,7 +54,7 @@ export async function deleteUser(params: ParamsType) {
         email,
       },
     });
-
+    revalidatePath('/');
     return deletedUser;
   } catch (error) {
     console.log('error with delete user', error);
@@ -66,59 +63,11 @@ export async function deleteUser(params: ParamsType) {
 
 export async function getUserById(id: string) {
   try {
-    const group = await prisma.user.findFirst({
+    const user = await prisma.user.findFirst({
       where: { id },
     });
-    return group;
+    return user;
   } catch (error) {
     throw new Error('An error occurred while fetching the user');
-  }
-}
-
-// Update onboarding progress
-export async function updateOnboardingProgress(id: string) {
-  try {
-    const selectedUser = await prisma.user.findFirst({
-      where: { id },
-    });
-
-    if (!selectedUser) return;
-
-    const updatedUser = await prisma.user.update({
-      where: {
-        id: selectedUser.id,
-      },
-      data: {
-        onboardingProgress: selectedUser.onboardingProgress + 1,
-      },
-    });
-
-    return updatedUser;
-  } catch (error) {
-    throw new Error('User not updated');
-  }
-}
-
-// Update current business stage
-export async function updateStage(id: string, currentStage: string) {
-  try {
-    const selectedUser = await prisma.user.findFirst({
-      where: { id },
-    });
-
-    if (!selectedUser) return;
-
-    const updatedUser = await prisma.user.update({
-      where: {
-        id: selectedUser.id,
-      },
-      data: {
-        currentStage,
-      },
-    });
-
-    return updatedUser;
-  } catch (error) {
-    throw new Error('User not updated');
   }
 }

@@ -105,9 +105,9 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   name: 'name',
   onboardingProgress: 'onboardingProgress',
-  currentStage: 'currentStage',
-  programmingLevel: 'programmingLevel',
-  interests: 'interests'
+  businessStage: 'businessStage',
+  codingLevel: 'codingLevel',
+  businessTypes: 'businessTypes'
 };
 
 exports.Prisma.SortOrder = {
