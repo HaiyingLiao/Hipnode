@@ -14,6 +14,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model Interviews
+ * 
+ */
+export type Interviews = $Result.DefaultSelection<Prisma.$InterviewsPayload>
+/**
  * Model User
  * 
  */
@@ -26,8 +31,8 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Interviews
+ * const interviews = await prisma.interviews.findMany()
  * ```
  *
  * 
@@ -47,8 +52,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * // Fetch zero or more Interviews
+   * const interviews = await prisma.interviews.findMany()
    * ```
    *
    * 
@@ -110,6 +115,16 @@ export class PrismaClient<
   $extends: $Extensions.ExtendsHook<'extends', Prisma.TypeMapCb, ExtArgs>
 
       /**
+   * `prisma.interviews`: Exposes CRUD operations for the **Interviews** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Interviews
+    * const interviews = await prisma.interviews.findMany()
+    * ```
+    */
+  get interviews(): Prisma.InterviewsDelegate<ExtArgs>;
+
+  /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
@@ -588,6 +603,7 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    Interviews: 'Interviews',
     User: 'User'
   };
 
@@ -605,10 +621,84 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'user'
+      modelProps: 'interviews' | 'user'
       txIsolationLevel: never
     },
     model: {
+      Interviews: {
+        payload: Prisma.$InterviewsPayload<ExtArgs>
+        fields: Prisma.InterviewsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InterviewsFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InterviewsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InterviewsFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InterviewsPayload>
+          }
+          findFirst: {
+            args: Prisma.InterviewsFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InterviewsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InterviewsFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InterviewsPayload>
+          }
+          findMany: {
+            args: Prisma.InterviewsFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InterviewsPayload>[]
+          }
+          create: {
+            args: Prisma.InterviewsCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InterviewsPayload>
+          }
+          createMany: {
+            args: Prisma.InterviewsCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.InterviewsDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InterviewsPayload>
+          }
+          update: {
+            args: Prisma.InterviewsUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InterviewsPayload>
+          }
+          deleteMany: {
+            args: Prisma.InterviewsDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InterviewsUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.InterviewsUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InterviewsPayload>
+          }
+          aggregate: {
+            args: Prisma.InterviewsAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateInterviews>
+          }
+          groupBy: {
+            args: Prisma.InterviewsGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<InterviewsGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.InterviewsFindRawArgs<ExtArgs>,
+            result: Prisma.JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.InterviewsAggregateRawArgs<ExtArgs>,
+            result: Prisma.JsonObject
+          }
+          count: {
+            args: Prisma.InterviewsCountArgs<ExtArgs>,
+            result: $Utils.Optional<InterviewsCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -815,10 +905,1117 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    interviews: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interviews?: boolean | UserCountOutputTypeCountInterviewsArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountInterviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InterviewsWhereInput
+  }
+
+
 
   /**
    * Models
    */
+
+  /**
+   * Model Interviews
+   */
+
+  export type AggregateInterviews = {
+    _count: InterviewsCountAggregateOutputType | null
+    _avg: InterviewsAvgAggregateOutputType | null
+    _sum: InterviewsSumAggregateOutputType | null
+    _min: InterviewsMinAggregateOutputType | null
+    _max: InterviewsMaxAggregateOutputType | null
+  }
+
+  export type InterviewsAvgAggregateOutputType = {
+    revenue: number | null
+    updates: number | null
+  }
+
+  export type InterviewsSumAggregateOutputType = {
+    revenue: number | null
+    updates: number | null
+  }
+
+  export type InterviewsMinAggregateOutputType = {
+    id: string | null
+    image: string | null
+    createdAt: Date | null
+    title: string | null
+    post: string | null
+    revenue: number | null
+    updates: number | null
+    website: string | null
+    category: string | null
+    authorId: string | null
+  }
+
+  export type InterviewsMaxAggregateOutputType = {
+    id: string | null
+    image: string | null
+    createdAt: Date | null
+    title: string | null
+    post: string | null
+    revenue: number | null
+    updates: number | null
+    website: string | null
+    category: string | null
+    authorId: string | null
+  }
+
+  export type InterviewsCountAggregateOutputType = {
+    id: number
+    image: number
+    createdAt: number
+    title: number
+    post: number
+    revenue: number
+    updates: number
+    website: number
+    category: number
+    tags: number
+    authorId: number
+    _all: number
+  }
+
+
+  export type InterviewsAvgAggregateInputType = {
+    revenue?: true
+    updates?: true
+  }
+
+  export type InterviewsSumAggregateInputType = {
+    revenue?: true
+    updates?: true
+  }
+
+  export type InterviewsMinAggregateInputType = {
+    id?: true
+    image?: true
+    createdAt?: true
+    title?: true
+    post?: true
+    revenue?: true
+    updates?: true
+    website?: true
+    category?: true
+    authorId?: true
+  }
+
+  export type InterviewsMaxAggregateInputType = {
+    id?: true
+    image?: true
+    createdAt?: true
+    title?: true
+    post?: true
+    revenue?: true
+    updates?: true
+    website?: true
+    category?: true
+    authorId?: true
+  }
+
+  export type InterviewsCountAggregateInputType = {
+    id?: true
+    image?: true
+    createdAt?: true
+    title?: true
+    post?: true
+    revenue?: true
+    updates?: true
+    website?: true
+    category?: true
+    tags?: true
+    authorId?: true
+    _all?: true
+  }
+
+  export type InterviewsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Interviews to aggregate.
+     */
+    where?: InterviewsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interviews to fetch.
+     */
+    orderBy?: InterviewsOrderByWithRelationInput | InterviewsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InterviewsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Interviews
+    **/
+    _count?: true | InterviewsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InterviewsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InterviewsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InterviewsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InterviewsMaxAggregateInputType
+  }
+
+  export type GetInterviewsAggregateType<T extends InterviewsAggregateArgs> = {
+        [P in keyof T & keyof AggregateInterviews]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInterviews[P]>
+      : GetScalarType<T[P], AggregateInterviews[P]>
+  }
+
+
+
+
+  export type InterviewsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InterviewsWhereInput
+    orderBy?: InterviewsOrderByWithAggregationInput | InterviewsOrderByWithAggregationInput[]
+    by: InterviewsScalarFieldEnum[] | InterviewsScalarFieldEnum
+    having?: InterviewsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InterviewsCountAggregateInputType | true
+    _avg?: InterviewsAvgAggregateInputType
+    _sum?: InterviewsSumAggregateInputType
+    _min?: InterviewsMinAggregateInputType
+    _max?: InterviewsMaxAggregateInputType
+  }
+
+  export type InterviewsGroupByOutputType = {
+    id: string
+    image: string
+    createdAt: Date
+    title: string
+    post: string
+    revenue: number
+    updates: number
+    website: string
+    category: string
+    tags: string[]
+    authorId: string
+    _count: InterviewsCountAggregateOutputType | null
+    _avg: InterviewsAvgAggregateOutputType | null
+    _sum: InterviewsSumAggregateOutputType | null
+    _min: InterviewsMinAggregateOutputType | null
+    _max: InterviewsMaxAggregateOutputType | null
+  }
+
+  type GetInterviewsGroupByPayload<T extends InterviewsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InterviewsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InterviewsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InterviewsGroupByOutputType[P]>
+            : GetScalarType<T[P], InterviewsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InterviewsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    image?: boolean
+    createdAt?: boolean
+    title?: boolean
+    post?: boolean
+    revenue?: boolean
+    updates?: boolean
+    website?: boolean
+    category?: boolean
+    tags?: boolean
+    authorId?: boolean
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["interviews"]>
+
+  export type InterviewsSelectScalar = {
+    id?: boolean
+    image?: boolean
+    createdAt?: boolean
+    title?: boolean
+    post?: boolean
+    revenue?: boolean
+    updates?: boolean
+    website?: boolean
+    category?: boolean
+    tags?: boolean
+    authorId?: boolean
+  }
+
+  export type InterviewsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+
+  export type $InterviewsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Interviews"
+    objects: {
+      author: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      image: string
+      createdAt: Date
+      title: string
+      post: string
+      revenue: number
+      updates: number
+      website: string
+      category: string
+      tags: string[]
+      authorId: string
+    }, ExtArgs["result"]["interviews"]>
+    composites: {}
+  }
+
+
+  type InterviewsGetPayload<S extends boolean | null | undefined | InterviewsDefaultArgs> = $Result.GetResult<Prisma.$InterviewsPayload, S>
+
+  type InterviewsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<InterviewsFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: InterviewsCountAggregateInputType | true
+    }
+
+  export interface InterviewsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Interviews'], meta: { name: 'Interviews' } }
+    /**
+     * Find zero or one Interviews that matches the filter.
+     * @param {InterviewsFindUniqueArgs} args - Arguments to find a Interviews
+     * @example
+     * // Get one Interviews
+     * const interviews = await prisma.interviews.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends InterviewsFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, InterviewsFindUniqueArgs<ExtArgs>>
+    ): Prisma__InterviewsClient<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Interviews that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {InterviewsFindUniqueOrThrowArgs} args - Arguments to find a Interviews
+     * @example
+     * // Get one Interviews
+     * const interviews = await prisma.interviews.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends InterviewsFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, InterviewsFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__InterviewsClient<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Interviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InterviewsFindFirstArgs} args - Arguments to find a Interviews
+     * @example
+     * // Get one Interviews
+     * const interviews = await prisma.interviews.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends InterviewsFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, InterviewsFindFirstArgs<ExtArgs>>
+    ): Prisma__InterviewsClient<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Interviews that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InterviewsFindFirstOrThrowArgs} args - Arguments to find a Interviews
+     * @example
+     * // Get one Interviews
+     * const interviews = await prisma.interviews.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends InterviewsFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, InterviewsFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__InterviewsClient<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Interviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InterviewsFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Interviews
+     * const interviews = await prisma.interviews.findMany()
+     * 
+     * // Get first 10 Interviews
+     * const interviews = await prisma.interviews.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const interviewsWithIdOnly = await prisma.interviews.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends InterviewsFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, InterviewsFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Interviews.
+     * @param {InterviewsCreateArgs} args - Arguments to create a Interviews.
+     * @example
+     * // Create one Interviews
+     * const Interviews = await prisma.interviews.create({
+     *   data: {
+     *     // ... data to create a Interviews
+     *   }
+     * })
+     * 
+    **/
+    create<T extends InterviewsCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, InterviewsCreateArgs<ExtArgs>>
+    ): Prisma__InterviewsClient<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Interviews.
+     *     @param {InterviewsCreateManyArgs} args - Arguments to create many Interviews.
+     *     @example
+     *     // Create many Interviews
+     *     const interviews = await prisma.interviews.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends InterviewsCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, InterviewsCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Interviews.
+     * @param {InterviewsDeleteArgs} args - Arguments to delete one Interviews.
+     * @example
+     * // Delete one Interviews
+     * const Interviews = await prisma.interviews.delete({
+     *   where: {
+     *     // ... filter to delete one Interviews
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends InterviewsDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, InterviewsDeleteArgs<ExtArgs>>
+    ): Prisma__InterviewsClient<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Interviews.
+     * @param {InterviewsUpdateArgs} args - Arguments to update one Interviews.
+     * @example
+     * // Update one Interviews
+     * const interviews = await prisma.interviews.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends InterviewsUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, InterviewsUpdateArgs<ExtArgs>>
+    ): Prisma__InterviewsClient<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Interviews.
+     * @param {InterviewsDeleteManyArgs} args - Arguments to filter Interviews to delete.
+     * @example
+     * // Delete a few Interviews
+     * const { count } = await prisma.interviews.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends InterviewsDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, InterviewsDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Interviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InterviewsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Interviews
+     * const interviews = await prisma.interviews.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends InterviewsUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, InterviewsUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Interviews.
+     * @param {InterviewsUpsertArgs} args - Arguments to update or create a Interviews.
+     * @example
+     * // Update or create a Interviews
+     * const interviews = await prisma.interviews.upsert({
+     *   create: {
+     *     // ... data to create a Interviews
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Interviews we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends InterviewsUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, InterviewsUpsertArgs<ExtArgs>>
+    ): Prisma__InterviewsClient<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Interviews that matches the filter.
+     * @param {InterviewsFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const interviews = await prisma.interviews.findRaw({
+     *   filter: { age: { $gt: 25 } } 
+     * })
+    **/
+    findRaw(
+      args?: InterviewsFindRawArgs
+    ): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a Interviews.
+     * @param {InterviewsAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const interviews = await prisma.interviews.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+    **/
+    aggregateRaw(
+      args?: InterviewsAggregateRawArgs
+    ): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Count the number of Interviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InterviewsCountArgs} args - Arguments to filter Interviews to count.
+     * @example
+     * // Count the number of Interviews
+     * const count = await prisma.interviews.count({
+     *   where: {
+     *     // ... the filter for the Interviews we want to count
+     *   }
+     * })
+    **/
+    count<T extends InterviewsCountArgs>(
+      args?: Subset<T, InterviewsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InterviewsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Interviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InterviewsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InterviewsAggregateArgs>(args: Subset<T, InterviewsAggregateArgs>): Prisma.PrismaPromise<GetInterviewsAggregateType<T>>
+
+    /**
+     * Group by Interviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InterviewsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InterviewsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InterviewsGroupByArgs['orderBy'] }
+        : { orderBy?: InterviewsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InterviewsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInterviewsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Interviews model
+   */
+  readonly fields: InterviewsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Interviews.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InterviewsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Interviews model
+   */ 
+  interface InterviewsFieldRefs {
+    readonly id: FieldRef<"Interviews", 'String'>
+    readonly image: FieldRef<"Interviews", 'String'>
+    readonly createdAt: FieldRef<"Interviews", 'DateTime'>
+    readonly title: FieldRef<"Interviews", 'String'>
+    readonly post: FieldRef<"Interviews", 'String'>
+    readonly revenue: FieldRef<"Interviews", 'Int'>
+    readonly updates: FieldRef<"Interviews", 'Int'>
+    readonly website: FieldRef<"Interviews", 'String'>
+    readonly category: FieldRef<"Interviews", 'String'>
+    readonly tags: FieldRef<"Interviews", 'String[]'>
+    readonly authorId: FieldRef<"Interviews", 'String'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Interviews findUnique
+   */
+  export type InterviewsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    /**
+     * Filter, which Interviews to fetch.
+     */
+    where: InterviewsWhereUniqueInput
+  }
+
+
+  /**
+   * Interviews findUniqueOrThrow
+   */
+  export type InterviewsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    /**
+     * Filter, which Interviews to fetch.
+     */
+    where: InterviewsWhereUniqueInput
+  }
+
+
+  /**
+   * Interviews findFirst
+   */
+  export type InterviewsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    /**
+     * Filter, which Interviews to fetch.
+     */
+    where?: InterviewsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interviews to fetch.
+     */
+    orderBy?: InterviewsOrderByWithRelationInput | InterviewsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Interviews.
+     */
+    cursor?: InterviewsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Interviews.
+     */
+    distinct?: InterviewsScalarFieldEnum | InterviewsScalarFieldEnum[]
+  }
+
+
+  /**
+   * Interviews findFirstOrThrow
+   */
+  export type InterviewsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    /**
+     * Filter, which Interviews to fetch.
+     */
+    where?: InterviewsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interviews to fetch.
+     */
+    orderBy?: InterviewsOrderByWithRelationInput | InterviewsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Interviews.
+     */
+    cursor?: InterviewsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Interviews.
+     */
+    distinct?: InterviewsScalarFieldEnum | InterviewsScalarFieldEnum[]
+  }
+
+
+  /**
+   * Interviews findMany
+   */
+  export type InterviewsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    /**
+     * Filter, which Interviews to fetch.
+     */
+    where?: InterviewsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interviews to fetch.
+     */
+    orderBy?: InterviewsOrderByWithRelationInput | InterviewsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Interviews.
+     */
+    cursor?: InterviewsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interviews.
+     */
+    skip?: number
+    distinct?: InterviewsScalarFieldEnum | InterviewsScalarFieldEnum[]
+  }
+
+
+  /**
+   * Interviews create
+   */
+  export type InterviewsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Interviews.
+     */
+    data: XOR<InterviewsCreateInput, InterviewsUncheckedCreateInput>
+  }
+
+
+  /**
+   * Interviews createMany
+   */
+  export type InterviewsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Interviews.
+     */
+    data: InterviewsCreateManyInput | InterviewsCreateManyInput[]
+  }
+
+
+  /**
+   * Interviews update
+   */
+  export type InterviewsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Interviews.
+     */
+    data: XOR<InterviewsUpdateInput, InterviewsUncheckedUpdateInput>
+    /**
+     * Choose, which Interviews to update.
+     */
+    where: InterviewsWhereUniqueInput
+  }
+
+
+  /**
+   * Interviews updateMany
+   */
+  export type InterviewsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Interviews.
+     */
+    data: XOR<InterviewsUpdateManyMutationInput, InterviewsUncheckedUpdateManyInput>
+    /**
+     * Filter which Interviews to update
+     */
+    where?: InterviewsWhereInput
+  }
+
+
+  /**
+   * Interviews upsert
+   */
+  export type InterviewsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Interviews to update in case it exists.
+     */
+    where: InterviewsWhereUniqueInput
+    /**
+     * In case the Interviews found by the `where` argument doesn't exist, create a new Interviews with this data.
+     */
+    create: XOR<InterviewsCreateInput, InterviewsUncheckedCreateInput>
+    /**
+     * In case the Interviews was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InterviewsUpdateInput, InterviewsUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Interviews delete
+   */
+  export type InterviewsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    /**
+     * Filter which Interviews to delete.
+     */
+    where: InterviewsWhereUniqueInput
+  }
+
+
+  /**
+   * Interviews deleteMany
+   */
+  export type InterviewsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Interviews to delete
+     */
+    where?: InterviewsWhereInput
+  }
+
+
+  /**
+   * Interviews findRaw
+   */
+  export type InterviewsFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+
+  /**
+   * Interviews aggregateRaw
+   */
+  export type InterviewsAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+
+  /**
+   * Interviews without action
+   */
+  export type InterviewsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+  }
+
+
 
   /**
    * Model User
@@ -834,18 +2031,21 @@ export namespace Prisma {
     id: string | null
     email: string | null
     name: string | null
+    image: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     email: string | null
     name: string | null
+    image: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     email: number
     name: number
+    image: number
     _all: number
   }
 
@@ -854,18 +2054,21 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    image?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     email?: true
     name?: true
+    image?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     email?: true
     name?: true
+    image?: true
     _all?: true
   }
 
@@ -944,7 +2147,8 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     email: string
-    name: string | null
+    name: string
+    image: string
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -968,22 +2172,34 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    image?: boolean
+    interviews?: boolean | User$interviewsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     email?: boolean
     name?: boolean
+    image?: boolean
+  }
+
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interviews?: boolean | User$interviewsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      interviews: Prisma.$InterviewsPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
-      name: string | null
+      name: string
+      image: string
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1376,6 +2592,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    interviews<T extends User$interviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$interviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InterviewsPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1408,6 +2625,7 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
+    readonly image: FieldRef<"User", 'String'>
   }
     
 
@@ -1421,6 +2639,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1437,6 +2659,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1451,6 +2677,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1497,6 +2727,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -1542,6 +2776,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -1582,6 +2820,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The data needed to create a User.
      */
     data: XOR<UserCreateInput, UserUncheckedCreateInput>
@@ -1607,6 +2849,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -1642,6 +2888,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -1664,6 +2914,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter which User to delete.
      */
@@ -1713,6 +2967,27 @@ export namespace Prisma {
 
 
   /**
+   * User.interviews
+   */
+  export type User$interviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interviews
+     */
+    select?: InterviewsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InterviewsInclude<ExtArgs> | null
+    where?: InterviewsWhereInput
+    orderBy?: InterviewsOrderByWithRelationInput | InterviewsOrderByWithRelationInput[]
+    cursor?: InterviewsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InterviewsScalarFieldEnum | InterviewsScalarFieldEnum[]
+  }
+
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1720,6 +2995,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -1728,10 +3007,28 @@ export namespace Prisma {
    * Enums
    */
 
+  export const InterviewsScalarFieldEnum: {
+    id: 'id',
+    image: 'image',
+    createdAt: 'createdAt',
+    title: 'title',
+    post: 'post',
+    revenue: 'revenue',
+    updates: 'updates',
+    website: 'website',
+    category: 'category',
+    tags: 'tags',
+    authorId: 'authorId'
+  };
+
+  export type InterviewsScalarFieldEnum = (typeof InterviewsScalarFieldEnum)[keyof typeof InterviewsScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     id: 'id',
     email: 'email',
-    name: 'name'
+    name: 'name',
+    image: 'image'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1773,6 +3070,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1784,10 +3095,111 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
   /**
    * Deep Input Types
    */
 
+
+  export type InterviewsWhereInput = {
+    AND?: InterviewsWhereInput | InterviewsWhereInput[]
+    OR?: InterviewsWhereInput[]
+    NOT?: InterviewsWhereInput | InterviewsWhereInput[]
+    id?: StringFilter<"Interviews"> | string
+    image?: StringFilter<"Interviews"> | string
+    createdAt?: DateTimeFilter<"Interviews"> | Date | string
+    title?: StringFilter<"Interviews"> | string
+    post?: StringFilter<"Interviews"> | string
+    revenue?: IntFilter<"Interviews"> | number
+    updates?: IntFilter<"Interviews"> | number
+    website?: StringFilter<"Interviews"> | string
+    category?: StringFilter<"Interviews"> | string
+    tags?: StringNullableListFilter<"Interviews">
+    authorId?: StringFilter<"Interviews"> | string
+    author?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type InterviewsOrderByWithRelationInput = {
+    id?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    title?: SortOrder
+    post?: SortOrder
+    revenue?: SortOrder
+    updates?: SortOrder
+    website?: SortOrder
+    category?: SortOrder
+    tags?: SortOrder
+    authorId?: SortOrder
+    author?: UserOrderByWithRelationInput
+  }
+
+  export type InterviewsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: InterviewsWhereInput | InterviewsWhereInput[]
+    OR?: InterviewsWhereInput[]
+    NOT?: InterviewsWhereInput | InterviewsWhereInput[]
+    image?: StringFilter<"Interviews"> | string
+    createdAt?: DateTimeFilter<"Interviews"> | Date | string
+    title?: StringFilter<"Interviews"> | string
+    post?: StringFilter<"Interviews"> | string
+    revenue?: IntFilter<"Interviews"> | number
+    updates?: IntFilter<"Interviews"> | number
+    website?: StringFilter<"Interviews"> | string
+    category?: StringFilter<"Interviews"> | string
+    tags?: StringNullableListFilter<"Interviews">
+    authorId?: StringFilter<"Interviews"> | string
+    author?: XOR<UserRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type InterviewsOrderByWithAggregationInput = {
+    id?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    title?: SortOrder
+    post?: SortOrder
+    revenue?: SortOrder
+    updates?: SortOrder
+    website?: SortOrder
+    category?: SortOrder
+    tags?: SortOrder
+    authorId?: SortOrder
+    _count?: InterviewsCountOrderByAggregateInput
+    _avg?: InterviewsAvgOrderByAggregateInput
+    _max?: InterviewsMaxOrderByAggregateInput
+    _min?: InterviewsMinOrderByAggregateInput
+    _sum?: InterviewsSumOrderByAggregateInput
+  }
+
+  export type InterviewsScalarWhereWithAggregatesInput = {
+    AND?: InterviewsScalarWhereWithAggregatesInput | InterviewsScalarWhereWithAggregatesInput[]
+    OR?: InterviewsScalarWhereWithAggregatesInput[]
+    NOT?: InterviewsScalarWhereWithAggregatesInput | InterviewsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Interviews"> | string
+    image?: StringWithAggregatesFilter<"Interviews"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Interviews"> | Date | string
+    title?: StringWithAggregatesFilter<"Interviews"> | string
+    post?: StringWithAggregatesFilter<"Interviews"> | string
+    revenue?: IntWithAggregatesFilter<"Interviews"> | number
+    updates?: IntWithAggregatesFilter<"Interviews"> | number
+    website?: StringWithAggregatesFilter<"Interviews"> | string
+    category?: StringWithAggregatesFilter<"Interviews"> | string
+    tags?: StringNullableListFilter<"Interviews">
+    authorId?: StringWithAggregatesFilter<"Interviews"> | string
+  }
 
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
@@ -1795,13 +3207,17 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
-    name?: StringNullableFilter<"User"> | string | null
+    name?: StringFilter<"User"> | string
+    image?: StringFilter<"User"> | string
+    interviews?: InterviewsListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    image?: SortOrder
+    interviews?: InterviewsOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -1810,13 +3226,16 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringNullableFilter<"User"> | string | null
+    name?: StringFilter<"User"> | string
+    image?: StringFilter<"User"> | string
+    interviews?: InterviewsListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    image?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -1828,45 +3247,150 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
-    name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    name?: StringWithAggregatesFilter<"User"> | string
+    image?: StringWithAggregatesFilter<"User"> | string
+  }
+
+  export type InterviewsCreateInput = {
+    id?: string
+    image: string
+    createdAt?: Date | string
+    title: string
+    post: string
+    revenue: number
+    updates: number
+    website: string
+    category: string
+    tags?: InterviewsCreatetagsInput | string[]
+    author: UserCreateNestedOneWithoutInterviewsInput
+  }
+
+  export type InterviewsUncheckedCreateInput = {
+    id?: string
+    image: string
+    createdAt?: Date | string
+    title: string
+    post: string
+    revenue: number
+    updates: number
+    website: string
+    category: string
+    tags?: InterviewsCreatetagsInput | string[]
+    authorId: string
+  }
+
+  export type InterviewsUpdateInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    post?: StringFieldUpdateOperationsInput | string
+    revenue?: IntFieldUpdateOperationsInput | number
+    updates?: IntFieldUpdateOperationsInput | number
+    website?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
+    author?: UserUpdateOneRequiredWithoutInterviewsNestedInput
+  }
+
+  export type InterviewsUncheckedUpdateInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    post?: StringFieldUpdateOperationsInput | string
+    revenue?: IntFieldUpdateOperationsInput | number
+    updates?: IntFieldUpdateOperationsInput | number
+    website?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
+    authorId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type InterviewsCreateManyInput = {
+    id?: string
+    image: string
+    createdAt?: Date | string
+    title: string
+    post: string
+    revenue: number
+    updates: number
+    website: string
+    category: string
+    tags?: InterviewsCreatetagsInput | string[]
+    authorId: string
+  }
+
+  export type InterviewsUpdateManyMutationInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    post?: StringFieldUpdateOperationsInput | string
+    revenue?: IntFieldUpdateOperationsInput | number
+    updates?: IntFieldUpdateOperationsInput | number
+    website?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
+  }
+
+  export type InterviewsUncheckedUpdateManyInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    post?: StringFieldUpdateOperationsInput | string
+    revenue?: IntFieldUpdateOperationsInput | number
+    updates?: IntFieldUpdateOperationsInput | number
+    website?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
+    authorId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCreateInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
+    image: string
+    interviews?: InterviewsCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
+    image: string
+    interviews?: InterviewsUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    interviews?: InterviewsUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    interviews?: InterviewsUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
+    image: string
   }
 
   export type UserUpdateManyMutationInput = {
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -1884,38 +3408,89 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-    isSet?: boolean
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type UserCountOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    name?: SortOrder
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type UserMaxOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    name?: SortOrder
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
   }
 
-  export type UserMinOrderByAggregateInput = {
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type InterviewsCountOrderByAggregateInput = {
     id?: SortOrder
-    email?: SortOrder
-    name?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    title?: SortOrder
+    post?: SortOrder
+    revenue?: SortOrder
+    updates?: SortOrder
+    website?: SortOrder
+    category?: SortOrder
+    tags?: SortOrder
+    authorId?: SortOrder
+  }
+
+  export type InterviewsAvgOrderByAggregateInput = {
+    revenue?: SortOrder
+    updates?: SortOrder
+  }
+
+  export type InterviewsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    title?: SortOrder
+    post?: SortOrder
+    revenue?: SortOrder
+    updates?: SortOrder
+    website?: SortOrder
+    category?: SortOrder
+    authorId?: SortOrder
+  }
+
+  export type InterviewsMinOrderByAggregateInput = {
+    id?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    title?: SortOrder
+    post?: SortOrder
+    revenue?: SortOrder
+    updates?: SortOrder
+    website?: SortOrder
+    category?: SortOrder
+    authorId?: SortOrder
+  }
+
+  export type InterviewsSumOrderByAggregateInput = {
+    revenue?: SortOrder
+    updates?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -1936,32 +3511,146 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-    isSet?: boolean
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type InterviewsListRelationFilter = {
+    every?: InterviewsWhereInput
+    some?: InterviewsWhereInput
+    none?: InterviewsWhereInput
+  }
+
+  export type InterviewsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    image?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    image?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    image?: SortOrder
+  }
+
+  export type InterviewsCreatetagsInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutInterviewsInput = {
+    create?: XOR<UserCreateWithoutInterviewsInput, UserUncheckedCreateWithoutInterviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInterviewsInput
+    connect?: UserWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-    unset?: boolean
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type InterviewsUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutInterviewsNestedInput = {
+    create?: XOR<UserCreateWithoutInterviewsInput, UserUncheckedCreateWithoutInterviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInterviewsInput
+    upsert?: UserUpsertWithoutInterviewsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInterviewsInput, UserUpdateWithoutInterviewsInput>, UserUncheckedUpdateWithoutInterviewsInput>
+  }
+
+  export type InterviewsCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<InterviewsCreateWithoutAuthorInput, InterviewsUncheckedCreateWithoutAuthorInput> | InterviewsCreateWithoutAuthorInput[] | InterviewsUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: InterviewsCreateOrConnectWithoutAuthorInput | InterviewsCreateOrConnectWithoutAuthorInput[]
+    createMany?: InterviewsCreateManyAuthorInputEnvelope
+    connect?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+  }
+
+  export type InterviewsUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<InterviewsCreateWithoutAuthorInput, InterviewsUncheckedCreateWithoutAuthorInput> | InterviewsCreateWithoutAuthorInput[] | InterviewsUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: InterviewsCreateOrConnectWithoutAuthorInput | InterviewsCreateOrConnectWithoutAuthorInput[]
+    createMany?: InterviewsCreateManyAuthorInputEnvelope
+    connect?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+  }
+
+  export type InterviewsUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<InterviewsCreateWithoutAuthorInput, InterviewsUncheckedCreateWithoutAuthorInput> | InterviewsCreateWithoutAuthorInput[] | InterviewsUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: InterviewsCreateOrConnectWithoutAuthorInput | InterviewsCreateOrConnectWithoutAuthorInput[]
+    upsert?: InterviewsUpsertWithWhereUniqueWithoutAuthorInput | InterviewsUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: InterviewsCreateManyAuthorInputEnvelope
+    set?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+    disconnect?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+    delete?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+    connect?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+    update?: InterviewsUpdateWithWhereUniqueWithoutAuthorInput | InterviewsUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: InterviewsUpdateManyWithWhereWithoutAuthorInput | InterviewsUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: InterviewsScalarWhereInput | InterviewsScalarWhereInput[]
+  }
+
+  export type InterviewsUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<InterviewsCreateWithoutAuthorInput, InterviewsUncheckedCreateWithoutAuthorInput> | InterviewsCreateWithoutAuthorInput[] | InterviewsUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: InterviewsCreateOrConnectWithoutAuthorInput | InterviewsCreateOrConnectWithoutAuthorInput[]
+    upsert?: InterviewsUpsertWithWhereUniqueWithoutAuthorInput | InterviewsUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: InterviewsCreateManyAuthorInputEnvelope
+    set?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+    disconnect?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+    delete?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+    connect?: InterviewsWhereUniqueInput | InterviewsWhereUniqueInput[]
+    update?: InterviewsUpdateWithWhereUniqueWithoutAuthorInput | InterviewsUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: InterviewsUpdateManyWithWhereWithoutAuthorInput | InterviewsUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: InterviewsScalarWhereInput | InterviewsScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -1978,19 +3667,26 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-    isSet?: boolean
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2010,7 +3706,21 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -2018,37 +3728,182 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-    isSet?: boolean
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-    isSet?: boolean
+  export type UserCreateWithoutInterviewsInput = {
+    id?: string
+    email: string
+    name: string
+    image: string
+  }
+
+  export type UserUncheckedCreateWithoutInterviewsInput = {
+    id?: string
+    email: string
+    name: string
+    image: string
+  }
+
+  export type UserCreateOrConnectWithoutInterviewsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutInterviewsInput, UserUncheckedCreateWithoutInterviewsInput>
+  }
+
+  export type UserUpsertWithoutInterviewsInput = {
+    update: XOR<UserUpdateWithoutInterviewsInput, UserUncheckedUpdateWithoutInterviewsInput>
+    create: XOR<UserCreateWithoutInterviewsInput, UserUncheckedCreateWithoutInterviewsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutInterviewsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutInterviewsInput, UserUncheckedUpdateWithoutInterviewsInput>
+  }
+
+  export type UserUpdateWithoutInterviewsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUncheckedUpdateWithoutInterviewsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type InterviewsCreateWithoutAuthorInput = {
+    id?: string
+    image: string
+    createdAt?: Date | string
+    title: string
+    post: string
+    revenue: number
+    updates: number
+    website: string
+    category: string
+    tags?: InterviewsCreatetagsInput | string[]
+  }
+
+  export type InterviewsUncheckedCreateWithoutAuthorInput = {
+    id?: string
+    image: string
+    createdAt?: Date | string
+    title: string
+    post: string
+    revenue: number
+    updates: number
+    website: string
+    category: string
+    tags?: InterviewsCreatetagsInput | string[]
+  }
+
+  export type InterviewsCreateOrConnectWithoutAuthorInput = {
+    where: InterviewsWhereUniqueInput
+    create: XOR<InterviewsCreateWithoutAuthorInput, InterviewsUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type InterviewsCreateManyAuthorInputEnvelope = {
+    data: InterviewsCreateManyAuthorInput | InterviewsCreateManyAuthorInput[]
+  }
+
+  export type InterviewsUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: InterviewsWhereUniqueInput
+    update: XOR<InterviewsUpdateWithoutAuthorInput, InterviewsUncheckedUpdateWithoutAuthorInput>
+    create: XOR<InterviewsCreateWithoutAuthorInput, InterviewsUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type InterviewsUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: InterviewsWhereUniqueInput
+    data: XOR<InterviewsUpdateWithoutAuthorInput, InterviewsUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type InterviewsUpdateManyWithWhereWithoutAuthorInput = {
+    where: InterviewsScalarWhereInput
+    data: XOR<InterviewsUpdateManyMutationInput, InterviewsUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type InterviewsScalarWhereInput = {
+    AND?: InterviewsScalarWhereInput | InterviewsScalarWhereInput[]
+    OR?: InterviewsScalarWhereInput[]
+    NOT?: InterviewsScalarWhereInput | InterviewsScalarWhereInput[]
+    id?: StringFilter<"Interviews"> | string
+    image?: StringFilter<"Interviews"> | string
+    createdAt?: DateTimeFilter<"Interviews"> | Date | string
+    title?: StringFilter<"Interviews"> | string
+    post?: StringFilter<"Interviews"> | string
+    revenue?: IntFilter<"Interviews"> | number
+    updates?: IntFilter<"Interviews"> | number
+    website?: StringFilter<"Interviews"> | string
+    category?: StringFilter<"Interviews"> | string
+    tags?: StringNullableListFilter<"Interviews">
+    authorId?: StringFilter<"Interviews"> | string
+  }
+
+  export type InterviewsCreateManyAuthorInput = {
+    id?: string
+    image: string
+    createdAt?: Date | string
+    title: string
+    post: string
+    revenue: number
+    updates: number
+    website: string
+    category: string
+    tags?: InterviewsCreatetagsInput | string[]
+  }
+
+  export type InterviewsUpdateWithoutAuthorInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    post?: StringFieldUpdateOperationsInput | string
+    revenue?: IntFieldUpdateOperationsInput | number
+    updates?: IntFieldUpdateOperationsInput | number
+    website?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
+  }
+
+  export type InterviewsUncheckedUpdateWithoutAuthorInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    post?: StringFieldUpdateOperationsInput | string
+    revenue?: IntFieldUpdateOperationsInput | number
+    updates?: IntFieldUpdateOperationsInput | number
+    website?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
+  }
+
+  export type InterviewsUncheckedUpdateManyWithoutAuthorInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    post?: StringFieldUpdateOperationsInput | string
+    revenue?: IntFieldUpdateOperationsInput | number
+    updates?: IntFieldUpdateOperationsInput | number
+    website?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    tags?: InterviewsUpdatetagsInput | string[]
   }
 
 
@@ -2056,6 +3911,14 @@ export namespace Prisma {
   /**
    * Aliases for legacy arg types
    */
+    /**
+     * @deprecated Use UserCountOutputTypeDefaultArgs instead
+     */
+    export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use InterviewsDefaultArgs instead
+     */
+    export type InterviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = InterviewsDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
