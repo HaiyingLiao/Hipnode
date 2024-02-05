@@ -8,20 +8,22 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formUrlQuery = (params: string, key: string, value: string) => {
-  if (typeof window !== 'undefined') {
-    const currentUrl = queryString.parse(params as string);
+export const formUrlQuery = (
+  params: string,
+  key: string,
+  value: string | null,
+) => {
+  const currentUrl = queryString.parse(params as string);
 
-    currentUrl[key] = value;
+  currentUrl[key] = value;
 
-    return queryString.stringifyUrl(
-      {
-        url: window.location.pathname,
-        query: currentUrl,
-      },
-      { skipNull: true },
-    );
-  }
+  return queryString.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true },
+  );
 };
 
 const roundDown = (value: number) => Math.floor(value);
@@ -182,3 +184,19 @@ export const shareOptionData = (email: string, postUrl: string) => {
     },
   ];
 };
+
+export function removeKeysFromQuery(params: string, keysToRemove: string[]) {
+  const currentUrl = queryString.parse(params);
+
+  keysToRemove.forEach((key) => {
+    delete currentUrl[key];
+  });
+
+  return queryString.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true },
+  );
+}

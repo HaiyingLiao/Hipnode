@@ -1,34 +1,51 @@
 'use server';
 
 import prisma from '@/prisma';
+import { auth } from '@clerk/nextjs';
+import { NextResponse } from 'next/server';
 
-interface ParamsType {
-  name?: string;
+interface UserParams {
+  name: string;
   email: string;
 }
 
-export async function createUser(params: ParamsType) {
-  try {
-    const { email, name } = params;
+interface CreateUserParams {
+  name: string;
+  email: string;
+  clerkId: string;
+}
 
-    const user = await prisma.user.create({
-      data: {
-        email,
-        name,
-      },
+export async function createUser(userData: CreateUserParams) {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    const { email, name, clerkId } = userData;
+
+    const newUser = await prisma.user.create({
+      data: { email, name, clerkId },
     });
 
-    return user;
+    return newUser;
   } catch (error) {
-    console.log('Error with create user', error);
+    console.log('Error creating user!', error);
     throw error;
   }
 }
 
-export async function updateUser(params: ParamsType) {
-  const { email, name } = params;
+export async function updateUser(userData: UserParams) {
+  const { email, name } = userData;
 
   try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
     const updatedUser = await prisma.user.update({
       where: {
         email,
@@ -39,23 +56,29 @@ export async function updateUser(params: ParamsType) {
     });
     return updatedUser;
   } catch (error) {
-    console.log('Error with update user', error);
+    console.log('User not updated!', error);
+    return NextResponse.json({ error: 'User not updated!', status: 500 });
   }
 }
 
-export async function deleteUser(params: ParamsType) {
-  const { email } = params;
-
+export async function deleteUser(clerkId: string) {
   try {
-    const deletedUser = await prisma.user.delete({
+    const { userId } = auth();
+
+    if (!userId) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    const deletedUserFromMongoDb = await prisma.user.delete({
       where: {
-        email,
+        clerkId,
       },
     });
 
-    return deletedUser;
+    return deletedUserFromMongoDb;
   } catch (error) {
-    console.log('error with delete user', error);
+    console.log('User not deleted!', error);
+    return NextResponse.json({ error: 'User not deleted!', status: 500 });
   }
 }
 

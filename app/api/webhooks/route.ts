@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import { Webhook } from 'svix';
 import { headers } from 'next/headers';
-import { DeletedObjectJSON, WebhookEvent } from '@clerk/nextjs/server';
+import { WebhookEvent } from '@clerk/nextjs/server';
 
 import { createUser, deleteUser, updateUser } from '@/lib/actions/user.action';
 
@@ -55,10 +55,11 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === 'user.created') {
-    const { email_addresses, first_name, last_name } = evt.data;
+    const { email_addresses, first_name, last_name, id: clerkId } = evt.data;
 
     // create user in db.
     const user = await createUser({
+      clerkId,
       email: email_addresses[0].email_address,
       name: `${first_name} ${last_name || ''}`,
     });
@@ -78,17 +79,18 @@ export async function POST(req: Request) {
   }
 
   if (eventType === 'user.deleted') {
-    type ExtendedDeletedObjectJSON = DeletedObjectJSON & {
-      email_addresses: { email_address: string }[];
-    };
+    const { id: clerkId } = evt.data;
 
-    const { email_addresses } = evt.data as ExtendedDeletedObjectJSON;
+    if (!clerkId) {
+      return NextResponse.json({ error: 'Missing clerkId in event data' });
+    }
 
-    // deleted user
-    const deletedUser = await deleteUser({
-      email: email_addresses[0].email_address,
-    });
-    return NextResponse.json({ deletedUser }, { status: 200 });
+    try {
+      const deletedUser = await deleteUser(clerkId);
+      return NextResponse.json({ deletedUser }, { status: 200 });
+    } catch (error) {
+      return NextResponse.json({ error: 'Error deleting user from MongoDB' });
+    }
   }
 
   return new Response('', { status: 201 });

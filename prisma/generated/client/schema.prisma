@@ -47,17 +47,6 @@ model Comment {
   type        String
 }
 
-model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  name      String?
-  posts     Post[]
-  createdAt DateTime @default(now())
-  updateAt  DateTime @default(now()) @updatedAt
-
-  notifications Notification[]
-}
-
 model Report {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt  DateTime @default(now())
@@ -93,4 +82,16 @@ enum NotificationType {
   comment
   publish
   mentions
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId   String   @unique
+  email     String   @unique
+  name      String?
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updateAt  DateTime @default(now()) @updatedAt
+
+  notifications Notification[]
 }
