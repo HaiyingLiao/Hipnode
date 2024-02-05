@@ -116,6 +116,7 @@ exports.Prisma.InterviewsScalarFieldEnum = {
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
+  clerkId: 'clerkId',
   email: 'email',
   name: 'name',
   image: 'image'
