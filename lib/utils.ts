@@ -38,3 +38,19 @@ export const formatDate = (originalDate: Date) => {
 
   return formattedDate;
 };
+
+export function removeKeysFromQuery(params: string, keysToRemove: string[]) {
+  const currentUrl = queryString.parse(params);
+
+  keysToRemove.forEach((key) => {
+    delete currentUrl[key];
+  });
+
+  return queryString.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true },
+  );
+}
