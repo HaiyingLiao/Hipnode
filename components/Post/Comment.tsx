@@ -48,16 +48,14 @@ const Comment = ({
     try {
       setLoading(true);
 
-      await Promise.all([
-        uploadComment({
-          message: text,
-          parentId: id,
-          path: window.location.pathname,
-          postId,
-          type: 'children',
-        }),
-        showAllReplies(),
-      ]);
+      await uploadComment({
+        message: text,
+        parentId: id,
+        path: window.location.pathname,
+        postId,
+        type: 'children',
+      });
+      await showAllReplies();
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -85,24 +83,15 @@ const Comment = ({
 
   const showAllReplies = async () => {
     try {
-      if (replies.length < 1) {
-        const commentsReply = await getCommentsReply(postId, id);
-        if (commentsReply.length < 1) {
-          toast({
-            title: 'There are no comments',
-          });
-          return;
-        }
-        setReplies(commentsReply);
-      } else {
-        setReplies([]);
+      const newReplies =
+        replies.length < 1 ? await getCommentsReply(postId, id) : [];
+      setReplies(newReplies);
+      if (newReplies.length < 1) {
+        toast({ title: 'There are no comments' });
       }
     } catch (error) {
       if (error instanceof Error) {
-        toast({
-          title: error.message,
-          variant: 'destructive',
-        });
+        toast({ title: error.message, variant: 'destructive' });
       }
     }
   };

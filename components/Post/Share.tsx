@@ -2,6 +2,7 @@
 
 import { useState, type Dispatch, type SetStateAction } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { CheckIcon } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 
@@ -80,7 +81,7 @@ export default function SharePost({
         <div className='flex flex-wrap items-center justify-center gap-5'>
           {shareOptions.map((option) =>
             option.path ? (
-              <a
+              <Link
                 rel='canonical'
                 onClick={() => sharePost(postId, window.location.pathname)}
                 target='_blank'
@@ -100,7 +101,7 @@ export default function SharePost({
                 <p className='pt-2 text-center text-sm font-semibold capitalize text-darkSecondary-800 group-hover:text-secondary-red-80'>
                   {option.label}
                 </p>
-              </a>
+              </Link>
             ) : (
               <button
                 onClick={() => sharePost(postId, window.location.pathname)}

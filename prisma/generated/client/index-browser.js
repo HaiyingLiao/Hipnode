@@ -133,15 +133,6 @@ exports.Prisma.CommentScalarFieldEnum = {
   type: 'type'
 };
 
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  clerkId: 'clerkId',
-  email: 'email',
-  name: 'name',
-  createdAt: 'createdAt',
-  updateAt: 'updateAt'
-};
-
 exports.Prisma.ReportScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -168,6 +159,15 @@ exports.Prisma.NotificationScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  clerkId: 'clerkId',
+  email: 'email',
+  name: 'name',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -187,10 +187,10 @@ exports.NotificationType = exports.$Enums.NotificationType = {
 exports.Prisma.ModelName = {
   Post: 'Post',
   Comment: 'Comment',
-  User: 'User',
   Report: 'Report',
   Tag: 'Tag',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  User: 'User'
 };
 
 /**
