@@ -6,7 +6,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formUrlQuery = (params: string, key: string, value: string) => {
+export const formUrlQuery = (
+  params: string,
+  key: string,
+  value: string | null,
+) => {
   const currentUrl = queryString.parse(params as string);
 
   currentUrl[key] = value;
@@ -19,3 +23,19 @@ export const formUrlQuery = (params: string, key: string, value: string) => {
     { skipNull: true },
   );
 };
+
+export function removeKeysFromQuery(params: string, keysToRemove: string[]) {
+  const currentUrl = queryString.parse(params);
+
+  keysToRemove.forEach((key) => {
+    delete currentUrl[key];
+  });
+
+  return queryString.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true },
+  );
+}
