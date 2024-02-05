@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Statistic, SeeMore } from '@/components/index';
+import { Statistic, InterviewPostActions } from '@/components/index';
 
 type InterviewPostCardProps = {
   authorImage: string;
@@ -49,7 +49,7 @@ export default function InterviewsPostCard({
               </div>
             </div>
 
-            <SeeMore postId={id} />
+            <InterviewPostActions postId={id} />
           </header>
           <Image
             alt='post'

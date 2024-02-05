@@ -10,12 +10,26 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { deleteInterviewById } from '@/lib/actions/interviews.action';
+import { useToast } from '@/components/ui/use-toast';
 
-export default function SeeMore({ postId }: { postId: string }) {
+export default function InterviewPostActions({ postId }: { postId: string }) {
+  const { toast } = useToast();
+
   const deletePost = async (id: string) => {
     try {
       await deleteInterviewById(id);
-    } catch (error) {}
+      toast({
+        title: 'Success!🎉 Your interview post has been deleted.',
+      });
+    } catch (error) {
+      console.error('Error in form:', error);
+      if (error instanceof Error) {
+        toast({
+          title: error.message,
+          variant: 'destructive',
+        });
+      }
+    }
   };
   return (
     <DropdownMenu>

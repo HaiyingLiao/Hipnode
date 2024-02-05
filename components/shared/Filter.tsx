@@ -9,52 +9,37 @@ import { formUrlQuery } from '@/lib/utils';
 const Filter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const categories = searchParams.get('category')?.split('_');
 
-  const [values, setValues] = useState<string[]>([]);
-  const [uncheckedValue, setUncheckValues] = useState<null | boolean>();
-  const [checkvalues, setCheckValues] = useState<string[]>([]);
+  const [checkvalues, setCheckValues] = useState<string[]>(categories || []);
 
-  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = (e.target as HTMLInputElement).value;
 
     if (e.target.checked) {
-      setValues((prevValues) => [...prevValues, value]);
-      setUncheckValues(false);
-      localStorage.setItem(`checkbox-${value}`, String(e.target.checked));
+      setCheckValues((prevValues) => [...(prevValues || []), value]);
+    } else if (checkvalues?.length === 1 && checkvalues[0] === value) {
+      setCheckValues([]);
     } else {
-      setCheckValues((prevValues) => prevValues.filter((val) => val !== value));
-      if (values.length === 1 && values[0] === value) {
-        setValues((prevValues) => prevValues.filter((val) => val !== value));
-        setUncheckValues(null);
-      } else {
-        setValues((prevValues) => prevValues.filter((val) => val !== value));
-      }
-
-      localStorage.removeItem(`checkbox-${value}`);
+      setCheckValues((prevValues) =>
+        prevValues ? prevValues.filter((val) => val !== value) : [],
+      );
     }
   };
 
   useEffect(() => {
-    categoryData?.forEach((category) => {
-      const isChecked = localStorage.getItem(`checkbox-${category.key}`);
-
-      if (isChecked === 'true') {
-        setCheckValues((prevValues) => [...prevValues, category.key]);
-      }
-    });
-
-    if (uncheckedValue === null) {
+    if (checkvalues.length > 0) {
       const newUrl = formUrlQuery(
         searchParams.toString(),
         'category',
-        uncheckedValue,
+        checkvalues,
       );
       router.push(newUrl);
-    } else if (values.length > 0) {
-      const newUrl = formUrlQuery(searchParams.toString(), 'category', values);
+    } else if (checkvalues.length === 0) {
+      const newUrl = formUrlQuery(searchParams.toString(), 'category', null);
       router.push(newUrl);
     }
-  }, [values, uncheckedValue, router, searchParams]);
+  }, [checkvalues, router, searchParams]);
 
   return (
     <aside className='rounded-2xl bg-white p-5 dark:bg-darkPrimary-3'>

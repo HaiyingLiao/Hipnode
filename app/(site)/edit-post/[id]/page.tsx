@@ -6,10 +6,9 @@ export default async function EditPostPage({
 }: {
   params: { id: string };
 }) {
-  const editingInterview = await getInterviewById(params.id);
+  const targetInterview = await getInterviewById(params.id);
   const { title, post, revenue, updates, website, category, tags, authorId } =
-    editingInterview;
-  const createType = 'interviews';
+    targetInterview;
 
   return (
     <section className='mx-auto my-[90px] w-full rounded-2xl bg-white p-5 dark:bg-darkPrimary-3 md:max-w-[900px] md:p-[30px] lg:my-[100px]'>
@@ -22,7 +21,7 @@ export default async function EditPostPage({
         category={category}
         tags={tags}
         authorId={authorId}
-        createType={createType}
+        createType='interviews'
         postId={params.id}
       />
     </section>

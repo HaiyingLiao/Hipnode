@@ -32,6 +32,6 @@ export { default as NotFound } from '@/components/shared/NotFound';
 export { default as CreateGroupForm } from '@/components/group/CreateForm/CreateForm';
 export { default as HostMeetupCard } from './shared/HostMeetupCard';
 export { default as SidebarListItem } from '@/components/Home/SidebarListItem';
-export { default as SeeMore } from '@/components/interviews/SeeMore';
+export { default as InterviewPostActions } from '@/components/interviews/InterviewPostActions';
 export { default as Statistic } from '@/components/interviews/statistic';
 export { default as EditPost } from '@/components/forms/EditPost';
