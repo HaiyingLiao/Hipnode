@@ -1,7 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
-import { Button } from '../ui/button';
-import Statistic from './statistic';
+import { Statistic } from '@/components/index';
 
 type InterviewPostCardProps = {
   authorImage: string;
@@ -9,6 +9,10 @@ type InterviewPostCardProps = {
   createdAt: string;
   captions: string;
   image: string;
+  revenue: number;
+  updates: number;
+  website: string;
+  id: string;
 };
 
 export default function InterviewsPostCard({
@@ -17,26 +21,32 @@ export default function InterviewsPostCard({
   createdAt,
   image,
   name,
+  revenue,
+  updates,
+  website,
+  id,
 }: InterviewPostCardProps) {
   return (
     <div className='flex w-full flex-col gap-2.5 rounded-2xl bg-white p-5 dark:bg-darkPrimary-4 max-lg:max-w-full'>
       <div className='flex w-full items-start justify-between gap-[30px]'>
         <div className='flex w-full flex-col gap-5'>
-          <header className='flex items-center gap-4'>
-            <Image
-              className='h-11 w-11 rounded-full'
-              src={authorImage}
-              alt='author image'
-              width={44}
-              height={44}
-            />
-            <div className='flex flex-col'>
-              <h3 className='text-sm font-semibold leading-normal text-darkSecondary-900 dark:text-white-800 md:text-base'>
-                {name}
-              </h3>
-              <p className='text-xs font-normal leading-snug text-neutral-400 md:text-sm'>
-                {createdAt}
-              </p>
+          <header className='flex justify-between'>
+            <div className='flex items-center gap-4'>
+              <Image
+                className='h-11 w-11 rounded-full'
+                src={authorImage}
+                alt='author image'
+                width={44}
+                height={44}
+              />
+              <div className='flex flex-col'>
+                <h3 className='text-sm font-semibold leading-normal text-darkSecondary-900 dark:text-white-800 md:text-base'>
+                  {name}
+                </h3>
+                <p className='text-xs font-normal leading-snug text-neutral-400 md:text-sm'>
+                  {createdAt}
+                </p>
+              </div>
             </div>
           </header>
           <Image
@@ -50,12 +60,15 @@ export default function InterviewsPostCard({
             {captions}
           </p>
           <div className='flex w-full flex-wrap items-center justify-between gap-5'>
-            <Statistic />
-            <Button className=' flex items-center justify-center gap-2.5 rounded !bg-secondary-blue'>
+            <Statistic revenue={revenue} updates={updates} website={website} />
+            <Link
+              className=' flex items-center justify-center gap-2.5 rounded !bg-secondary-blue px-[14px] py-2'
+              href={`/interviews/${id}`}
+            >
               <span className='text-sm font-semibold leading-snug text-white'>
                 Full Details
               </span>
-            </Button>
+            </Link>
           </div>
         </div>
         <Image

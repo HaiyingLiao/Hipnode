@@ -1,24 +1,41 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
-export default function Statistic() {
+type statisticProps = {
+  revenue: number;
+  updates: number;
+  website: string;
+};
+
+export default function Statistic({
+  revenue,
+  updates,
+  website,
+}: statisticProps) {
   return (
-    <div className='flex items-center justify-start gap-[25px]'>
+    <div className='flex items-center justify-start gap-5 lg:gap-[25px]'>
       <div>
         <p className='text-sm font-bold leading-snug text-darkSecondary-900 dark:text-white-800'>
-          $23k/mo
+          {`$${revenue}k/mo`}
         </p>
         <span className='block text-xs font-normal leading-18 text-neutral-400'>
           Revenue
         </span>
       </div>
+
+      <div className='h-[30px] w-[1px] bg-darkSecondary-800 dark:bg-darkSecondary-600' />
+
       <div>
         <p className='text-sm font-bold leading-snug text-darkSecondary-900 dark:text-white-800'>
-          27
+          {updates}
         </p>
         <span className='block text-xs font-normal leading-18 text-neutral-400'>
           Updates
         </span>
       </div>
+
+      <div className='h-[30px] w-[1px] bg-darkSecondary-800  dark:bg-darkSecondary-600' />
+
       <div className='inline-flex flex-col items-start justify-start'>
         <Image
           className='invert dark:invert-0'
@@ -27,9 +44,12 @@ export default function Statistic() {
           height={20}
           alt='web icon'
         />
-        <p className='text-xs font-normal leading-18 text-neutral-400'>
+        <Link
+          className='text-xs font-normal leading-18 text-neutral-400'
+          href={website}
+        >
           Website
-        </p>
+        </Link>
       </div>
     </div>
   );

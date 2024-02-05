@@ -20,6 +20,16 @@ export const formUrlQuery = (params: string, key: string, value: string) => {
   );
 };
 
+export const formatDate = (originalDate: Date) => {
+  const formattedDate = new Date(originalDate).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+
+  return formattedDate;
+};
+
 export const timeAgo = (timestamp: Date): string => {
   const now = new Date();
   const diff = now.getTime() - new Date(timestamp).getTime();

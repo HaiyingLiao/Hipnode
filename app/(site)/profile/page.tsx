@@ -5,10 +5,11 @@ import {
   PostCard,
   HostMeetupCard,
   Pagination,
+  InterviewPostCard,
 } from '@/components/index';
 import { cardBtns, postDummyData } from '@/constants';
 import { getProfilePosts } from '@/lib/actions/profile.action';
-import { timeAgo } from '@/lib/utils';
+import { timeAgo, formatDate } from '@/lib/utils';
 
 interface SearchParamsProps {
   searchParams: {
@@ -35,22 +36,41 @@ export default async function ProfilePage({ searchParams }: SearchParamsProps) {
       <main className='flex w-full flex-col lg:max-w-[785px]'>
         <OptionBar />
         <div>
-          {posts?.map((post) => (
-            <PostCard
-              slug={post.id.toString()}
-              key={post.id}
-              name={post.author.name}
-              title={post.title}
-              tags={post.tags}
-              views={244564}
-              mainImage={post.image}
-              createdDate={timeAgo(post.createdAt)}
-              avatar={post.author.image}
-              comments={184}
-              online={true}
-              likes={10290}
-            />
-          ))}
+          {posts?.map(
+            (post) =>
+              type === 'interviews' ? (
+                <InterviewPostCard
+                  key={post.title}
+                  image={post.image}
+                  createdAt={formatDate(post.createdAt)}
+                  name={post.author.name}
+                  authorImage={post.author.image}
+                  captions={post.title}
+                  revenue={post.revenue}
+                  updates={post.updates}
+                  website={post.website}
+                  id={post.id}
+                />
+              ) : (
+                // here will implement other cards
+                <div key={post.id} />
+              ),
+            // <PostCard
+            //   slug={post.id.toString()}
+            //   key={post.id}
+            //   name={post.name}
+            //   title={post.title}
+            //   tags={post.tags}
+            //   views={post.views}
+            //   mainImage={post.mainImage}
+            //   createdDate={post.createdDate}
+            //   avatar={post.avatar}
+            //   comments={post.comments}
+            //   online={post.online}
+            //   // isLiked={post.isLiked}
+            //   likes={post.likes}
+            // />
+          )}
           <Pagination totalPages={totalPages} />
         </div>
       </main>

@@ -28,7 +28,7 @@ const OptionBar = () => {
           className={
             'heading3 rounded-3xl px-5 py-2 text-darkSecondary-800 focus:bg-secondary-red-80 focus:text-white focus:outline-none dark:text-white-700'
           }
-          autoFocus={type === option.toLowerCase()}
+          autoFocus={type ? type === option.toLowerCase() : true}
         >
           {option}
         </button>
