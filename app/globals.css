@@ -468,7 +468,7 @@
   /* Home Main Section */
 
   .homeMain {
-    @apply sticky left-0 top-0 flex h-screen w-fit max-w-4xl shrink-0 flex-col overflow-auto py-[90px] md:py-24;
+    @apply sticky left-0 top-0 flex h-screen w-fit shrink-0 flex-col overflow-auto py-[90px] md:py-24;
   }
 
   /* Home Page Right Sidebar  */
@@ -513,6 +513,15 @@
 
   .reportButtonImageContainer {
     @apply flex aspect-square items-center justify-center rounded-[6px] bg-white-800 p-1 px-1.5 dark:bg-darkPrimary-4 dark:md:bg-darkPrimary-4 !important;
+  }
+
+  /* form */
+  .inputStyle {
+    @apply bodyMd-regular md:body-regular min-h-[50px] rounded-lg border-2 border-white-800 bg-white px-5 py-3 text-darkSecondary-800 dark:border-darkPrimary-4 dark:bg-darkPrimary-3;
+  }
+
+  .selectStyle {
+    @apply bodyXs-regular md:body-semibold flex items-center gap-2 rounded border-none bg-white-800 text-darkSecondary-900 dark:bg-darkPrimary-4 dark:text-white-800 !important;
   }
 }
 ::-webkit-scrollbar {

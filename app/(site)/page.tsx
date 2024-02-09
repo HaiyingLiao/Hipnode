@@ -1,58 +1,55 @@
-import Link from 'next/link';
+import { currentUser } from '@clerk/nextjs';
 import Image from 'next/image';
 
+import { popularTags, pinnedGroups, newAndPopular } from '@/constants';
 import {
-  Pagination,
   PostCard,
-  SidebarListItem,
-  SidePodcasts,
+  Pagination,
   MeetupChip,
+  SidePodcasts,
+  CreatePostInput,
+  SidebarListItem,
 } from '@/components/index';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  postDummyData,
-  newAndPopular,
-  newAndPopularMobile,
-  pinnedGroups,
-  popularTags,
-} from '@/constants';
+import { getAllPosts } from '@/lib/actions/post.action';
+import { getCreatedDate } from '@/lib/utils';
+import SortMobile from '@/components/Home/SortMobile';
 
 type URLProps = {
   searchParams: {
     page: string;
     search: string;
+    sort?: 'popular' | 'newest';
+    tags: string;
   };
 };
 
-export default function Home({ searchParams }: URLProps) {
-  // Test functions - will re-write this when querying from server
-  let postsThatIncludeQuery = postDummyData.filter((article) =>
-    article.title.includes(searchParams.search),
+export default async function Home({ searchParams }: URLProps) {
+  const user = await currentUser();
+  const page = searchParams.page ? +searchParams.page : 1;
+  const { posts, totalPages } = await getAllPosts(
+    searchParams.sort,
+    page,
+    10,
+    '/',
+    searchParams.tags,
   );
 
-  if (postsThatIncludeQuery.length === 0) {
-    postsThatIncludeQuery = postDummyData;
-  }
-
-  const MAX_POSTS_PER_PAGE = 5;
-  const maxNumberOfPages = Math.ceil(
-    postsThatIncludeQuery.length / MAX_POSTS_PER_PAGE,
-  );
-  const currentPage = Number(searchParams.page || '1');
-  const startIndex = (currentPage - 1) * MAX_POSTS_PER_PAGE;
-  const endIndex = currentPage * MAX_POSTS_PER_PAGE;
-  const activePosts = postsThatIncludeQuery.slice(startIndex, endIndex);
+  const searchResults = posts?.filter((article) => {
+    const search = searchParams.search ?? '';
+    return search !== ''
+      ? article.title.toLowerCase().includes(searchParams.search.toLowerCase())
+      : posts;
+  });
 
   return (
-    <main className='mb-30 flex flex-row justify-center gap-7 bg-white-700 dark:bg-darkPrimary-2'>
+    <main className='mb-30 flex flex-row justify-center gap-7  bg-white-700 dark:bg-darkPrimary-2'>
       {/* Left Sidebar */}
-      <aside className='leftSidebar'>
+      <aside className='leftSidebar no-scrollbar'>
         <section className='asideContainerSmall'>
           <ul>
             {newAndPopular.map((item) => (
               <SidebarListItem
+                label={item.label}
                 key={item.id}
                 id={item.id}
                 icon={item.icon}
@@ -75,6 +72,7 @@ export default function Home({ searchParams }: URLProps) {
           <ul>
             {popularTags.map((item) => (
               <SidebarListItem
+                label={''}
                 key={item.id}
                 id={item.id}
                 icon={item.icon}
@@ -82,7 +80,7 @@ export default function Home({ searchParams }: URLProps) {
                 text={item.text}
                 isFollowingNumberHidden={item.isFollowingNumberHidden}
                 hashtag={item.hashtag}
-                noOfPosts={item.noOfPosts}
+                totalPosts={item.noOfPosts}
                 bgColor={item.bgColor}
                 dimensionsInnerSquare={item.dimensionsInnerSquare}
                 dimensionsOuterSquare={item.dimensionsOuterSquare}
@@ -107,6 +105,7 @@ export default function Home({ searchParams }: URLProps) {
           <ul>
             {pinnedGroups.map((item) => (
               <SidebarListItem
+                label=''
                 key={item.id}
                 id={item.id}
                 icon={item.icon}
@@ -114,7 +113,7 @@ export default function Home({ searchParams }: URLProps) {
                 text={item.text}
                 isFollowingNumberHidden={item.isFollowingNumberHidden}
                 hashtag={item.hashtag}
-                noOfPosts={item.noOfPosts}
+                totalPosts={item.noOfPosts}
                 bgColor={item.bgColor}
                 dimensionsInnerSquare={item.dimensionsInnerSquare}
                 dimensionsOuterSquare={item.dimensionsOuterSquare}
@@ -124,76 +123,42 @@ export default function Home({ searchParams }: URLProps) {
         </section>
       </aside>
 
-      {/* Middle Section */}
-      <section>
-        <div className='homeMain'>
-          {/* Only on Mobile */}
-          <ul className='asideContainerSmall mb-5 flex pr-4 md:hidden'>
-            {newAndPopularMobile.map((item) => (
-              <li key={item.id} className='w-full'>
-                <Link href='/' className='asideListItemLink justify-center'>
-                  <div className='asideImageDiv h-[28px] w-[28px] p-1'>
-                    <Image src={item.icon} alt='Icon' width={15} height={15} />
-                  </div>
-
-                  <div>
-                    <div className='flex items-center gap-[6px]'>
-                      <h6 className='bodyXs-semibold sm:bodyMd-semibold text-darkSecondary-900 dark:text-white'>
-                        {item.title}
-                      </h6>
-                      <p
-                        className={`${
-                          item.isFollowingNumberHidden ? 'hidden' : ''
-                        } asideFollowingNumber px-[3px]`}
-                      >
-                        24
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <section className='barContainer'>
-            <Avatar className='avatarCreatePostMobile'>
-              <AvatarImage src='https://github.com/shadcn.png' />
-              <AvatarFallback>HN</AvatarFallback>
-            </Avatar>
-            <Input
-              type='text'
-              placeholder="Let's share what's going on in your mind..."
-              className='barInput bodySm-regular md:body-regular'
-            />
-            <Button className='barButton'>Create Post</Button>
-          </section>
-
-          <section className='mb-10 max-w-2xl'>
+      <section className='w-full'>
+        <div className='homeMain no-scrollbar w-full'>
+          <SortMobile />
+          <CreatePostInput
+            username={user?.username as string}
+            imageUrl={user?.imageUrl as string}
+          />
+          <section className='mb-10'>
             <div className='pb-2'>
-              {activePosts?.map((post) => (
+              {searchResults?.map((post) => (
                 <PostCard
-                  slug={post.id.toString()}
+                  emailAddress={user?.emailAddresses[0].emailAddress as string}
+                  username={user?.username as string}
                   key={post.id}
-                  name={post.name}
+                  id={post.id}
+                  authorName={post.authorName}
                   title={post.title}
                   tags={post.tags}
                   views={post.views}
-                  mainImage={post.mainImage}
-                  createdDate={post.createdDate}
+                  // @ts-ignore
+                  postImage={post.postImage}
+                  createdAt={getCreatedDate(new Date(post.createdAt)) as string}
                   avatar={post.avatar}
+                  // @ts-ignore
                   comments={post.comments}
-                  online={post.online}
+                  online={true}
                   likes={post.likes}
                 />
               ))}
             </div>
-            <Pagination totalPages={maxNumberOfPages} />
+            <Pagination totalPages={totalPages} />
           </section>
         </div>
       </section>
 
-      {/* Right Sidebar */}
-      <aside className='rightSidebar'>
+      <aside className='rightSidebar no-scrollbar'>
         <MeetupChip />
         <SidePodcasts />
       </aside>

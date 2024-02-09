@@ -36,13 +36,15 @@ export default function GroupDetail() {
           {[1, 2, 3, 4].map((p) => (
             <div key={p} className='w-full'>
               <PostCard
-                slug='/slug'
+                id='/slug'
                 avatar='/assets/images/user-avatar.svg'
-                comments={5}
-                createdDate={'12/10/2024'}
-                likes={23}
-                mainImage='/assets/images/profile.svg'
-                name='wira'
+                // comments={5}
+                createdAt={'12/10/2024'}
+                authorName='Wira'
+                emailAddress='wira@gmail.com'
+                // likes={23}
+                postImage='/assets/images/profile.svg'
+                username='wira'
                 tags={['finance', 'crypto', 'bitcoin']}
                 title='Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women...'
                 views={333}

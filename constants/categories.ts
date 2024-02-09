@@ -8,7 +8,7 @@ const categoryData = [
   {
     item: 'Part Time',
     selected: false,
-    key: 'part-time',
+    key: 'parttime',
     id: 2,
   },
   {

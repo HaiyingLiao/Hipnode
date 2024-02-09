@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <NavProfileMenu />
         </TopBar>
 
-        <main className='h-full w-full'>{children}</main>
+        <section className='h-full w-full'>{children}</section>
 
         <BottomBar />
       </ThemeProvider>

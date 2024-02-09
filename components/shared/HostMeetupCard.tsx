@@ -30,13 +30,13 @@ const HostMeetupCard = ({ cardBtns }: HostButtonProps) => {
       <CardContent className='mt-5 flex justify-between p-0'>
         <Link
           href={`${cardBtns[1]?.link}`}
-          className='body-semibold rounded-md !bg-secondary-red-60 px-4 py-2.5 !text-secondary-red-10 hover:!bg-secondary-red-80'
+          className='bodyMd-semibold rounded-md !bg-secondary-red-60 px-3 py-2.5 !text-secondary-red-10 hover:!bg-secondary-red-80'
         >
           {cardBtns[1]?.name}
         </Link>
         <Link
           href={cardBtns[0]?.link}
-          className='body-semibold rounded-md bg-white px-4 py-2.5 !text-secondary-red-80 hover:!bg-white-700'
+          className='bodyMd-semibold rounded-md bg-white px-2 py-2.5 !text-secondary-red-80 hover:!bg-white-700'
         >
           {cardBtns[0]?.name}
         </Link>
