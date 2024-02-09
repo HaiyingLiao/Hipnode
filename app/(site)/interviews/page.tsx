@@ -19,7 +19,11 @@ interface SearchParamsProps {
 export default async function Interviews({ searchParams }: SearchParamsProps) {
   const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
-  const { interviews, totalPages } = await getInterviews(page, 10, category);
+  const { posts: interviews, totalPages } = await getInterviews(
+    page,
+    10,
+    category,
+  );
 
   return (
     <div className='mt-28 flex h-full w-full flex-col gap-5 lg:flex-row '>
