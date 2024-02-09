@@ -1,11 +1,12 @@
-import { sidebarContents } from '@/constants';
 import Image from 'next/image';
+
+import { sidebarContents } from '@/constants';
 import { SelectItem } from '@/components/ui/select';
 
 const GroupSelectContent = () => {
   return (
     <div className='flex w-full flex-col gap-3 p-3 dark:bg-darkPrimary-3 md:flex-row'>
-      {sidebarContents.map((content) => (
+      {sidebarContents.map((content, i) => (
         <div
           className='mb-2 flex flex-col items-start space-y-5'
           key={content.label}
@@ -30,10 +31,10 @@ const GroupSelectContent = () => {
             </p>
           </div>
 
-          <div className='flex flex-col items-start gap-3'>
-            {content.items.map((item) => (
+          <div className='flex w-full max-w-[150px] flex-col items-start gap-3'>
+            {content.items.map((item, i) => (
               <div
-                className={`mb-3 inline-flex h-full  items-center justify-start gap-x-2 rounded-lg`}
+                className={`mb-3 inline-flex h-full  items-center justify-start gap-x-2 truncate rounded-lg`}
                 key={item.title}
               >
                 <Image
@@ -43,7 +44,7 @@ const GroupSelectContent = () => {
                   height={34}
                   alt={item.title}
                 />
-                <div className='w-full text-left'>
+                <div className=' text-left'>
                   <SelectItem value={item.title} className='cursor-pointer'>
                     {item.title}
                   </SelectItem>

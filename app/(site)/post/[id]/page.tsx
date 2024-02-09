@@ -1,4 +1,3 @@
-import { postDummyData } from '@/constants';
 import {
   PostStats,
   PostArticle,
@@ -6,6 +5,13 @@ import {
   UserPostList,
   NotFound,
 } from '@/components/index';
+import {
+  getPostById,
+  getRelatedPosts,
+  updateView,
+} from '@/lib/actions/post.action';
+import { getUserByPostAuthor } from '@/lib/actions/user.action';
+import { getCreatedDate, getPostStats } from '@/lib/utils';
 
 type URLProps = {
   params: {
@@ -13,45 +19,63 @@ type URLProps = {
   };
 };
 
-const Page = ({ params }: URLProps) => {
-  const post = postDummyData.find((post) => `${post.id}` === params.id);
-
+const Page = async ({ params }: URLProps) => {
+  const { post, totalComments } = await getPostById(params.id);
   if (!post) return <NotFound />;
+
+  const [relatedPosts, postAuthor] = await Promise.all([
+    getRelatedPosts(post.authorName, post.title),
+    getUserByPostAuthor(post.authorEmail),
+    updateView(post.id),
+  ]);
+  const postStats = getPostStats(post.likes.length, totalComments, post.share);
 
   return (
     <main className='postDetailsLeftCol'>
       <div className='flex shrink-0 flex-col gap-5 max-xl:hidden'>
-        <PostStats />
+        <PostStats
+          stats={postStats}
+          postAuthorName={post.authorName}
+          postId={post?.id}
+        />
         <section className='flex shrink-0 flex-col gap-1 rounded-2xl bg-white p-5 px-7 dark:bg-darkPrimary-3'>
           <p className='display-semibold text-secondary-blue-80'>
-            {post?.name}
+            {post?.authorName}
           </p>
           <p className='display-semibold text-darkSecondary-800'>
-            Posted {post?.createdDate}
+            Posted {getCreatedDate(new Date(post?.createdAt!)) as string}
           </p>
         </section>
       </div>
 
-      <section>
+      <section className='w-full'>
         <PostArticle
-          postHeader={post?.mainImage}
+          id={post.id}
+          comments={post.comments ?? []}
+          likes={post.likes.length}
+          share={post.share}
+          postHeader={post?.postImage}
           alt={post?.title}
           title={post?.title}
-          description={''}
-          tags={post?.tags}
-          user={post?.name}
-          createdDate={post?.createdDate}
+          description={post?.body}
+          tags={post?.tags ?? []}
+          user={post?.authorName}
+          createdDate={getCreatedDate(new Date(post.createdAt)) as string}
         />
       </section>
 
       <div className='postDetailsRightCol'>
         <PostProfile
-          avatar={post?.avatar}
-          user={post?.name}
-          joinDate={post?.createdDate}
-          userJob={''}
+          avatar={post?.avatar!}
+          user={post?.authorName!}
+          joinDate={getCreatedDate(postAuthor.createdAt)!}
+          userJob={post?.role!}
         />
-        <UserPostList user={post?.name} id={post?.id} />
+        <UserPostList
+          posts={relatedPosts ?? []}
+          user={post?.authorName!}
+          id={post?.id}
+        />
       </div>
     </main>
   );

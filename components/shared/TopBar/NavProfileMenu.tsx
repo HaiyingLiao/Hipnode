@@ -1,11 +1,11 @@
 import Link from 'next/link';
+import { UserButton } from '@clerk/nextjs';
 
 // import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import ProfileDropDown from './ProfileDropDown';
 import { Button } from '@/components/ui/button';
 import DarkModeToggle from './DarkModeToggle';
 import MessageDropDown from './MessageDropDown';
-import { UserButton } from '@clerk/nextjs';
 
 const NavProfileMenu = () => {
   // For testing
@@ -31,6 +31,7 @@ const NavProfileMenu = () => {
                 height={38}
                 className='navProfileAvatarImage'
               />
+
               <AvatarFallback className='rounded-lg'>HN</AvatarFallback>
             </Avatar> */}
             <UserButton afterSignOutUrl='' />

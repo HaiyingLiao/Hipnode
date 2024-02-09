@@ -5,8 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 interface ParamsType {
   name: string;
-  email: string;
-}
+  email: string;}
 
 export async function createUser(params: ParamsType) {
   try {

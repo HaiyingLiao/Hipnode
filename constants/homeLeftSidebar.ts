@@ -1,51 +1,57 @@
 export const newAndPopularMobile = [
   {
     id: 1,
-    icon: '/assets/leftSideBarHome/new.svg',
+    icon: '/assets/home/icons/new.svg',
     title: 'Newest',
     isFollowingNumberHidden: true,
+    label: 'newest',
   },
   {
     id: 2,
-    icon: '/assets/leftSideBarHome/popular.svg',
+    icon: '/assets/home/icons/popular.svg',
     title: 'Popular',
     isFollowingNumberHidden: true,
+    label: 'popular',
   },
   {
     id: 3,
-    icon: '/assets/leftSideBarHome/follow.svg',
+    icon: '/assets/home/icons/follow.svg',
     title: 'Following',
     isFollowingNumberHidden: false,
+    label: 'following',
   },
 ];
 
 export const newAndPopular = [
   {
     id: 1,
-    icon: '/assets/leftSideBarHome/new.svg',
+    icon: '/assets/home/icons/new.svg',
     title: 'Newest and Recent',
     text: 'Find the latest update',
     isFollowingNumberHidden: true,
     dimensionsOuterSquare: 28,
     dimensionsInnerSquare: 20,
+    label: 'newest',
   },
   {
     id: 2,
-    icon: '/assets/leftSideBarHome/popular.svg',
+    icon: '/assets/home/icons/popular.svg',
     title: 'Popular of the day',
     text: 'Shots Featured Today by Creators',
     isFollowingNumberHidden: true,
     dimensionsOuterSquare: 28,
     dimensionsInnerSquare: 20,
+    label: 'popular',
   },
   {
     id: 3,
     title: 'Following',
-    icon: '/assets/leftSideBarHome/follow.svg',
+    icon: '/assets/home/icons/follow.svg',
     text: 'Explore from your favorite person',
     isFollowingNumberHidden: false,
     dimensionsOuterSquare: 28,
     dimensionsInnerSquare: 20,
+    label: 'following',
   },
 ];
 
@@ -53,7 +59,7 @@ export const popularTags = [
   {
     id: 1,
     title: 'javascript',
-    icon: '/assets/leftSideBarHome/javascript.svg',
+    icon: '/assets/home/icons/javascript.svg',
     noOfPosts: 82645,
     text: 'Posted by this tag',
     isFollowingNumberHidden: true,
@@ -65,7 +71,7 @@ export const popularTags = [
   {
     id: 2,
     title: 'bitcoin',
-    icon: '/assets/leftSideBarHome/bitcoin.svg',
+    icon: '/assets/home/icons/bitcoin.svg',
     noOfPosts: 65523,
     text: 'Posted | Trending',
     isFollowingNumberHidden: true,
@@ -77,7 +83,7 @@ export const popularTags = [
   {
     id: 3,
     title: 'design',
-    icon: '/assets/leftSideBarHome/design.svg',
+    icon: '/assets/home/icons/design.svg',
     noOfPosts: 45637,
     text: 'Trending in Bangladesh',
     isFollowingNumberHidden: true,
@@ -89,7 +95,7 @@ export const popularTags = [
   {
     id: 4,
     title: 'blogging',
-    icon: '/assets/leftSideBarHome/blogging.svg',
+    icon: '/assets/home/icons/blogging.svg',
     noOfPosts: 67645,
     text: 'Posted by this tag',
     isFollowingNumberHidden: true,
@@ -101,7 +107,7 @@ export const popularTags = [
   {
     id: 5,
     title: 'tutorial',
-    icon: '/assets/leftSideBarHome/tutorial.svg',
+    icon: '/assets/home/icons/tutorial.svg',
     noOfPosts: 42625,
     text: 'Trending in Bangladesh',
     isFollowingNumberHidden: true,
@@ -113,7 +119,7 @@ export const popularTags = [
   {
     id: 6,
     title: 'seo',
-    icon: '/assets/leftSideBarHome/seo.svg',
+    icon: '/assets/home/icons/seo.svg',
     noOfPosts: 55645,
     text: 'Posted by this tag',
     isFollowingNumberHidden: true,
@@ -128,7 +134,7 @@ export const pinnedGroups = [
   {
     id: 1,
     title: 'javascript',
-    icon: '/assets/leftSideBarHome/javascript2.svg',
+    icon: '/assets/home/icons/javascript2.svg',
     noOfPosts: 82645,
     text: 'Posted by this tag',
     hashtag: true,
@@ -140,7 +146,7 @@ export const pinnedGroups = [
   {
     id: 2,
     title: 'bitcoin',
-    icon: '/assets/leftSideBarHome/bitcoin2.svg',
+    icon: '/assets/home/icons/bitcoin2.svg',
     noOfPosts: 65523,
     text: 'Posted Trending',
     hashtag: true,
@@ -152,7 +158,7 @@ export const pinnedGroups = [
   {
     id: 3,
     title: 'design',
-    icon: '/assets/leftSideBarHome/design2.svg',
+    icon: '/assets/home/icons/design2.svg',
     noOfPosts: 45637,
     text: 'Trending in Bangladesh',
     hashtag: true,
@@ -164,7 +170,7 @@ export const pinnedGroups = [
   {
     id: 4,
     title: 'blogging',
-    icon: '/assets/leftSideBarHome/blogging2.svg',
+    icon: '/assets/home/icons/blogging2.svg',
     noOfPosts: 67645,
     text: 'Posted by this tag',
     hashtag: true,
