@@ -12,7 +12,7 @@ export default function Signin() {
         contents={signInContents}
       />
       <div className='flex w-full items-center justify-center dark:bg-darkPrimary-3'>
-        <SignIn />;
+        <SignIn />
       </div>
     </>
   );
