@@ -1,24 +1,27 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface ReportItemProps {
   id: number;
   title: string;
-  setSelectedReportItems: Dispatch<SetStateAction<number[]>>;
+  selectedReportItem: string[];
+  setSelectedReportItems: Dispatch<SetStateAction<string[]>>;
 }
 
-const ReportItem = ({ id, title, setSelectedReportItems }: ReportItemProps) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
-
+const ReportItem = ({
+  id,
+  title,
+  setSelectedReportItems,
+  selectedReportItem,
+}: ReportItemProps) => {
   const handleClick = () => {
     setSelectedReportItems((prevState) => {
-      if (prevState.includes(id)) {
-        return prevState.filter((itemId) => itemId !== id);
+      if (prevState.includes(title)) {
+        return prevState.filter((prevtitle) => prevtitle !== title);
       }
-      return prevState.concat(id);
+      return prevState.concat(title);
     });
-    setIsActive(!isActive);
   };
 
   return (
@@ -26,7 +29,9 @@ const ReportItem = ({ id, title, setSelectedReportItems }: ReportItemProps) => {
       key={id}
       onClick={handleClick}
       className={`cursor-pointer rounded-[20px] border-[1px] border-darkSecondary-600 bg-white-700 px-5 py-2.5 dark:border-darkSecondary-900 dark:bg-darkPrimary-3 ${
-        isActive ? 'border-primary dark:border-primary' : 'border-transparent'
+        selectedReportItem.includes(title)
+          ? 'border-primary dark:border-primary'
+          : 'border-transparent'
       }
     `}
     >

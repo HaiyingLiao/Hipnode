@@ -34,6 +34,7 @@
     "@svgr/webpack": "^8.1.0",
     "@tinymce/tinymce-react": "^4.3.0",
     "aws-sdk": "^2.1480.0",
+    "bad-words": "^3.0.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
@@ -59,6 +60,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/bad-words": "^3.0.3",
     "@types/node": "^20.8.10",
     "@types/react": "^18",
     "@types/react-dom": "^18",

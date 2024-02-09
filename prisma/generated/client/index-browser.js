@@ -100,6 +100,7 @@ Prisma.NullTypes = {
  * Enums
  */
 
+<<<<<<< HEAD
 exports.Prisma.InterviewsScalarFieldEnum = {
   id: 'id',
   image: 'image',
@@ -112,6 +113,65 @@ exports.Prisma.InterviewsScalarFieldEnum = {
   category: 'category',
   tags: 'tags',
   authorId: 'authorId'
+=======
+exports.Prisma.PostScalarFieldEnum = {
+  id: 'id',
+  authorEmail: 'authorEmail',
+  title: 'title',
+  body: 'body',
+  role: 'role',
+  createdAt: 'createdAt',
+  views: 'views',
+  likes: 'likes',
+  authorName: 'authorName',
+  avatar: 'avatar',
+  postImage: 'postImage',
+  postImageKey: 'postImageKey',
+  altText: 'altText',
+  tags: 'tags',
+  groupId: 'groupId',
+  share: 'share',
+  country: 'country'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  authorImage: 'authorImage',
+  comment: 'comment',
+  likes: 'likes',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt',
+  postId: 'postId',
+  parentId: 'parentId',
+  type: 'type'
+};
+
+exports.Prisma.ReportScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  postId: 'postId',
+  reasons: 'reasons',
+  reportedBy: 'reportedBy'
+};
+
+exports.Prisma.TagScalarFieldEnum = {
+  title: 'title',
+  postIds: 'postIds'
+};
+
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  postTitle: 'postTitle',
+  authorName: 'authorName',
+  authorImage: 'authorImage',
+  message: 'message',
+  isRead: 'isRead',
+  typeText: 'typeText',
+  postId: 'postId',
+  type: 'type',
+  userId: 'userId'
+>>>>>>> main
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -119,7 +179,12 @@ exports.Prisma.UserScalarFieldEnum = {
   clerkId: 'clerkId',
   email: 'email',
   name: 'name',
+<<<<<<< HEAD
   image: 'image'
+=======
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
+>>>>>>> main
 };
 
 exports.Prisma.SortOrder = {
@@ -131,10 +196,23 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.NotificationType = exports.$Enums.NotificationType = {
+  reactions: 'reactions',
+  comment: 'comment',
+  publish: 'publish',
+  mentions: 'mentions'
+};
 
 exports.Prisma.ModelName = {
+<<<<<<< HEAD
   Interviews: 'Interviews',
+=======
+  Post: 'Post',
+  Comment: 'Comment',
+  Report: 'Report',
+  Tag: 'Tag',
+  Notification: 'Notification',
+>>>>>>> main
   User: 'User'
 };
 

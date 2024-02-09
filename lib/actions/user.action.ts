@@ -81,3 +81,14 @@ export async function deleteUser(clerkId: string) {
     return NextResponse.json({ error: 'User not deleted!', status: 500 });
   }
 }
+
+export async function getUserByPostAuthor(email: string) {
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user) throw new Error('User not found');
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}

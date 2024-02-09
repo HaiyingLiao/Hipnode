@@ -1,36 +1,53 @@
 'use client';
 
 import Image from 'next/image';
-import { ReactNode, useState } from 'react';
+import parse from 'html-react-parser';
+import { useState } from 'react';
 
-import { comments as commentsData, createComment } from '@/constants';
-import { CommentType } from '@/types/post';
+import { uploadComment } from '@/lib/actions/post.action';
 import { CommentInput, PostStats, Comment } from '@/components/index';
-
-interface PostArticleProps {
-  postHeader: string;
-  alt: string;
-  title: string;
-  tags: string[];
-  description: ReactNode;
-  user: string;
-  createdDate: string;
-}
+import { getCreatedDate, getPostStats } from '@/lib/utils';
+import { toast } from '../ui/use-toast';
+import { PostArticleProps } from '@/types/post-detail.interface';
 
 const PostArticle = ({
   postHeader,
   alt,
+  id,
   title,
   tags,
   description,
   user,
   createdDate,
+  likes,
+  comments,
+  share,
 }: PostArticleProps) => {
-  const [comments, setComments] = useState(commentsData);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleComment = (text: string) => {
-    const comment = createComment(text, new Date());
-    setComments((prev) => prev.concat(comment as CommentType));
+  const postStats = getPostStats(likes, comments.length, share);
+
+  const handleComment = async (text: string) => {
+    try {
+      setLoading(true);
+
+      await uploadComment({
+        postId: id,
+        message: text,
+        parentId: null,
+        path: window.location.pathname,
+        type: 'comment',
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: error.message,
+          variant: 'destructive',
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -45,8 +62,8 @@ const PostArticle = ({
           height={273}
           className='max-h-96 rounded-t-lg border-2 border-blue-100 object-cover'
         />
-        <div>
-          <div className='flex items-start justify-center px-[15px] md:px-[30px]'>
+        <div className='w-full'>
+          <div className='flex items-start px-[15px] md:px-[30px]'>
             <div className='body-regular md:heading3-regular p-[5px] pr-5 text-darkSecondary-600 md:pr-[30px]'>
               H1
             </div>
@@ -58,12 +75,13 @@ const PostArticle = ({
                 {tags?.map((tag) => <li key={tag}>#{tag}</li>)}
               </ul>
               <div className='bodyMd-regular md:body-regular pb-5 text-darkSecondary-800'>
-                {description}
+                {parse(description)}
               </div>
             </div>
           </div>
           <div className='pl-6 pr-10 dark:bg-darkPrimary-3'>
             <CommentInput
+              loading={loading}
               placeholder='Comment... '
               handleComment={handleComment}
             />
@@ -72,7 +90,7 @@ const PostArticle = ({
       </div>
 
       <div className='flex w-full shrink-0 flex-col lg:hidden'>
-        <PostStats />
+        <PostStats stats={postStats} postAuthorName={user} postId={id} />
         <section className='mt-4 flex shrink-0 flex-col gap-1 rounded-2xl bg-white p-5 px-7 dark:bg-darkPrimary-3 xl:mt-0'>
           <p className='display-semibold text-secondary-blue-80'>{user}</p>
           <p className='display-semibold text-darkSecondary-800'>
@@ -82,17 +100,29 @@ const PostArticle = ({
       </div>
 
       <div className='mb-3 rounded-b-2xl bg-white dark:bg-darkPrimary-3 max-lg:rounded-2xl md:-mt-8'>
-        {comments.map((comment) => (
+        {comments?.map((comment) => (
           <Comment
             key={comment.id}
+            postId={id}
+            parentId={comment.parentId}
+            type='comment'
+            // @ts-ignore
+            likes={comment.likes}
+            className={
+              comment.type === 'children' && comment.parentId === comment.id
+                ? 'ml-[60px] mt-4'
+                : ''
+            }
             id={comment.id}
-            user={comment.user}
+            name={comment.name}
             comment={comment.comment}
-            avatar={comment.avatar}
-            postedDate={comment.postedDate}
-            editedDate={comment.editedDate}
-            subComments={comment.subComments}
-            setComments={setComments}
+            authorImage={comment.authorImage}
+            createdAt={
+              getCreatedDate(new Date(comment?.createdAt!)) as unknown as Date
+            }
+            updateAt={
+              getCreatedDate(new Date(comment?.createdAt!)) as unknown as Date
+            }
           />
         ))}
       </div>

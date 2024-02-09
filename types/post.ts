@@ -7,3 +7,10 @@ export interface CommentType {
   editedDate?: string;
   subComments?: CommentType[];
 }
+
+export type PostStatsType = {
+  icon: string;
+  alt: string;
+  value: number;
+  label: string;
+};
