@@ -1,3 +1,4 @@
+import { currentUser } from '@clerk/nextjs';
 import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
@@ -19,7 +20,7 @@ type HeroContentsProps = {
   path?: string;
 };
 
-export default function HeroContents({
+export default async function HeroContents({
   contents,
   title,
   bg,
@@ -27,6 +28,10 @@ export default function HeroContents({
   position,
   path,
 }: HeroContentsProps) {
+  // const user = await currentUser();
+  // if (!user) return;
+  const user = { id: '65b4ac09393361a92bd49f7a' };
+
   return (
     <section
       className={cn(
@@ -45,6 +50,7 @@ export default function HeroContents({
               {...content}
               position={position}
               cardBg={cardBg!}
+              userId={user.id}
             />
           ))}
           {position === 'right' && (

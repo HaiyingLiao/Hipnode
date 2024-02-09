@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]) {
 export const formUrlQuery = (
   params: string,
   key: string,
-  value: string | null,
+  value: null | string,
 ) => {
   const currentUrl = queryString.parse(params as string);
 
