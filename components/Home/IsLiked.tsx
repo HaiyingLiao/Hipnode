@@ -6,7 +6,7 @@ import { likePost } from '@/lib/actions/post.action';
 interface isLikedProps {
   avatar: string;
   id: string;
-  likes: string[];
+  // likes: string[];
   emailAddress: string;
   username: string;
 }
@@ -14,11 +14,12 @@ interface isLikedProps {
 export const IsLiked = ({
   avatar,
   id,
-  likes,
+  // likes,
   emailAddress,
   username,
 }: isLikedProps) => {
-  const isLikedByCurrentUser = likes.includes(emailAddress);
+  // const isLikedByCurrentUser = likes.includes(emailAddress);
+  const isLikedByCurrentUser = true
   const heartIcon = isLikedByCurrentUser
     ? '/orange-heart.svg'
     : '/gray-heart.svg';

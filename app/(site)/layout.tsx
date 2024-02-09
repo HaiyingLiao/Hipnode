@@ -4,7 +4,6 @@ import { ThemeProvider } from '@/components/shared/TopBar/ThemeProvider';
 import BottomBar from '@/components/shared/BottomBar';
 import TopBar from '@/components/shared/TopBar/TopBar';
 import NavProfileMenu from '@/components/shared/TopBar/NavProfileMenu';
-import { Toaster } from '@/components/ui/toaster';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -19,8 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <NavProfileMenu />
         </TopBar>
 
-        <main className='h-full w-full'>{children}</main>
-        <Toaster />
+        <section className='h-full w-full'>{children}</section>
 
         <BottomBar />
       </ThemeProvider>

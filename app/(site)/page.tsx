@@ -42,7 +42,7 @@ export default async function Home({ searchParams }: URLProps) {
   });
 
   return (
-    <main className='mb-30 flex flex-row justify-center gap-7 overflow-hidden bg-white-700 dark:bg-darkPrimary-2'>
+    <main className='mb-30 flex flex-row justify-center gap-7  bg-white-700 dark:bg-darkPrimary-2'>
       {/* Left Sidebar */}
       <aside className='leftSidebar no-scrollbar'>
         <section className='asideContainerSmall'>
@@ -123,8 +123,8 @@ export default async function Home({ searchParams }: URLProps) {
         </section>
       </aside>
 
-      <section className='w-max'>
-        <div className='homeMain no-scrollbar'>
+      <section className='w-full'>
+        <div className='homeMain no-scrollbar w-full'>
           <SortMobile />
           <CreatePostInput
             username={user?.username as string}
@@ -142,6 +142,7 @@ export default async function Home({ searchParams }: URLProps) {
                   title={post.title}
                   tags={post.tags}
                   views={post.views}
+                  // @ts-ignore
                   postImage={post.postImage}
                   createdAt={getCreatedDate(new Date(post.createdAt)) as string}
                   avatar={post.avatar}

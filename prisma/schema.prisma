@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/client"
 }
 
 datasource db {
@@ -100,14 +99,20 @@ enum NotificationType {
 }
 
 model User {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId       String         @unique
-  email         String         @unique
-  name          String
-  image         String
-  interviews    Interviews[]
-  posts         Post[]
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId    String       @unique
+  email      String       @unique
+  name       String
+  image      String
+  interviews Interviews[]
+  posts      Post[]
+
+  createdAt          DateTime @default(now())
+  updateAt           DateTime @default(now()) @updatedAt
+  onboardingProgress String
+  businessStage      String
+  codingLevel        String
+  businessTypes      String[]
+
   notifications Notification[]
-  createdAt     DateTime       @default(now())
-  updateAt      DateTime       @default(now()) @updatedAt
 }

@@ -20,8 +20,8 @@ interface PostCardProps extends User {
   online?: boolean;
   createdAt: string;
   views: number;
-  likes: string[];
-  comments: Comment[];
+  // likes: string[];
+  // comments: Comment[];
   styles?: string;
   id: string;
 }
@@ -29,11 +29,11 @@ interface PostCardProps extends User {
 const PostCard = ({
   authorName,
   avatar,
-  comments,
+  // comments,
   createdAt,
   id,
   styles,
-  likes,
+  // likes,
   postImage,
   tags,
   title,
@@ -72,7 +72,7 @@ const PostCard = ({
       <IsLiked
         avatar={avatar}
         id={id}
-        likes={likes}
+        // likes={likes}
         emailAddress={emailAddress}
         username={username}
       />
@@ -104,8 +104,10 @@ const PostCard = ({
       <div className='postCardGridItem5'>
         <ul className='viewsList'>
           <li>{views} Views</li>
-          <li>{likes.length} Likes</li>
-          <li>{comments.length} Comments</li>
+          {/* <li>{likes.length} Likes</li> */}
+          <li>10 Likes</li>
+          {/* <li>{comments.length} Comments</li> */}
+          <li>0 Comments</li>
         </ul>
       </div>
     </div>
