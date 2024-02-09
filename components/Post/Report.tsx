@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
@@ -16,20 +16,32 @@ import {
 import { reportTags } from '@/constants';
 import ReportItem from './ReportItem';
 import ReportConfirmation from './ReportConfirmation';
+import { reportPost } from '@/lib/actions/post.action';
+import { toast } from '../ui/use-toast';
 
 interface ReportProps {
   user: string;
+  postId: string;
 }
 
-const Report = ({ user }: ReportProps) => {
-  const [selectedReportItems, setSelectedReportItems] = useState<number[]>([]);
+const Report = ({ user, postId }: ReportProps) => {
+  const [selectedReportItems, setSelectedReportItems] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!isOpen) {
+  const handlePostReport = async () => {
+    try {
+      await reportPost(postId, selectedReportItems);
       setSelectedReportItems([]);
+      setIsOpen(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: error.message,
+          variant: 'destructive',
+        });
+      }
     }
-  }, [isOpen]);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -44,19 +56,20 @@ const Report = ({ user }: ReportProps) => {
               className='m-[1px] object-contain dark:brightness-200'
             />
           </div>
-          <div className='display-regular text-darkSecondary-800'>Report</div>
+          <p className='display-regular text-darkSecondary-800'>Report</p>
         </Button>
       </DialogTrigger>
       <DialogContent className='flex flex-col gap-[30px] rounded-2xl p-[30px] dark:bg-darkPrimary sm:max-w-[477px]'>
         <DialogHeader>
           <DialogTitle className='heading3 text-darkSecondary-900 dark:text-white-800'>
-            Why are you reporting this post by @{user}?
+            Why are you reporting this post by {user}?
           </DialogTitle>
         </DialogHeader>
         <div className='grid gap-4 py-4'>
           <ul className='flex flex-wrap items-center gap-5'>
             {reportTags.map((item) => (
               <ReportItem
+                selectedReportItem={selectedReportItems}
                 key={item.id}
                 id={item.id}
                 title={item.title}
@@ -68,14 +81,11 @@ const Report = ({ user }: ReportProps) => {
 
         <DialogFooter className='flex !flex-row !justify-start'>
           <ReportConfirmation
-            closeParentModal={() => setIsOpen(false)}
+            closeParentModal={handlePostReport}
             selectedReportItems={selectedReportItems}
           />
           <DialogClose asChild>
-            <Button
-              type='submit'
-              className='heading-3 no-focus ml-5 !bg-transparent p-2.5 text-darkSecondary-800 hover:bg-transparent dark:text-darkSecondary-800 dark:hover:text-secondary-blue'
-            >
+            <Button className='heading-3 no-focus ml-5 !bg-transparent p-2.5 text-darkSecondary-800 hover:bg-transparent dark:text-darkSecondary-800 dark:hover:text-secondary-blue'>
               Cancel
             </Button>
           </DialogClose>

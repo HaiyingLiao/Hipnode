@@ -3,13 +3,17 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: 'utfs.io',
+        hostname: 'hipnode-bucket.s3.amazonaws.com',
         pathname: '/*',
         protocol: 'https'
-      }
+      },
+      {
+        hostname: 'img.clerk.com',
+        pathname: '/*',
+        protocol: 'https'
+      },
     ]
-  },
-  reactStrictMode: false,
+  }
 };
 
 module.exports = nextConfig;

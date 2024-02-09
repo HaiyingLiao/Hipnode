@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 import './globals.css';
+import { Toaster } from '@/components/ui/toaster';
 
 const sourceSansPro = Source_Sans_3({
   subsets: ['latin'],
@@ -20,11 +21,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en'>
-      <ClerkProvider>
+      <ClerkProvider key={'clerk'}>
         <body
-          className={`${sourceSansPro.style} max-container bg-white-800 dark:bg-darkPrimary-2`}
+          className={`${sourceSansPro.className} max-container bg-white-800 dark:bg-darkPrimary-2`}
         >
           <main>{children}</main>
+          <Toaster />
         </body>
       </ClerkProvider>
     </html>
