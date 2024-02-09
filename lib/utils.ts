@@ -39,6 +39,7 @@ export const formatDate = (originalDate: Date) => {
   });
 
   return formattedDate;
+};
 
 const roundDown = (value: number) => Math.floor(value);
 
