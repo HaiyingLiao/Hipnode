@@ -10,7 +10,7 @@ import {
   getRelatedPosts,
   updateView,
 } from '@/lib/actions/post.action';
-import { getUserByPostAuthor } from '@/lib/actions/user.action';
+// import { getUserByPostAuthor } from '@/lib/actions/user.action';
 import { getCreatedDate, getPostStats } from '@/lib/utils';
 
 type URLProps = {
@@ -25,7 +25,7 @@ const Page = async ({ params }: URLProps) => {
 
   const [relatedPosts, postAuthor] = await Promise.all([
     getRelatedPosts(post.authorName, post.title),
-    getUserByPostAuthor(post.authorEmail),
+    // getUserByPostAuthor(post.authorEmail),
     updateView(post.id),
   ]);
   const postStats = getPostStats(post.likes.length, totalComments, post.share);
@@ -54,6 +54,7 @@ const Page = async ({ params }: URLProps) => {
           comments={post.comments ?? []}
           likes={post.likes.length}
           share={post.share}
+          // @ts-ignore
           postHeader={post?.postImage}
           alt={post?.title}
           title={post?.title}
@@ -68,6 +69,7 @@ const Page = async ({ params }: URLProps) => {
         <PostProfile
           avatar={post?.avatar!}
           user={post?.authorName!}
+          // @ts-ignore
           joinDate={getCreatedDate(postAuthor.createdAt)!}
           userJob={post?.role!}
         />

@@ -142,6 +142,7 @@ export default async function Home({ searchParams }: URLProps) {
                   title={post.title}
                   tags={post.tags}
                   views={post.views}
+                  // @ts-ignore
                   postImage={post.postImage}
                   createdAt={getCreatedDate(new Date(post.createdAt)) as string}
                   avatar={post.avatar}
