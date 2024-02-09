@@ -468,7 +468,7 @@
   /* Home Main Section */
 
   .homeMain {
-    @apply sticky left-0 top-0 flex h-screen w-fit max-w-4xl shrink-0 flex-col overflow-auto py-[90px] md:py-24;
+    @apply sticky left-0 top-0 flex h-screen w-fit shrink-0 flex-col overflow-auto py-[90px] md:py-24;
   }
 
   /* Home Page Right Sidebar  */
