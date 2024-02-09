@@ -55,13 +55,20 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === 'user.created') {
-    const { email_addresses, first_name, last_name, id: clerkId } = evt.data;
+    const {
+      email_addresses,
+      first_name,
+      last_name,
+      id: clerkId,
+      image_url,
+    } = evt.data;
 
     // create user in db.
     const user = await createUser({
       clerkId,
       email: email_addresses[0].email_address,
       name: `${first_name} ${last_name || ''}`,
+      image: image_url,
     });
 
     return NextResponse.json({ user }, { status: 201 });
@@ -86,7 +93,7 @@ export async function POST(req: Request) {
     }
 
     try {
-      const deletedUser = await deleteUser(clerkId);
+      const deletedUser = await deleteUser({ clerkId });
       return NextResponse.json({ deletedUser }, { status: 200 });
     } catch (error) {
       return NextResponse.json({ error: 'Error deleting user from MongoDB' });

@@ -4,17 +4,22 @@ import prisma from '@/prisma';
 import { revalidatePath } from 'next/cache';
 
 interface ParamsType {
+  clerkId: string;
   name: string;
-  email: string;}
+  email: string;
+  image: string;
+}
 
 export async function createUser(params: ParamsType) {
   try {
-    const { name, email } = params;
+    const { clerkId, name, email, image } = params;
 
     const user = await prisma.user.create({
       data: {
+        clerkId,
         name,
         email,
+        image,
       },
     });
 
@@ -25,7 +30,7 @@ export async function createUser(params: ParamsType) {
   }
 }
 
-export async function updateUser(params: ParamsType) {
+export async function updateUser(params: Pick<ParamsType, 'email' | 'name'>) {
   const { email, name } = params;
 
   try {
@@ -44,13 +49,13 @@ export async function updateUser(params: ParamsType) {
   }
 }
 
-export async function deleteUser(params: ParamsType) {
-  const { email } = params;
+export async function deleteUser(params: Pick<ParamsType, 'clerkId'>) {
+  const { clerkId } = params;
 
   try {
     const deletedUser = await prisma.user.delete({
       where: {
-        email,
+        clerkId,
       },
     });
     revalidatePath('/');

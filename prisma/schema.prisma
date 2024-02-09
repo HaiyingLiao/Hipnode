@@ -109,9 +109,9 @@ model User {
 
   createdAt          DateTime @default(now())
   updateAt           DateTime @default(now()) @updatedAt
-  onboardingProgress String
-  businessStage      String
-  codingLevel        String
+  onboardingProgress String @default("")
+  businessStage      String?
+  codingLevel        String?
   businessTypes      String[]
 
   notifications Notification[]
