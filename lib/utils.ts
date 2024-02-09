@@ -11,19 +11,34 @@ export function cn(...inputs: ClassValue[]) {
 export const formUrlQuery = (
   params: string,
   key: string,
-  value: null | string,
+  value: string | string[] | null,
 ) => {
-  const currentUrl = queryString.parse(params as string);
+  const currentQuery = queryString.parse(params as string);
 
-  currentUrl[key] = value;
+  if (Array.isArray(value)) {
+    const newVal = value.join('_');
+    currentQuery[key] = newVal;
+  } else {
+    currentQuery[key] = value;
+  }
 
   return queryString.stringifyUrl(
     {
       url: window.location.pathname,
-      query: currentUrl,
+      query: currentQuery,
     },
     { skipNull: true },
   );
+};
+
+export const formatDate = (originalDate: Date) => {
+  const formattedDate = new Date(originalDate).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+
+  return formattedDate;
 };
 
 const roundDown = (value: number) => Math.floor(value);

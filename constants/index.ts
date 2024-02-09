@@ -11,7 +11,7 @@ export { sidebarContents } from './group';
 export { socialIcons, demoPerformance, optionBar } from './profileData';
 export { interviewCards } from './interviews';
 export { cardBtns } from './hostMeetupCard';
-export { createPostData } from './create-post';
+export { createPostData, categoryItems } from './formData';
 export { postDummyData } from './home';
 export { navLinks } from './navLinks';
 export { messageDropDownNav } from './messageDropDownNav';

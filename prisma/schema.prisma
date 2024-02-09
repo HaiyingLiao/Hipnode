@@ -7,6 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Interviews {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  image     String
+  createdAt DateTime @default(now())
+  title     String
+  post      String
+  revenue   Int
+  updates   Int
+  website   String
+  category  String
+  tags      String[]
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String   @db.ObjectId
+}
+
 model Post {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   author      User      @relation(fields: [authorEmail], references: [email], onDelete: Cascade)
@@ -84,13 +99,16 @@ enum NotificationType {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId   String   @unique
-  email     String   @unique
-  name      String?
-  posts     Post[]
-  createdAt DateTime @default(now())
-  updateAt  DateTime @default(now()) @updatedAt
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId    String       @unique
+  email      String       @unique
+  name       String
+  image      String
+  interviews Interviews[]
+  posts      Post[]
+
+  createdAt          DateTime @default(now())
+  updateAt           DateTime @default(now()) @updatedAt
   onboardingProgress String
   businessStage      String
   codingLevel        String
