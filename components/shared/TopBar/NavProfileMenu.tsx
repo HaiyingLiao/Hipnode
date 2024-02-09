@@ -34,7 +34,7 @@ const NavProfileMenu = () => {
 
               <AvatarFallback className='rounded-lg'>HN</AvatarFallback>
             </Avatar> */}
-            <UserButton afterSignOutUrl='' />
+            <UserButton afterSignOutUrl='/' />
             <div className='flex items-center justify-between gap-[5px] lg:gap-2.5'>
               <h6 className='navProfileName'>{testUser.name}</h6>
               <ProfileDropDown />
