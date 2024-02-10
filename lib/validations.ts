@@ -1,16 +1,17 @@
 import { z } from 'zod';
 
+// for form
 export const PostSchema = z.object({
   title: z.string().min(5).max(130),
   post: z.string().min(100),
-  postImage: z.string(),
+  // postImage: z.string(),
   group: z.string(),
   createType: z.string(),
   tags: z.array(z.string().min(1).max(15)).min(1).max(5),
 });
 
 export const CreatePostSchema = PostSchema.extend({
-  postImageKey: z.string(),
+  // postImageKey: z.string(),
   revenue: z.coerce.number().optional(),
   updates: z.coerce.number().optional(),
   website: z.string().optional(),
@@ -18,6 +19,7 @@ export const CreatePostSchema = PostSchema.extend({
   category: z.string().optional(),
 });
 
+// for server action
 export const InterviewsSchema = z.object({
   title: z.string().min(5).max(130),
   post: z.string().min(100),
@@ -30,6 +32,16 @@ export const InterviewsSchema = z.object({
   tags: z.array(z.string().min(1).max(15)).min(1).max(5),
 });
 
+export const PostsSchema = z.object({
+  title: z.string().min(5).max(130),
+  post: z.string().min(100),
+  image: z.string(),
+  authorId: z.string(),
+  tags: z.array(z.string().min(1).max(15)).min(1).max(5),
+  country: z.string(),
+});
+
 export type CreatePostType = z.infer<typeof CreatePostSchema>;
 export type UpdatePostSchemaType = z.infer<typeof PostSchema>;
 export type InterviewsType = z.infer<typeof InterviewsSchema>;
+export type PostsType = z.infer<typeof PostsSchema>;

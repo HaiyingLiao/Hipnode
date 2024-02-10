@@ -10,9 +10,10 @@ import { notFound } from 'next/navigation';
 
 import prisma from '@/prisma';
 import {
-  PostSchema,
-  CreatePostType,
+  PostsSchema,
   UpdatePostSchemaType,
+  PostsType,
+  PostSchema,
 } from '../validations';
 import {
   CreateCommentTye,
@@ -55,29 +56,24 @@ export async function getAllPosts(
   }
 }
 
-export async function createPost({ postData }: { postData: CreatePostType }) {
+export async function createPost(postData: PostsType) {
   try {
     const session = await getCurrentUser();
     if (!session) return redirectToSignIn();
 
-    const parsedData = PostSchema.safeParse(postData);
+    const parsedData = PostsSchema.safeParse(postData);
     if (!parsedData.success) throw new Error(parsedData.error.message);
 
     const post = await prisma.post.create({
       data: {
-        authorEmail: session.emailAddresses[0].emailAddress,
+        // authorEmail: session.emailAddresses[0].emailAddress,
+        authorId: postData.authorId,
         altText: postData.title,
-        authorName:
-          session.username ??
-          session.firstName ??
-          session.lastName ??
-          session.emailAddresses[0].emailAddress,
-        avatar: session.imageUrl,
         body: postData.post,
-        postImage: postData.postImage,
+        image: postData.image,
         role: 'Developer',
         title: postData.title,
-        postImageKey: postData.postImageKey!,
+        // postImageKey: postData.postImageKey!,
         country: postData.country,
       },
     });

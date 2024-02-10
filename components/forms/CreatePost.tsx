@@ -28,13 +28,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
-import { CreatePostSchema } from '@/lib/validations';
 import { createPostData, categoryItems } from '@/constants';
 import GroupSelectContent from './GroupSelectContent';
+import { CreatePostSchema } from '@/lib/validations';
 import { createInterview } from '@/lib/actions/interviews.action';
 import { createPost } from '@/lib/actions/post.action';
 import { uploadImageToS3 } from '@/lib/aws_s3';
-import { filterWords } from '@/lib/utils';
+import { filterWords, getUserCountry } from '@/lib/utils';
 import useUploadFile from '@/hooks/useUploadFile';
 
 const CreatePost = () => {
@@ -56,8 +56,6 @@ const CreatePost = () => {
       createType: '',
       group: '',
       post: '',
-      postImage: '',
-      postImageKey: '',
     },
   });
 
@@ -78,7 +76,9 @@ const CreatePost = () => {
       group,
     } = values;
     const modifiedCategory = category?.replace(/\W/g, '');
+
     setLoading(true);
+
     const isContainBadWord = filterWords(post);
     if (isContainBadWord) {
       toast({
@@ -110,28 +110,47 @@ const CreatePost = () => {
           break;
 
         case 'post':
-          if (files && files.postImage) {
-            // const userCountry = await getUserCountry();
-
-            const postImage = await uploadImageToS3(files.postImage);
+          {
+            const userCountry = await getUserCountry();
             await createPost({
-              postData: {
-                createType: '',
-                group,
-                post,
-                postImage: postImage?.Location as string,
-                tags,
-                title,
-                postImageKey: files.postImage.name,
-                // country: userCountry?.region,
-              },
+              // replace image path when implement image function
+              image: '/assets/images/illustration.png',
+              authorId: '657ddd2e3647ac6914ff58c7',
+              tags,
+              title,
+              post,
+              country: userCountry?.region,
             });
-            toast({
-              title: 'Your Post has been uploaded🎉',
-            });
-            router.push('/');
           }
+          toast({
+            title: 'Success!🎉 Your post has been uploaded.',
+          });
+          router.push('/');
           break;
+
+        // case 'post':
+        //   if (files && files.postImage) {
+        //     // const userCountry = await getUserCountry();
+
+        //     const postImage = await uploadImageToS3(files.postImage);
+        //     await createPost({
+        //       postData: {
+        //         createType: '',
+        //         group,
+        //         post,
+        //         postImage: postImage?.Location as string,
+        //         tags,
+        //         title,
+        //         postImageKey: files.postImage.name,
+        //         // country: userCountry?.region,
+        //       },
+        //     });
+        //     toast({
+        //       title: 'Your Post has been uploaded🎉',
+        //     });
+        //     router.push('/');
+        //   }
+        //   break;
       }
     } catch (error) {
       console.error('Error in form:', error);
@@ -199,7 +218,7 @@ const CreatePost = () => {
         />
 
         <div className='flex gap-5'>
-          <FormField
+          {/* <FormField
             control={form.control}
             name='postImage'
             render={() => (
@@ -236,7 +255,7 @@ const CreatePost = () => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <FormField
             control={form.control}
             name='group'
