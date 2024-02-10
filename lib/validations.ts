@@ -15,7 +15,7 @@ export const CreatePostSchema = PostSchema.extend({
   revenue: z.coerce.number().optional(),
   updates: z.coerce.number().optional(),
   website: z.string().optional(),
-  authorId: z.string().optional(),
+  authorclerkId: z.string().optional(),
   category: z.string().optional(),
 });
 
@@ -27,7 +27,7 @@ export const InterviewsSchema = z.object({
   revenue: z.number(),
   updates: z.number(),
   website: z.string(),
-  authorId: z.string(),
+  authorclerkId: z.string(),
   category: z.string(),
   tags: z.array(z.string().min(1).max(15)).min(1).max(5),
 });

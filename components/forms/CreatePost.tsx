@@ -37,7 +37,11 @@ import { uploadImageToS3 } from '@/lib/aws_s3';
 import { filterWords, getUserCountry } from '@/lib/utils';
 import useUploadFile from '@/hooks/useUploadFile';
 
-const CreatePost = () => {
+const CreatePost = ({
+  authorclerkId,
+}: {
+  authorclerkId: string | undefined | null;
+}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { theme } = useTheme();
   const editorRef = useRef(null);
@@ -91,22 +95,28 @@ const CreatePost = () => {
     try {
       switch (createType) {
         case 'interviews':
-          await createInterview({
-            // replace image path when implement image function
-            image: '/assets/images/illustration.png',
-            authorId: '657ddd2e3647ac6914ff58c7',
-            title,
-            post,
-            tags,
-            revenue: revenue || 0,
-            updates: updates || 0,
-            website: website || '',
-            category: modifiedCategory || 'free',
-          });
-          toast({
-            title: 'Success!🎉 Your interview post has been uploaded.',
-          });
-          router.push('/interviews');
+          if (authorclerkId) {
+            await createInterview({
+              // replace image path when implement image function
+              image: '/assets/images/illustration.png',
+              authorclerkId,
+              title,
+              post,
+              tags,
+              revenue: revenue || 0,
+              updates: updates || 0,
+              website: website || '',
+              category: modifiedCategory || 'free',
+            });
+            toast({
+              title: 'Success!🎉 Your interview post has been uploaded.',
+            });
+            router.push('/interviews');
+          } else {
+            toast({
+              title: 'Please log in to create posts',
+            });
+          }
           break;
 
         case 'post':

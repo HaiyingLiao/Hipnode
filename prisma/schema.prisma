@@ -8,18 +8,18 @@ datasource db {
 }
 
 model Interviews {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  image     String
-  createdAt DateTime @default(now())
-  title     String
-  post      String
-  revenue   Int
-  updates   Int
-  website   String
-  category  String
-  tags      String[]
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  String   @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  image         String
+  createdAt     DateTime @default(now())
+  title         String
+  post          String
+  revenue       Int
+  updates       Int
+  website       String
+  category      String
+  tags          String[]
+  author        User     @relation(fields: [authorclerkId], references: [clerkId], onDelete: Cascade)
+  authorclerkId String
 }
 
 model Post {
