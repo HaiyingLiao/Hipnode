@@ -36,7 +36,7 @@ export const PostsSchema = z.object({
   title: z.string().min(5).max(130),
   post: z.string().min(100),
   image: z.string(),
-  authorId: z.string(),
+  authorclerkId: z.string(),
   tags: z.array(z.string().min(1).max(15)).min(1).max(5),
   country: z.string(),
 });

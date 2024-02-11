@@ -7,7 +7,7 @@ import {
   Pagination,
   InterviewPostCard,
 } from '@/components/index';
-import { cardBtns, postDummyData } from '@/constants';
+import { cardBtns } from '@/constants';
 import { getProfilePosts } from '@/lib/actions/profile.action';
 import { timeAgo, formatDate } from '@/lib/utils';
 
@@ -41,7 +41,7 @@ export default async function ProfilePage({ searchParams }: SearchParamsProps) {
               case 'interviews':
                 return (
                   <InterviewPostCard
-                    key={post.title}
+                    key={post.id}
                     image={post.image}
                     createdAt={formatDate(post.createdAt)}
                     name={post.author.name}
@@ -56,36 +56,36 @@ export default async function ProfilePage({ searchParams }: SearchParamsProps) {
               case 'post':
                 return (
                   <PostCard
-                    slug={post.id.toString()}
                     key={post.id}
-                    name={post.name}
+                    emailAddress={post.author.email}
+                    username={post.author.name}
                     title={post.title}
                     tags={post.tags}
                     views={post.views}
-                    mainImage={post.mainImage}
-                    createdDate={post.createdDate}
-                    avatar={post.avatar}
-                    comments={post.comments}
-                    online={post.online}
-                    // isLiked={post.isLiked}
+                    image={post.image}
+                    createdAt={timeAgo(post.createdAt)}
+                    avatar={post.author.image}
+                    // comments={post.comments}
+                    online={true}
+                    id={post.id}
                     likes={post.likes}
                   />
                 );
               default:
                 return (
                   <PostCard
-                    slug={post.id.toString()}
                     key={post.id}
-                    name={post.name}
+                    emailAddress={post.author.email}
+                    username={post.author.name}
                     title={post.title}
                     tags={post.tags}
                     views={post.views}
-                    mainImage={post.mainImage}
-                    createdDate={post.createdDate}
-                    avatar={post.avatar}
-                    comments={post.comments}
-                    online={post.online}
-                    // isLiked={post.isLiked}
+                    image={post.image}
+                    createdAt={timeAgo(post.createdAt)}
+                    avatar={post.author.image}
+                    // comments={post.comments}
+                    online={true}
+                    id={post.id}
                     likes={post.likes}
                   />
                 );

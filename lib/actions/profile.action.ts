@@ -1,6 +1,7 @@
 'use server';
 
 import { getInterviews } from './interviews.action';
+import { getAllPosts } from './post.action';
 
 export async function getProfilePosts(postType: string, page: string) {
   const currentPage = page ? Number(page) : 1;
@@ -13,13 +14,12 @@ export async function getProfilePosts(postType: string, page: string) {
         // implement your logic here
         break;
       case 'posts':
-        // implement your logic here
-        break;
+        return await getAllPosts('popular', currentPage, 10, '/');
       case 'podcasts':
         // implement your logic here
         break;
       default:
-      // return posts data here
+        return await getAllPosts('popular', currentPage, 10, '/');
     }
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : 'Unknown error');

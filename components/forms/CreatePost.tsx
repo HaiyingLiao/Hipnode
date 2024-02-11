@@ -93,9 +93,9 @@ const CreatePost = ({
     }
 
     try {
-      switch (createType) {
-        case 'interviews':
-          if (authorclerkId) {
+      if (authorclerkId) {
+        switch (createType) {
+          case 'interviews':
             await createInterview({
               // replace image path when implement image function
               image: '/assets/images/illustration.png',
@@ -112,55 +112,31 @@ const CreatePost = ({
               title: 'Success!🎉 Your interview post has been uploaded.',
             });
             router.push('/interviews');
-          } else {
+            break;
+
+          case 'post':
+            {
+              const userCountry = await getUserCountry();
+              await createPost({
+                // replace image path when implement image function
+                image: '/assets/images/illustration.png',
+                authorclerkId,
+                tags,
+                title,
+                post,
+                country: userCountry?.region,
+              });
+            }
             toast({
-              title: 'Please log in to create posts',
+              title: 'Success!🎉 Your post has been uploaded.',
             });
-          }
-          break;
-
-        case 'post':
-          {
-            const userCountry = await getUserCountry();
-            await createPost({
-              // replace image path when implement image function
-              image: '/assets/images/illustration.png',
-              authorId: '657ddd2e3647ac6914ff58c7',
-              tags,
-              title,
-              post,
-              country: userCountry?.region,
-            });
-          }
-          toast({
-            title: 'Success!🎉 Your post has been uploaded.',
-          });
-          router.push('/');
-          break;
-
-        // case 'post':
-        //   if (files && files.postImage) {
-        //     // const userCountry = await getUserCountry();
-
-        //     const postImage = await uploadImageToS3(files.postImage);
-        //     await createPost({
-        //       postData: {
-        //         createType: '',
-        //         group,
-        //         post,
-        //         postImage: postImage?.Location as string,
-        //         tags,
-        //         title,
-        //         postImageKey: files.postImage.name,
-        //         // country: userCountry?.region,
-        //       },
-        //     });
-        //     toast({
-        //       title: 'Your Post has been uploaded🎉',
-        //     });
-        //     router.push('/');
-        //   }
-        //   break;
+            router.push('/');
+            break;
+        }
+      } else {
+        toast({
+          title: 'Please log in to create posts',
+        });
       }
     } catch (error) {
       console.error('Error in form:', error);

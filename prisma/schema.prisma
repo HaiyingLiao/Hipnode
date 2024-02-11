@@ -23,28 +23,23 @@ model Interviews {
 }
 
 model Post {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  // author      User      @relation(fields: [authorEmail], references: [email], onDelete: Cascade)
-  // authorEmail String
-  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  String    @db.ObjectId
-  title     String
-  body      String
-  role      String
-  createdAt DateTime  @default(now())
-  views     Int       @default(0)
-  likes     String[]
-  // authorName String
-  // avatar     String
-  image     String
-  // imageKey  String
-  altText   String
-  comments  Comment[]
-  tags      String[]
-  groupId   String?
-  share     Int       @default(0)
-  report    Report[]
-  country   String
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  author        User      @relation(fields: [authorclerkId], references: [clerkId], onDelete: Cascade)
+  authorclerkId String
+  title         String
+  body          String
+  role          String
+  createdAt     DateTime  @default(now())
+  views         Int       @default(0)
+  likes         String[]
+  image         String
+  altText       String
+  comments      Comment[]
+  tags          String[]
+  groupId       String?
+  share         Int       @default(0)
+  report        Report[]
+  country       String
 }
 
 // "onDelete: Cascade" in Comment model mean, when the post deleted, all related comments will be deleted as well same thing happen in Post model

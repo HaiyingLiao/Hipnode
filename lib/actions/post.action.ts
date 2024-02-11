@@ -43,6 +43,13 @@ export async function getAllPosts(
       orderBy: sort === 'newest' ? { createdAt: 'desc' } : [{ views: 'desc' }],
       include: {
         comments: true,
+        author: {
+          select: {
+            name: true,
+            image: true,
+            email: true,
+          },
+        },
       },
       ...groupsQuery,
     });
@@ -66,14 +73,12 @@ export async function createPost(postData: PostsType) {
 
     const post = await prisma.post.create({
       data: {
-        // authorEmail: session.emailAddresses[0].emailAddress,
-        authorId: postData.authorId,
+        authorclerkId: postData.authorclerkId,
         altText: postData.title,
         body: postData.post,
         image: postData.image,
         role: 'Developer',
         title: postData.title,
-        // postImageKey: postData.postImageKey!,
         country: postData.country,
       },
     });
@@ -119,6 +124,13 @@ export async function getPostById(id: string) {
       prisma.post.findFirst({
         where: { id },
         include: {
+          author: {
+            select: {
+              name: true,
+              image: true,
+              email: true,
+            },
+          },
           comments: {
             where: {
               postId: id,

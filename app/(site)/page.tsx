@@ -11,7 +11,7 @@ import {
   SidebarListItem,
 } from '@/components/index';
 import { getAllPosts } from '@/lib/actions/post.action';
-import { getCreatedDate } from '@/lib/utils';
+import { timeAgo } from '@/lib/utils';
 import SortMobile from '@/components/Home/SortMobile';
 
 type URLProps = {
@@ -134,21 +134,18 @@ export default async function Home({ searchParams }: URLProps) {
             <div className='pb-2'>
               {searchResults?.map((post) => (
                 <PostCard
-                  emailAddress={user?.emailAddresses[0].emailAddress as string}
-                  username={user?.username as string}
                   key={post.id}
-                  id={post.id}
-                  authorName={post.authorName}
+                  emailAddress={post.author.email}
+                  username={post.author.name}
                   title={post.title}
                   tags={post.tags}
                   views={post.views}
-                  // @ts-ignore
-                  postImage={post.postImage}
-                  createdAt={getCreatedDate(new Date(post.createdAt)) as string}
-                  avatar={post.avatar}
-                  // @ts-ignore
-                  comments={post.comments}
+                  image={post.image}
+                  createdAt={timeAgo(post.createdAt)}
+                  avatar={post.author.image}
+                  // comments={post.comments}
                   online={true}
+                  id={post.id}
                   likes={post.likes}
                 />
               ))}

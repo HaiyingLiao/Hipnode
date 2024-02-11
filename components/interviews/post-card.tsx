@@ -17,10 +17,10 @@ type InterviewPostCardProps = {
 
 export default function InterviewsPostCard({
   authorImage,
+  name,
   captions,
   createdAt,
   image,
-  name,
   revenue,
   updates,
   website,
