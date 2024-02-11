@@ -67,6 +67,7 @@ module.exports = {
           },
           blue: {
             DEFAULT: '#347AE2',
+            btnhover: '#347ae2e6',
             90: '#4887E5',
             80: '#5D95E8',
             20: '#D6E4F9',

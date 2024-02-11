@@ -565,12 +565,12 @@ const CreatePost = ({
           <Button
             disabled={loading}
             type='submit'
-            className='body-semibold md:display-semibold rounded-lg bg-secondary-blue px-10 py-[10px] text-secondary-blue-10 hover:bg-[#347ae2e6] dark:bg-secondary-blue dark:text-secondary-blue-10 dark:hover:bg-[#347ae2e6]'
+            className='body-semibold md:display-semibold rounded-lg bg-secondary-blue px-10 py-[10px] text-secondary-blue-10 hover:bg-secondary-blue-btnhover dark:bg-secondary-blue dark:text-secondary-blue-10 dark:hover:bg-secondary-blue-btnhover'
           >
             {loading ? 'Publishing...' : 'Publish'}
           </Button>
           <Link
-            href={'/'}
+            href='/'
             type='button'
             className='md:display-regular body-semibold bg-white text-darkSecondary-800 hover:bg-white dark:bg-darkPrimary-3 dark:text-darkSecondary-800'
           >

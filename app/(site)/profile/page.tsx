@@ -36,41 +36,62 @@ export default async function ProfilePage({ searchParams }: SearchParamsProps) {
       <main className='flex w-full flex-col lg:max-w-[785px]'>
         <OptionBar />
         <div>
-          {posts?.map(
-            (post) =>
-              type === 'interviews' ? (
-                <InterviewPostCard
-                  key={post.title}
-                  image={post.image}
-                  createdAt={formatDate(post.createdAt)}
-                  name={post.author.name}
-                  authorImage={post.author.image}
-                  captions={post.title}
-                  revenue={post.revenue}
-                  updates={post.updates}
-                  website={post.website}
-                  id={post.id}
-                />
-              ) : (
-                // here will implement other cards
-                <div key={post.id} />
-              ),
-            // <PostCard
-            //   slug={post.id.toString()}
-            //   key={post.id}
-            //   name={post.name}
-            //   title={post.title}
-            //   tags={post.tags}
-            //   views={post.views}
-            //   mainImage={post.mainImage}
-            //   createdDate={post.createdDate}
-            //   avatar={post.avatar}
-            //   comments={post.comments}
-            //   online={post.online}
-            //   // isLiked={post.isLiked}
-            //   likes={post.likes}
-            // />
-          )}
+          {posts?.map((post) => {
+            switch (type) {
+              case 'interviews':
+                return (
+                  <InterviewPostCard
+                    key={post.title}
+                    image={post.image}
+                    createdAt={formatDate(post.createdAt)}
+                    name={post.author.name}
+                    authorImage={post.author.image}
+                    captions={post.title}
+                    revenue={post.revenue}
+                    updates={post.updates}
+                    website={post.website}
+                    id={post.id}
+                  />
+                );
+              case 'post':
+                return (
+                  <PostCard
+                    slug={post.id.toString()}
+                    key={post.id}
+                    name={post.name}
+                    title={post.title}
+                    tags={post.tags}
+                    views={post.views}
+                    mainImage={post.mainImage}
+                    createdDate={post.createdDate}
+                    avatar={post.avatar}
+                    comments={post.comments}
+                    online={post.online}
+                    // isLiked={post.isLiked}
+                    likes={post.likes}
+                  />
+                );
+              default:
+                return (
+                  <PostCard
+                    slug={post.id.toString()}
+                    key={post.id}
+                    name={post.name}
+                    title={post.title}
+                    tags={post.tags}
+                    views={post.views}
+                    mainImage={post.mainImage}
+                    createdDate={post.createdDate}
+                    avatar={post.avatar}
+                    comments={post.comments}
+                    online={post.online}
+                    // isLiked={post.isLiked}
+                    likes={post.likes}
+                  />
+                );
+            }
+          })}
+
           <Pagination totalPages={totalPages} />
         </div>
       </main>
