@@ -56,7 +56,7 @@ export default function InterviewsPostCard({
             width={280}
             height={180}
             className='block w-full rounded-lg object-contain lg:hidden'
-            src={'/assets/images/illustration.png'}
+            src={image}
           />
           <p className='text-base font-semibold leading-relaxed text-darkSecondary-900 dark:text-white-800 md:text-lg'>
             {captions}
@@ -77,7 +77,7 @@ export default function InterviewsPostCard({
           alt='post'
           width={280}
           height={180}
-          className='hidden h-[180px] w-[280px] rounded-lg lg:block'
+          className='hidden max-h-[180px] min-h-[180px] min-w-[280px] rounded-lg object-cover lg:block'
           src={image}
         />
       </div>

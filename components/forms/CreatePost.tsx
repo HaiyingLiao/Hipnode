@@ -36,6 +36,7 @@ import { createPost } from '@/lib/actions/post.action';
 import { uploadImageToS3 } from '@/lib/aws_s3';
 import { filterWords, getUserCountry } from '@/lib/utils';
 import useUploadFile from '@/hooks/useUploadFile';
+import { UploadButton } from '@/lib/uploadthing';
 
 const CreatePost = ({
   authorclerkId,
@@ -47,6 +48,19 @@ const CreatePost = ({
   const editorRef = useRef(null);
   const router = useRouter();
   const { toast } = useToast();
+
+  const [imagePreview, setImagePreview] = useState<
+    {
+      fileKey: string;
+      fileName: string;
+      fileSize: number;
+      fileUrl: string;
+      key: string;
+      name: string;
+      size: number;
+      url: string;
+    }[]
+  >([]);
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
@@ -97,8 +111,7 @@ const CreatePost = ({
         switch (createType) {
           case 'interviews':
             await createInterview({
-              // replace image path when implement image function
-              image: '/assets/images/illustration.png',
+              image: imagePreview[0].url,
               authorclerkId,
               title,
               post,
@@ -118,8 +131,7 @@ const CreatePost = ({
             {
               const userCountry = await getUserCountry();
               await createPost({
-                // replace image path when implement image function
-                image: '/assets/images/illustration.png',
+                image: imagePreview[0].url,
                 authorclerkId,
                 tags,
                 title,
@@ -242,6 +254,55 @@ const CreatePost = ({
               </FormItem>
             )}
           /> */}
+
+          {/* @ts-ignore */}
+          <UploadButton
+            appearance={{
+              button:
+                'px-2.5 py-2 text-darkSecondary-900 bodyXs-regular md:body-semibold dark:bg-darkPrimary-4 dark:text-white-800 ut-uploading:cursor-not-allowed rounded-r-none bg-white-800 bg-none',
+            }}
+            endpoint='imageUploader'
+            onClientUploadComplete={(
+              res: Array<{
+                fileKey: string;
+                fileName: string;
+                fileSize: number;
+                fileUrl: string;
+                key: string;
+                name: string;
+                size: number;
+                url: string;
+              }>,
+            ) => {
+              setImagePreview(res);
+            }}
+            onUploadError={(error: Error) => {
+              toast({
+                title: `ERROR! ${error.message}`,
+                variant: 'destructive',
+              });
+            }}
+            content={{
+              button() {
+                return (
+                  <div className='flex items-center gap-2'>
+                    <Image
+                      src='uploadIcon.svg'
+                      alt='upload icon'
+                      width={20}
+                      height={20}
+                      className='h-5 w-5 dark:brightness-0 dark:invert'
+                    />
+                    <p>Change Cover</p>
+                  </div>
+                );
+              },
+              allowedContent() {
+                return '';
+              },
+            }}
+          />
+
           <FormField
             control={form.control}
             name='group'
@@ -271,7 +332,6 @@ const CreatePost = ({
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name='createType'
@@ -315,16 +375,15 @@ const CreatePost = ({
             )}
           />
         </div>
-        {preview && (
-          <div className='relative min-h-[350px] w-full'>
-            <Image
-              src={preview.postImage as string}
-              alt='cover'
-              fill
-              className='rounded-lg object-cover'
-              priority
-            />
-          </div>
+
+        {imagePreview.length > 0 && (
+          <Image
+            src={imagePreview[0].url}
+            alt='cover image'
+            width={870}
+            height={500}
+            className='w-full rounded-lg'
+          />
         )}
 
         <FormField

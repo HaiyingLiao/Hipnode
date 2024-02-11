@@ -3,9 +3,12 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Source_Sans_3 } from 'next/font/google';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
+import { extractRouterConfig } from 'uploadthing/server';
 
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import { ourFileRouter } from './api/uploadthing/core';
 
 const sourceSansPro = Source_Sans_3({
   subsets: ['latin'],
@@ -25,7 +28,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <body
           className={`${sourceSansPro.className} max-container bg-white-800 dark:bg-darkPrimary-2`}
         >
-          <main>{children}</main>
+          <main>
+            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+            {children}
+          </main>
           <Toaster />
         </body>
       </ClerkProvider>
