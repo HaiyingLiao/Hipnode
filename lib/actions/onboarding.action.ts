@@ -57,17 +57,20 @@ export async function updateCodingLevel(clerkId: string, codingLevel: string) {
 }
 
 // Update Business Types
-export async function updateBusinessTypes(id: string, businessTypes: string[]) {
+export async function updateBusinessTypes(
+  clerkId: string,
+  businessTypes: string[],
+) {
   try {
     const selectedUser = await prisma.user.findFirst({
-      where: { id },
+      where: { clerkId },
     });
 
     if (!selectedUser) return;
 
     const updatedUser = await prisma.user.update({
       where: {
-        id: selectedUser.id,
+        clerkId: selectedUser.clerkId,
       },
       data: {
         onboardingProgress: 'Business Types',

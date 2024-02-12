@@ -60,9 +60,8 @@ export default function ContentCard({
         } ${position === 'left' && 'cursor-none'}`,
         cardBg,
         `${
-          answerParams === text.toLowerCase()
-            ? 'bg-secondary-red-60 !text-white'
-            : ''
+          answerParams === text.toLowerCase() &&
+          'bg-secondary-red-60 !text-white'
         }`,
       )}
     >

@@ -2,7 +2,7 @@ export { default as MeetupsWrapper } from './shared/MeetupsWrapper';
 export { default as Filter } from './shared/Filter';
 export { default as PodcastsCard } from './shared/PodcastCard';
 export { default as Contents } from '@/components/shared/Contents/Contents';
-export { default as BusinessInterest } from '@/components/BusinessInterest/BuisinessInterest';
+export { default as InterestWrapper } from '@/components/Onboarding/InterestWrapper';
 export { default as SidePodcasts } from '@/components/SidePodcasts/SidePodcasts';
 export { default as PodcastChip } from '@/components/Podcasts/PodcastChip';
 export { default as MeetupChip } from './shared/MeetupChip';
