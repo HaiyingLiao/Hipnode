@@ -20,7 +20,7 @@ type URLProps = {
 };
 
 const Page = async ({ params }: URLProps) => {
-  await checkUserStage();
+  await checkUserStage('');
   const { post, totalComments } = await getPostById(params.id);
   if (!post) return <NotFound />;
 

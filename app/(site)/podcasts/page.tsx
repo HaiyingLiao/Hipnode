@@ -9,7 +9,7 @@ import { podcastDatas } from '@/constants';
 import { checkUserStage } from '@/lib/utils';
 
 const Podcasts = async () => {
-  await checkUserStage();
+  await checkUserStage('');
   const cardBtns = [
     {
       name: 'Host a Podcast',

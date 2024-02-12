@@ -1,7 +1,8 @@
 'use server';
 
+import { unstable_cache, revalidatePath } from 'next/cache';
 import prisma from '@/prisma';
-import { revalidatePath } from 'next/cache';
+
 import { getCachedUser } from '@/lib/userCache';
 
 interface ParamsType {
@@ -66,7 +67,7 @@ export async function deleteUser(params: Pick<ParamsType, 'clerkId'>) {
   }
 }
 
-export async function getUserByClerkId() {
+export const getUserByClerkId = unstable_cache(async () => {
   try {
     const user = await getCachedUser();
 
@@ -80,4 +81,4 @@ export async function getUserByClerkId() {
   } catch (error) {
     throw new Error('An error occurred while fetching the user');
   }
-}
+});

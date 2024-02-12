@@ -7,7 +7,7 @@ import {
 import { checkUserStage } from '@/lib/utils';
 
 const Page = async () => {
-  await checkUserStage();
+  await checkUserStage('');
   const cardBtns = [
     {
       name: 'Host a Meetup',

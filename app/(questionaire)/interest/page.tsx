@@ -3,7 +3,7 @@ import { InterestWrapper } from '@/components/index';
 import { checkUserStage } from '@/lib/utils';
 
 export default async function Introduce() {
-  await checkUserStage();
+  await checkUserStage('interest');
   const user = await getCachedUser();
   if (!user) return;
 

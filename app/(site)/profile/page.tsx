@@ -19,7 +19,7 @@ interface SearchParamsProps {
 }
 
 export default async function ProfilePage({ searchParams }: SearchParamsProps) {
-  await checkUserStage();
+  await checkUserStage('');
   const { type, page } = searchParams;
 
   const postData = await getProfilePosts(type, page);

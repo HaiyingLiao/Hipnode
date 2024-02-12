@@ -10,7 +10,7 @@ type Params = {
 };
 
 export default async function InterviewDetail({ params: { id } }: Params) {
-  await checkUserStage();
+  await checkUserStage('');
   const interview = await getInterviewById(id);
 
   // fetch tags from database later

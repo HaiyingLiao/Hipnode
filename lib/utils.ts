@@ -235,14 +235,14 @@ export function removeKeysFromQuery(params: string, keysToRemove: string[]) {
   );
 }
 
-export const checkUserStage = async () => {
+export const checkUserStage = async (currentPage: String) => {
   const user = await getUserByClerkId();
-
+  console.log(user?.onboardingProgress);
   if (user?.onboardingProgress === '') {
-    redirect('/current-stage');
+    currentPage !== 'current-stage' && redirect('/current-stage');
   } else if (user?.onboardingProgress === 'Business Stage') {
-    redirect('/programming-level');
+    currentPage !== 'programming-level' && redirect('/programming-level');
   } else if (user?.onboardingProgress === 'Coding Level') {
-    redirect('/interest');
+    currentPage !== 'interest' && redirect('/interest');
   }
 };

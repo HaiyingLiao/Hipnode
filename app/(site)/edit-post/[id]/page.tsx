@@ -7,7 +7,7 @@ export default async function EditPostPage({
 }: {
   params: { id: string };
 }) {
-  await checkUserStage();
+  await checkUserStage('');
   const targetInterview = await getInterviewById(params.id);
   const {
     title,
