@@ -3,12 +3,14 @@ import Image from 'next/image';
 
 import Statistic from '@/components/interviews/statistic';
 import { getInterviewById } from '@/lib/actions/interviews.action';
+import { checkUserStage } from '@/lib/utils';
 
 type Params = {
   params: { id: string };
 };
 
 export default async function InterviewDetail({ params: { id } }: Params) {
+  await checkUserStage();
   const interview = await getInterviewById(id);
 
   // fetch tags from database later

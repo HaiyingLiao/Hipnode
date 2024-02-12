@@ -1,11 +1,13 @@
 import { EditPost } from '@/components/index';
 import { getInterviewById } from '@/lib/actions/interviews.action';
+import { checkUserStage } from '@/lib/utils';
 
 export default async function EditPostPage({
   params,
 }: {
   params: { id: string };
 }) {
+  await checkUserStage();
   const targetInterview = await getInterviewById(params.id);
   const {
     title,

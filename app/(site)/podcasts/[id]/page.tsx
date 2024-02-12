@@ -3,8 +3,10 @@ import React from 'react';
 
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
+import { checkUserStage } from '@/lib/utils';
 
-const Podcast = () => {
+const Podcast = async () => {
+  await checkUserStage();
   return (
     <main className='max-container  w-full pb-10 pt-28 md:w-4/6'>
       <section className='rounded-2xl bg-white p-5 dark:bg-darkPrimary-3'>

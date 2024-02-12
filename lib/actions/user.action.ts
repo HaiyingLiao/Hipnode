@@ -2,6 +2,7 @@
 
 import prisma from '@/prisma';
 import { revalidatePath } from 'next/cache';
+import { getCachedUser } from '@/lib/userCache';
 
 interface ParamsType {
   clerkId: string;
@@ -65,12 +66,17 @@ export async function deleteUser(params: Pick<ParamsType, 'clerkId'>) {
   }
 }
 
-export async function getUserById(id: string) {
+export async function getUserByClerkId() {
   try {
-    const user = await prisma.user.findFirst({
-      where: { id },
+    const user = await getCachedUser();
+
+    const selectedUser = await prisma.user.findFirst({
+      where: { clerkId: user?.id },
     });
-    return user;
+
+    if (!selectedUser) return;
+
+    return selectedUser;
   } catch (error) {
     throw new Error('An error occurred while fetching the user');
   }

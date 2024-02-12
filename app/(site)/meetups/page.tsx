@@ -4,8 +4,10 @@ import {
   MeetupsWrapper,
   SidePodcasts,
 } from '@/components/index';
+import { checkUserStage } from '@/lib/utils';
 
-const Page = () => {
+const Page = async () => {
+  await checkUserStage();
   const cardBtns = [
     {
       name: 'Host a Meetup',

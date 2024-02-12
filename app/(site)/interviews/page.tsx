@@ -7,7 +7,7 @@ import {
 } from '@/components/index';
 import { interviewCards } from '@/constants';
 import { getInterviews } from '@/lib/actions/interviews.action';
-import { formatDate } from '@/lib/utils';
+import { formatDate, checkUserStage } from '@/lib/utils';
 
 interface SearchParamsProps {
   searchParams: {
@@ -17,6 +17,7 @@ interface SearchParamsProps {
 }
 
 export default async function Interviews({ searchParams }: SearchParamsProps) {
+  await checkUserStage();
   const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
   const { data: interviews, totalPages } = await getInterviews(

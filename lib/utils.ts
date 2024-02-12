@@ -3,6 +3,9 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import queryString from 'query-string';
 import Filter from 'bad-words';
+import { redirect } from 'next/navigation';
+
+import { getUserByClerkId } from './actions/user.action';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -231,3 +234,15 @@ export function removeKeysFromQuery(params: string, keysToRemove: string[]) {
     { skipNull: true },
   );
 }
+
+export const checkUserStage = async () => {
+  const user = await getUserByClerkId();
+
+  if (user?.onboardingProgress === '') {
+    redirect('/current-stage');
+  } else if (user?.onboardingProgress === 'Business Stage') {
+    redirect('/programming-level');
+  } else if (user?.onboardingProgress === 'Coding Level') {
+    redirect('/interest');
+  }
+};

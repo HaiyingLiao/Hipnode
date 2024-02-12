@@ -6,8 +6,10 @@ import {
   PodcastChip,
 } from '@/components/index';
 import { podcastDatas } from '@/constants';
+import { checkUserStage } from '@/lib/utils';
 
-const Podcasts = () => {
+const Podcasts = async () => {
+  await checkUserStage();
   const cardBtns = [
     {
       name: 'Host a Podcast',

@@ -9,7 +9,7 @@ import {
 } from '@/components/index';
 import { cardBtns } from '@/constants';
 import { getProfilePosts } from '@/lib/actions/profile.action';
-import { timeAgo, formatDate } from '@/lib/utils';
+import { timeAgo, formatDate, checkUserStage } from '@/lib/utils';
 
 interface SearchParamsProps {
   searchParams: {
@@ -19,6 +19,7 @@ interface SearchParamsProps {
 }
 
 export default async function ProfilePage({ searchParams }: SearchParamsProps) {
+  await checkUserStage();
   const { type, page } = searchParams;
 
   const postData = await getProfilePosts(type, page);
