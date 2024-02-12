@@ -27,10 +27,10 @@ const NavProfileMenu = async () => {
           </>
         ) : (
           <div className='flex flex-1 items-center justify-center gap-[15px] py-3 md:gap-6'>
-            <Link href='#' className='signupButton'>
+            <Link href='/sign-up' className='signupButton'>
               Signup
             </Link>
-            <Link href='#'>
+            <Link href='/sign-in'>
               <Button className='loginButton'>Login</Button>
             </Link>
             <DarkModeToggle isTextHidden={true} />
