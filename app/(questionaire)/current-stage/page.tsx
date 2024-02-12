@@ -1,8 +1,10 @@
 import { getCachedUser } from '@/lib/userCache';
 import { Contents } from '@/components/index';
 import { userCurrentStage } from '@/constants';
+import { checkUserStage } from '@/lib/utils';
 
 export default async function CurrentStage() {
+  await checkUserStage();
   const user = await getCachedUser();
   if (!user) return;
 

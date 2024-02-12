@@ -1,7 +1,9 @@
 import { getCachedUser } from '@/lib/userCache';
 import { InterestWrapper } from '@/components/index';
+import { checkUserStage } from '@/lib/utils';
 
 export default async function Introduce() {
+  await checkUserStage();
   const user = await getCachedUser();
   if (!user) return;
 
