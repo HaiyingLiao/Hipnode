@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import { UserButton } from '@clerk/nextjs';
-import { currentUser } from '@clerk/nextjs/server';
 
 import ProfileDropDown from './ProfileDropDown';
 import { Button } from '@/components/ui/button';
 import DarkModeToggle from './DarkModeToggle';
 import MessageDropDown from './MessageDropDown';
+import { getCachedUser } from '@/lib/userCache';
 
 const NavProfileMenu = async () => {
-  const user = await currentUser();
+  const user = await getCachedUser();
   const isLoggedIn: boolean = !!user;
 
   return (

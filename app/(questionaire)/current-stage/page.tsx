@@ -1,10 +1,9 @@
-import { currentUser } from '@clerk/nextjs/server';
-
+import { getCachedUser } from '@/lib/userCache';
 import { Contents } from '@/components/index';
 import { userCurrentStage } from '@/constants';
 
 export default async function CurrentStage() {
-  const user = await currentUser();
+  const user = await getCachedUser();
   if (!user) return;
 
   return (

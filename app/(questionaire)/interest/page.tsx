@@ -1,9 +1,8 @@
-import { currentUser } from '@clerk/nextjs/server';
-
+import { getCachedUser } from '@/lib/userCache';
 import { InterestWrapper } from '@/components/index';
 
 export default async function Introduce() {
-  const user = await currentUser();
+  const user = await getCachedUser();
   if (!user) return;
 
   return (

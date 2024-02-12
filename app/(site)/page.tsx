@@ -1,6 +1,6 @@
-import { currentUser } from '@clerk/nextjs';
 import Image from 'next/image';
 
+import { getCachedUser } from '@/lib/userCache';
 import { popularTags, pinnedGroups, newAndPopular } from '@/constants';
 import {
   PostCard,
@@ -24,7 +24,7 @@ type URLProps = {
 };
 
 export default async function Home({ searchParams }: URLProps) {
-  const user = await currentUser();
+  const user = await getCachedUser();
   const page = searchParams.page ? +searchParams.page : 1;
   const { data: posts, totalPages } = await getAllPosts(
     searchParams.sort,
