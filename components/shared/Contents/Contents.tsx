@@ -1,8 +1,14 @@
-import { currentUser } from '@clerk/nextjs';
+'use client';
+
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import ContentCard from './Card';
+import {
+  updateBusinessStage,
+  updateCodingLevel,
+} from '@/lib/actions/onboarding.action';
 
 type ContentsTypes = {
   background: string;
@@ -18,19 +24,30 @@ type HeroContentsProps = {
   cardBg?: string;
   position: 'left' | 'right';
   path?: string;
+  userClerkId: string;
 };
 
-export default async function HeroContents({
+export default function HeroContents({
   contents,
   title,
   bg,
   cardBg,
   position,
   path,
+  userClerkId,
 }: HeroContentsProps) {
-  // const user = await currentUser();
-  // if (!user) return;
-  const user = { id: '65b4ac09393361a92bd49f7a' };
+  const searchParams = useSearchParams();
+  const answerParams = searchParams.get('answer');
+
+  const handleClick = async () => {
+    if (answerParams !== null) {
+      if (path === '/programming-level') {
+        await updateBusinessStage(userClerkId, answerParams as string);
+      } else if (path === '/interest') {
+        await updateCodingLevel(userClerkId, answerParams as string);
+      }
+    }
+  };
 
   return (
     <section
@@ -50,11 +67,12 @@ export default async function HeroContents({
               {...content}
               position={position}
               cardBg={cardBg!}
-              userId={user.id}
+              userClerkId={userClerkId}
             />
           ))}
-          {position === 'right' && (
+          {position === 'right' && answerParams !== null && (
             <Link
+              onClick={handleClick}
               href={path!}
               className='mt-5 block w-min rounded bg-secondary-red-60 px-10 py-3 text-white-700'
             >

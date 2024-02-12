@@ -4,17 +4,20 @@ import prisma from '@/prisma';
 import { revalidatePath } from 'next/cache';
 
 // Update Business Stage
-export async function updateBusinessStage(id: string, businessStage: string) {
+export async function updateBusinessStage(
+  clerkId: string,
+  businessStage: string,
+) {
   try {
     const selectedUser = await prisma.user.findFirst({
-      where: { id },
+      where: { clerkId },
     });
 
     if (!selectedUser) return;
 
     const updatedUser = await prisma.user.update({
       where: {
-        id: selectedUser.id,
+        clerkId: selectedUser.clerkId,
       },
       data: {
         onboardingProgress: 'Business Stage',
@@ -28,17 +31,17 @@ export async function updateBusinessStage(id: string, businessStage: string) {
 }
 
 // Update Coding Level
-export async function updateCodingLevel(id: string, codingLevel: string) {
+export async function updateCodingLevel(clerkId: string, codingLevel: string) {
   try {
     const selectedUser = await prisma.user.findFirst({
-      where: { id },
+      where: { clerkId },
     });
 
     if (!selectedUser) return;
 
     const updatedUser = await prisma.user.update({
       where: {
-        id: selectedUser.id,
+        clerkId: selectedUser.clerkId,
       },
       data: {
         onboardingProgress: 'Coding Level',
