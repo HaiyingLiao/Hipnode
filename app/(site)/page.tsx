@@ -26,7 +26,7 @@ type URLProps = {
 export default async function Home({ searchParams }: URLProps) {
   const user = await currentUser();
   const page = searchParams.page ? +searchParams.page : 1;
-  const { posts, totalPages } = await getAllPosts(
+  const { data: posts, totalPages } = await getAllPosts(
     searchParams.sort,
     page,
     10,
