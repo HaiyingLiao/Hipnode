@@ -19,7 +19,7 @@ interface SearchParamsProps {
 export default async function Interviews({ searchParams }: SearchParamsProps) {
   const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
-  const { posts: interviews, totalPages } = await getInterviews(
+  const { data: interviews, totalPages } = await getInterviews(
     page,
     10,
     category,

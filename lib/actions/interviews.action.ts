@@ -63,7 +63,7 @@ export async function getInterviews(
     });
     const totalPages = Math.ceil(totalPosts / pageSize);
 
-    const posts = await prisma.interviews.findMany({
+    const data = await prisma.interviews.findMany({
       take: pageSize,
       skip: pageSize * (page - 1),
       include: {
@@ -80,9 +80,9 @@ export async function getInterviews(
       where: whereClause,
     });
 
-    if (!posts) throw new Error('Interviews not found.');
+    if (!data) throw new Error('Interviews not found.');
 
-    return { posts, totalPages };
+    return { data, totalPages };
   } catch (error) {
     console.error('Error in getInterviews:', error);
     throw new Error(error instanceof Error ? error.message : 'Unknown error');

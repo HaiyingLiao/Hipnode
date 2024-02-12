@@ -37,7 +37,7 @@ export async function getAllPosts(
       },
     };
 
-    const posts = await prisma.post.findMany({
+    const data = await prisma.post.findMany({
       take: pageSize,
       skip: (page - 1) * pageSize,
       orderBy: sort === 'newest' ? { createdAt: 'desc' } : [{ views: 'desc' }],
@@ -55,7 +55,7 @@ export async function getAllPosts(
     });
 
     return {
-      posts,
+      data,
       totalPages,
     };
   } catch (error) {

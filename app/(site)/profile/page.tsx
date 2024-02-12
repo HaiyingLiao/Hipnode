@@ -22,7 +22,7 @@ export default async function ProfilePage({ searchParams }: SearchParamsProps) {
   const { type, page } = searchParams;
 
   const postData = await getProfilePosts(type, page);
-  const posts = postData?.posts;
+  const posts = postData?.data;
   const totalPages = postData?.totalPages || 1;
 
   return (
