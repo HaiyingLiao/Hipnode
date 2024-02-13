@@ -28,9 +28,9 @@ export default async function Interviews({ searchParams }: SearchParamsProps) {
 
   return (
     <div className='mt-28 flex h-full w-full flex-col gap-5 lg:flex-row '>
-      <section className=' w-full max-w-[210px] max-lg:max-w-full lg:sticky lg:top-28 lg:h-screen'>
+      <aside className=' w-full max-w-[210px] max-lg:max-w-full lg:sticky lg:top-28 lg:h-screen'>
         <Filter />
-      </section>
+      </aside>
 
       <div className='flex flex-wrap gap-5'>
         <section className='space-y-5 pb-5 max-[1350px]:w-full lg:max-w-[700px]'>
@@ -51,10 +51,10 @@ export default async function Interviews({ searchParams }: SearchParamsProps) {
           <Pagination totalPages={totalPages} />
         </section>
 
-        <section className='no-scrollbar space-y-5 max-[1350px]:min-w-full lg:sticky lg:top-28 lg:h-screen lg:max-w-[325px] lg:overflow-y-auto'>
+        <aside className='no-scrollbar space-y-5 max-[1350px]:min-w-full lg:sticky lg:top-28 lg:h-screen lg:max-w-[325px] lg:overflow-y-auto'>
           <HostMeetupCard cardBtns={interviewCards} />
           <SidePodcasts />
-        </section>
+        </aside>
       </div>
     </div>
   );

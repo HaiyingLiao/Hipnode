@@ -4,24 +4,15 @@ import {
   MeetupsWrapper,
   SidePodcasts,
 } from '@/components/index';
+import { cardBtns } from '@/constants';
 import { checkUserStage } from '@/lib/utils';
 
-const Page = async () => {
+export default async function Meetups() {
   await checkUserStage('');
-  const cardBtns = [
-    {
-      name: 'Host a Meetup',
-      link: '/host-meetup',
-    },
-    {
-      name: 'Code of Conduct',
-      link: '/code-of-conduct',
-    },
-  ];
 
   return (
-    <section className='flex flex-col gap-4 bg-white-700 dark:bg-darkPrimary-2 md:flex-row'>
-      <main className='flex flex-col gap-4 lg:flex lg:flex-row '>
+    <section className='mt-28 flex flex-col gap-4 bg-white-700 dark:bg-darkPrimary-2 md:flex-row'>
+      <div className='flex flex-col gap-4 lg:flex lg:flex-row '>
         <div className='flex flex-col gap-4 lg:flex-row'>
           <div className='w-full lg:hidden'>
             <HostMeetupCard cardBtns={cardBtns} />
@@ -37,15 +28,13 @@ const Page = async () => {
           </div>
         </div>
 
-        <div className='flex w-full flex-col gap-5 lg:max-w-[360px]'>
+        <aside className='flex w-full flex-col gap-5 lg:max-w-[360px]'>
           <div className='hidden lg:block'>
             <HostMeetupCard cardBtns={cardBtns} />
           </div>
           <SidePodcasts />
-        </div>
-      </main>
+        </aside>
+      </div>
     </section>
   );
-};
-
-export default Page;
+}
