@@ -2,6 +2,7 @@ import {
   Filter,
   HostMeetupCard,
   MeetupsWrapper,
+  Pagination,
   SidePodcasts,
 } from '@/components/index';
 import { cardBtns } from '@/constants';
@@ -24,6 +25,7 @@ export default async function Meetups() {
             </aside>
             <div className='w-full lg:w-5/6'>
               <MeetupsWrapper />
+              <Pagination totalPages={10} />
             </div>
           </div>
         </div>
