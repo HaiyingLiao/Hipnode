@@ -37,6 +37,7 @@ import { uploadImageToS3 } from '@/lib/aws_s3';
 import { filterWords, getUserCountry } from '@/lib/utils';
 import useUploadFile from '@/hooks/useUploadFile';
 import { UploadButton } from '@/lib/uploadthing';
+import { UploadthingType } from '@/types/uploadthing.type';
 
 const CreatePost = ({
   authorclerkId,
@@ -107,48 +108,47 @@ const CreatePost = ({
     }
 
     try {
-      if (authorclerkId) {
-        switch (createType) {
-          case 'interviews':
-            await createInterview({
-              image: imagePreview[0].url,
-              authorclerkId,
-              title,
-              post,
-              tags,
-              revenue: revenue || 0,
-              updates: updates || 0,
-              website: website || '',
-              category: modifiedCategory || 'free',
-            });
-            toast({
-              title: 'Success!🎉 Your interview post has been uploaded.',
-            });
-            router.push('/interviews');
-            break;
-
-          case 'post':
-            {
-              const userCountry = await getUserCountry();
-              await createPost({
-                image: imagePreview[0].url,
-                authorclerkId,
-                tags,
-                title,
-                post,
-                country: userCountry?.region,
-              });
-            }
-            toast({
-              title: 'Success!🎉 Your post has been uploaded.',
-            });
-            router.push('/');
-            break;
-        }
-      } else {
-        toast({
+      if (!authorclerkId)
+        return toast({
           title: 'Please log in to create posts',
         });
+
+      switch (createType) {
+        case 'interviews':
+          await createInterview({
+            image: imagePreview[0].url,
+            authorclerkId,
+            title,
+            post,
+            tags,
+            revenue: revenue || 0,
+            updates: updates || 0,
+            website: website || '',
+            category: modifiedCategory || 'free',
+          });
+          toast({
+            title: 'Success!🎉 Your interview post has been uploaded.',
+          });
+          router.push('/interviews');
+          break;
+
+        case 'post':
+          {
+            const userCountry = await getUserCountry();
+            await createPost({
+              image: imagePreview[0].url,
+              authorclerkId,
+              tags,
+              title,
+              post,
+              country: userCountry?.region,
+            });
+          }
+          toast({
+            title: 'Success!🎉 Your post has been uploaded.',
+          });
+          router.push('/');
+          break;
       }
     } catch (error) {
       console.error('Error in form:', error);
@@ -262,18 +262,7 @@ const CreatePost = ({
                 'px-2.5 py-2 text-darkSecondary-900 bodyXs-regular md:body-semibold dark:bg-darkPrimary-4 dark:text-white-800 ut-uploading:cursor-not-allowed rounded-r-none bg-white-800 bg-none',
             }}
             endpoint='imageUploader'
-            onClientUploadComplete={(
-              res: Array<{
-                fileKey: string;
-                fileName: string;
-                fileSize: number;
-                fileUrl: string;
-                key: string;
-                name: string;
-                size: number;
-                url: string;
-              }>,
-            ) => {
+            onClientUploadComplete={(res: UploadthingType) => {
               setImagePreview(res);
             }}
             onUploadError={(error: Error) => {

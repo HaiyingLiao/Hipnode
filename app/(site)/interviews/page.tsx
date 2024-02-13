@@ -8,15 +8,13 @@ import {
 import { interviewCards } from '@/constants';
 import { getInterviews } from '@/lib/actions/interviews.action';
 import { formatDate } from '@/lib/utils';
+import { SearchParamsProps } from '@/types/searchParamsProps';
 
-interface SearchParamsProps {
-  searchParams: {
-    page: string;
-    category: string;
-  };
-}
-
-export default async function Interviews({ searchParams }: SearchParamsProps) {
+export default async function Interviews({
+  searchParams,
+}: {
+  searchParams: Pick<SearchParamsProps['searchParams'], 'category' | 'page'>;
+}) {
   const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
   const { data: interviews, totalPages } = await getInterviews(

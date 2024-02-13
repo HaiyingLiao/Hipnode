@@ -10,15 +10,13 @@ import {
 import { cardBtns } from '@/constants';
 import { getProfilePosts } from '@/lib/actions/profile.action';
 import { timeAgo, formatDate } from '@/lib/utils';
+import { SearchParamsProps } from '@/types/searchParamsProps';
 
-interface SearchParamsProps {
-  searchParams: {
-    type: string;
-    page: string;
-  };
-}
-
-export default async function ProfilePage({ searchParams }: SearchParamsProps) {
+export default async function ProfilePage({
+  searchParams,
+}: {
+  searchParams: Pick<SearchParamsProps['searchParams'], 'type' | 'page'>;
+}) {
   const { type, page } = searchParams;
 
   const postData = await getProfilePosts(type, page);
