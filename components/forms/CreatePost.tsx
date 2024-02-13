@@ -33,9 +33,8 @@ import GroupSelectContent from './GroupSelectContent';
 import { CreatePostSchema } from '@/lib/validations';
 import { createInterview } from '@/lib/actions/interviews.action';
 import { createPost } from '@/lib/actions/post.action';
-import { uploadImageToS3 } from '@/lib/aws_s3';
+import { createMeetup } from '@/lib/actions/meetups.action';
 import { filterWords, getUserCountry } from '@/lib/utils';
-import useUploadFile from '@/hooks/useUploadFile';
 import { UploadButton } from '@/lib/uploadthing';
 
 const CreatePost = ({
@@ -74,12 +73,12 @@ const CreatePost = ({
       createType: '',
       group: '',
       post: '',
+      companyName: '',
     },
   });
 
-  // interview post related field show up based on selectedType
+  // interview and meetup post related field show up based on selectedType
   const selectedType = form.watch('createType');
-  const { handleChange, isChecking, preview, files } = useUploadFile(form);
 
   async function onSubmit(values: z.infer<typeof CreatePostSchema>) {
     const {
@@ -91,6 +90,7 @@ const CreatePost = ({
       website,
       category,
       createType,
+      companyName,
       group,
     } = values;
     const modifiedCategory = category?.replace(/\W/g, '');
@@ -105,6 +105,8 @@ const CreatePost = ({
       });
       return;
     }
+
+    const userCountry = await getUserCountry();
 
     try {
       if (authorclerkId) {
@@ -128,21 +130,36 @@ const CreatePost = ({
             break;
 
           case 'post':
-            {
-              const userCountry = await getUserCountry();
-              await createPost({
-                image: imagePreview[0].url,
-                authorclerkId,
-                tags,
-                title,
-                post,
-                country: userCountry?.region,
-              });
-            }
+            await createPost({
+              image: imagePreview[0].url,
+              authorclerkId,
+              tags,
+              title,
+              post,
+              country: userCountry?.region,
+            });
+
             toast({
               title: 'Success!🎉 Your post has been uploaded.',
             });
             router.push('/');
+            break;
+
+          case 'meetup':
+            await createMeetup({
+              image: 'images/job3.svg',
+              authorclerkId,
+              tags,
+              title,
+              companyName,
+              location: userCountry?.region,
+              description: post,
+              category: modifiedCategory || 'free',
+            });
+            toast({
+              title: 'Success!🎉 Your meetup post has been uploaded.',
+            });
+            router.push('/meetups');
             break;
         }
       } else {
@@ -453,7 +470,7 @@ const CreatePost = ({
           )}
         />
 
-        {selectedType === 'interviews' && (
+        {selectedType === 'interviews' ? (
           <>
             <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
               <FormField
@@ -558,6 +575,28 @@ const CreatePost = ({
               />
             </div>
           </>
+        ) : selectedType === 'meetup' ? (
+          <FormField
+            control={form.control}
+            name='companyName'
+            render={({ field }) => (
+              <FormItem className='w-full '>
+                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                  Company Name
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Add company name...'
+                    {...field}
+                    className='inputStyle'
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ) : (
+          ''
         )}
 
         <FormField

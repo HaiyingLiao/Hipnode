@@ -15,6 +15,7 @@ export const CreatePostSchema = PostSchema.extend({
   website: z.string().optional(),
   authorclerkId: z.string().optional(),
   category: z.string().optional(),
+  companyName: z.string().optional(),
 });
 
 // for server action
