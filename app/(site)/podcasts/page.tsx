@@ -5,21 +5,12 @@ import {
   Pagination,
   PodcastChip,
 } from '@/components/index';
-import { podcastDatas } from '@/constants';
+import { cardBtns, podcastDatas } from '@/constants';
 import { checkUserStage } from '@/lib/utils';
 
 const Podcasts = async () => {
   await checkUserStage('');
-  const cardBtns = [
-    {
-      name: 'Host a Podcast',
-      link: '/host-podcast',
-    },
-    {
-      name: 'Code of Conduct',
-      link: '/code-of-conduct',
-    },
-  ];
+
   return (
     <>
       <section className='flex flex-col gap-4 bg-white-700 pb-12 pt-28 dark:bg-darkPrimary-2 md:flex-row'>
