@@ -1,12 +1,13 @@
 import {
   Filter,
   HostMeetupCard,
-  MeetupsWrapper,
   Pagination,
   SidePodcasts,
+  MeetupCard,
 } from '@/components/index';
 import { cardBtns } from '@/constants';
 import { checkUserStage } from '@/lib/utils';
+import { getMeetups } from '@/lib/actions/meetups.action';
 
 interface SearchParamsProps {
   searchParams: {
@@ -19,6 +20,7 @@ export default async function Meetups({ searchParams }: SearchParamsProps) {
   await checkUserStage('');
   const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
+  const { data: meetups, totalPages } = await getMeetups(page, 10, category);
 
   return (
     <section className='mt-28 flex flex-col gap-4 bg-white-700 dark:bg-darkPrimary-2 md:flex-row'>
@@ -33,8 +35,22 @@ export default async function Meetups({ searchParams }: SearchParamsProps) {
               <Filter />
             </aside>
             <div className='w-full lg:w-5/6'>
-              <MeetupsWrapper page={page} category={category} />
-              <Pagination totalPages={10} />
+              <section className='flex flex-col gap-3'>
+                {meetups?.map((meetupData) => (
+                  <MeetupCard
+                    key={meetupData.id}
+                    id={meetupData.id}
+                    title={meetupData.title}
+                    companyName={meetupData.companyName}
+                    location={meetupData.companyName}
+                    description={meetupData.description}
+                    tags={meetupData.tags}
+                    image={meetupData.image}
+                    updateAt={meetupData.updateAt}
+                  />
+                ))}
+              </section>
+              <Pagination totalPages={totalPages} />
             </div>
           </div>
         </div>
