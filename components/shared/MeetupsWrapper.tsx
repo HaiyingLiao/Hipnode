@@ -1,17 +1,26 @@
 import Image from 'next/image';
 
-import { meetupsData } from '@/constants';
 import { Badge } from '../ui/badge';
+import { getMonth, getDay } from '@/lib/utils';
+import { getMeetups } from '@/lib/actions/meetups.action';
 
-const MeetupsWrapper = () => {
+const MeetupsWrapper = async ({
+  page,
+  category,
+}: {
+  page: number;
+  category: string;
+}) => {
+  const meetups = await getMeetups(page, 10, category);
+
   return (
     <>
-      {meetupsData?.map((meetupData) => (
+      {meetups.data?.map((meetupData) => (
         <section
           className='mb-4 w-full rounded-2xl bg-white p-5 shadow-md  dark:bg-darkPrimary-3'
-          key={meetupData.companyName}
+          key={meetupData.id}
         >
-          <div key={meetupData.companyName}>
+          <div>
             {/* Meetup Quick Informatio */}
             <article className='flex items-center justify-between'>
               <div className='flex'>
@@ -35,10 +44,10 @@ const MeetupsWrapper = () => {
 
               <time className='dark:shadow-darkShadow rounded-md border-2 border-darkSecondary-600 px-3 py-1 text-center dark:border-none md:px-4 md:py-2'>
                 <p className='bodyMd-semibold sm:display-semibold uppercase text-darkSecondary-900 dark:text-white'>
-                  Feb
+                  {getMonth(meetupData.updateAt)}
                 </p>
                 <p className='display-semibold sm:heading1 text-secondary-blue'>
-                  7
+                  {getDay(meetupData.updateAt)}
                 </p>
               </time>
             </article>

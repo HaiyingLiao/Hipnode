@@ -8,8 +8,17 @@ import {
 import { cardBtns } from '@/constants';
 import { checkUserStage } from '@/lib/utils';
 
-export default async function Meetups() {
+interface SearchParamsProps {
+  searchParams: {
+    page: string;
+    category: string;
+  };
+}
+
+export default async function Meetups({ searchParams }: SearchParamsProps) {
   await checkUserStage('');
+  const page = Number(searchParams.page) || 1;
+  const category = searchParams.category;
 
   return (
     <section className='mt-28 flex flex-col gap-4 bg-white-700 dark:bg-darkPrimary-2 md:flex-row'>
@@ -24,7 +33,7 @@ export default async function Meetups() {
               <Filter />
             </aside>
             <div className='w-full lg:w-5/6'>
-              <MeetupsWrapper />
+              <MeetupsWrapper page={page} category={category} />
               <Pagination totalPages={10} />
             </div>
           </div>
