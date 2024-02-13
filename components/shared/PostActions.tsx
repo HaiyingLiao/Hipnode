@@ -10,14 +10,28 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { deleteInterviewById } from '@/lib/actions/interviews.action';
+import { deleteMeetupById } from '@/lib/actions/meetups.action';
 import { useToast } from '@/components/ui/use-toast';
 
-export default function InterviewPostActions({ postId }: { postId: string }) {
+export default function PostActions({
+  postId,
+  postType,
+}: {
+  postId: string;
+  postType: string;
+}) {
   const { toast } = useToast();
 
   const deletePost = async (id: string) => {
     try {
-      await deleteInterviewById(id);
+      switch (postType) {
+        case 'interviews':
+          return await deleteInterviewById(id);
+
+        case 'meetups':
+          return await deleteMeetupById(id);
+      }
+
       toast({
         title: 'Success!🎉 Your interview post has been deleted.',
       });

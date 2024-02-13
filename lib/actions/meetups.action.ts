@@ -123,7 +123,7 @@ export async function updateMeetup(id: string, updateData: MeetupsType) {
   }
 }
 
-export async function deleteMeetuoById(id: string) {
+export async function deleteMeetupById(id: string) {
   const user = await currentUser();
   if (!user) throw new Error('You must sign in to perform this action');
 

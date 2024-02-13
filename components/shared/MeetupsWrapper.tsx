@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Badge } from '../ui/badge';
 import { getMonth, getDay } from '@/lib/utils';
 import { getMeetups } from '@/lib/actions/meetups.action';
+import { PostActions } from '@/components/index';
 
 const MeetupsWrapper = async ({
   page,
@@ -56,16 +57,21 @@ const MeetupsWrapper = async ({
             <div className='bodyMd-regular md:body-regular my-6 text-darkSecondary-900 dark:text-white'>
               {meetupData.description}
             </div>
-            <figcaption className='flex'>
-              {meetupData.tags?.map((tag) => (
-                <Badge
-                  key={tag}
-                  className='bodyXs-semibold md:bodyMd-semibold mr-2.5 bg-white-700 text-darkSecondary-700 dark:bg-darkPrimary-4'
-                  variant='secondary'
-                >
-                  {tag}
-                </Badge>
-              ))}
+
+            <figcaption className='flex justify-between'>
+              <div>
+                {meetupData.tags?.map((tag) => (
+                  <Badge
+                    key={tag}
+                    className='bodyXs-semibold md:bodyMd-semibold mr-2.5 bg-white-700 text-darkSecondary-700 dark:bg-darkPrimary-4'
+                    variant='secondary'
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+
+              <PostActions postId={meetupData.id} postType='meetups' />
             </figcaption>
           </div>
         </section>
