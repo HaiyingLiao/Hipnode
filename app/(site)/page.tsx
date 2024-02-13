@@ -1,6 +1,5 @@
 import Image from 'next/image';
 
-import { getCachedUser } from '@/lib/userCache';
 import { popularTags, pinnedGroups, newAndPopular } from '@/constants';
 import {
   PostCard,
@@ -11,8 +10,10 @@ import {
   SidebarListItem,
 } from '@/components/index';
 import { getAllPosts } from '@/lib/actions/post.action';
-import { timeAgo } from '@/lib/utils';
+import { checkUserStage, timeAgo } from '@/lib/utils';
 import SortMobile from '@/components/Home/SortMobile';
+import { auth } from '@clerk/nextjs';
+import { getUserByClerkId } from '@/lib/actions/user.action';
 
 type URLProps = {
   searchParams: {
@@ -24,8 +25,12 @@ type URLProps = {
 };
 
 export default async function Home({ searchParams }: URLProps) {
-  const user = await getCachedUser();
+  const { userId, user } = auth();
+  const mongoUser = await getUserByClerkId(userId!);
+  if (mongoUser) checkUserStage('/', mongoUser.onboardingProgress);
+
   const page = searchParams.page ? +searchParams.page : 1;
+
   const { data: posts, totalPages } = await getAllPosts(
     searchParams.sort,
     page,

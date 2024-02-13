@@ -1,12 +1,14 @@
-import { getCachedUser } from '@/lib/userCache';
 import { Contents } from '@/components/index';
 import { programmingLevels } from '@/constants';
+import { getUserByClerkId } from '@/lib/actions/user.action';
 import { checkUserStage } from '@/lib/utils';
+import { auth } from '@clerk/nextjs';
 
 export default async function ProgrammingLevel() {
-  await checkUserStage('programming-level');
-  const user = await getCachedUser();
-  if (!user) return;
+  const { userId } = auth();
+  const mongoUser = await getUserByClerkId(userId!);
+
+  checkUserStage('programming-level', mongoUser!.onboardingProgress);
 
   return (
     <section className=' h-full w-full'>
@@ -17,7 +19,7 @@ export default async function ProgrammingLevel() {
         cardBg='bg-white-800 dark:bg-darkPrimary-4 hover:bg-secondary-red-60 '
         contents={programmingLevels}
         title='Do you know how to code?'
-        userClerkId={user.id}
+        userClerkId={userId!}
       />
     </section>
   );

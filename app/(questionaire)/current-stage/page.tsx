@@ -1,12 +1,13 @@
-import { getCachedUser } from '@/lib/userCache';
 import { Contents } from '@/components/index';
 import { userCurrentStage } from '@/constants';
+import { getUserByClerkId } from '@/lib/actions/user.action';
 import { checkUserStage } from '@/lib/utils';
+import { auth } from '@clerk/nextjs';
 
-export default async function CurrentStage() {
-  await checkUserStage('current-stage');
-  const user = await getCachedUser();
-  if (!user) return;
+async function CurrentStage() {
+  const { userId } = auth();
+  const mongoUser = await getUserByClerkId(userId!);
+  checkUserStage('current-stage', mongoUser!.onboardingProgress);
 
   return (
     <Contents
@@ -16,7 +17,9 @@ export default async function CurrentStage() {
       cardBg='bg-white-800 dark:bg-darkPrimary-4'
       contents={userCurrentStage}
       title="Which best describes the stage you're at right now?"
-      userClerkId={user.id}
+      userClerkId={userId!}
     />
   );
 }
+
+export default CurrentStage;

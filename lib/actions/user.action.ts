@@ -2,8 +2,7 @@
 
 import prisma from '@/prisma';
 
-import { getCachedUser } from '@/lib/userCache';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache';
 
 interface ParamsType {
   clerkId: string;
@@ -68,18 +67,28 @@ export async function deleteUser(params: Pick<ParamsType, 'clerkId'>) {
   }
 }
 
-export const getUserByClerkId = async () => {
-  try {
-    const user = await getCachedUser();
+export const getUserByClerkId = unstable_cache(
+  async (id: string) => {
+    // get random number between 1 to 100
+    const randomNumber = Math.floor(Math.random() * 100 + 1);
+    console.log('randomNumber', randomNumber);
 
-    const selectedUser = await prisma.user.findFirst({
-      where: { clerkId: user?.id },
-    });
+    if (!id) return null;
 
-    if (!selectedUser) return;
+    try {
+      // const user = await getCachedUser();
 
-    return selectedUser;
-  } catch (error) {
-    throw new Error('An error occurred while fetching the user');
-  }
-};
+      const selectedUser = await prisma.user.findFirst({
+        // where: { clerkId: user?.id },
+        where: { clerkId: id },
+      });
+
+      if (!selectedUser) return;
+
+      return selectedUser;
+    } catch (error) {
+      throw new Error('An error occurred while fetching the user');
+    }
+  },
+  ['user'],
+);

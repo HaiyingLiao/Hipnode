@@ -4,9 +4,6 @@ import { twMerge } from 'tailwind-merge';
 import queryString from 'query-string';
 import Filter from 'bad-words';
 import { redirect } from 'next/navigation';
-import { unstable_cache } from 'next/cache';
-
-import { getUserByClerkId } from './actions/user.action';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -236,19 +233,19 @@ export function removeKeysFromQuery(params: string, keysToRemove: string[]) {
   );
 }
 
-export const checkUserStage = unstable_cache(
-  async (currentPage: String) => {
-    const user = await getUserByClerkId();
+export const checkUserStage = (
+  currentPage: string,
+  onboardingProgress: string,
+) => {
+  console.log(currentPage, onboardingProgress);
 
-    if (user?.onboardingProgress === '') {
-      currentPage !== 'current-stage' && redirect('/current-stage');
-    } else if (user?.onboardingProgress === 'Business Stage') {
-      currentPage !== 'programming-level' && redirect('/programming-level');
-    } else if (user?.onboardingProgress === 'Coding Level') {
-      currentPage !== 'interest' && redirect('/interest');
-    } else {
-      currentPage !== '' && redirect('/');
-    }
-  },
-  ['user'],
-);
+  if (onboardingProgress === '') {
+    currentPage !== 'current-stage' && redirect('/current-stage');
+  } else if (onboardingProgress === 'Business Stage') {
+    currentPage !== 'programming-level' && redirect('/programming-level');
+  } else if (onboardingProgress === 'Coding Level') {
+    currentPage !== 'interest' && redirect('/interest');
+  } else {
+    currentPage !== '' && redirect('/');
+  }
+};
