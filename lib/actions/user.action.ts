@@ -1,9 +1,9 @@
 'use server';
 
-import { unstable_cache, revalidatePath } from 'next/cache';
 import prisma from '@/prisma';
 
 import { getCachedUser } from '@/lib/userCache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 interface ParamsType {
   clerkId: string;
@@ -24,7 +24,7 @@ export async function createUser(params: ParamsType) {
         image,
       },
     });
-
+    revalidateTag('user');
     return user;
   } catch (error) {
     console.log('Error with create user', error);
@@ -44,6 +44,7 @@ export async function updateUser(params: Pick<ParamsType, 'email' | 'name'>) {
         name,
       },
     });
+    revalidateTag('user');
     revalidatePath('/');
     return updatedUser;
   } catch (error) {
@@ -67,7 +68,7 @@ export async function deleteUser(params: Pick<ParamsType, 'clerkId'>) {
   }
 }
 
-export const getUserByClerkId = unstable_cache(async () => {
+export const getUserByClerkId = async () => {
   try {
     const user = await getCachedUser();
 
@@ -81,4 +82,4 @@ export const getUserByClerkId = unstable_cache(async () => {
   } catch (error) {
     throw new Error('An error occurred while fetching the user');
   }
-}, ['user']);
+};
