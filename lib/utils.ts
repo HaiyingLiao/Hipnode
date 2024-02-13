@@ -245,5 +245,7 @@ export const checkUserStage = async (currentPage: String) => {
     currentPage !== 'programming-level' && redirect('/programming-level');
   } else if (user?.onboardingProgress === 'Coding Level') {
     currentPage !== 'interest' && redirect('/interest');
+  } else {
+    currentPage !== '' && redirect('/');
   }
 };
