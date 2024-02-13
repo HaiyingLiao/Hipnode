@@ -6,6 +6,7 @@ import Filter from 'bad-words';
 import { redirect } from 'next/navigation';
 
 import { getUserByClerkId } from './actions/user.action';
+import { revalidateTag } from 'next/cache';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -237,7 +238,7 @@ export function removeKeysFromQuery(params: string, keysToRemove: string[]) {
 
 export const checkUserStage = async (currentPage: String) => {
   const user = await getUserByClerkId();
-  console.log(user?.onboardingProgress);
+
   if (user?.onboardingProgress === '') {
     currentPage !== 'current-stage' && redirect('/current-stage');
   } else if (user?.onboardingProgress === 'Business Stage') {

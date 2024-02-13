@@ -1,8 +1,10 @@
 import { getCachedUser } from '@/lib/userCache';
 import { InterestWrapper } from '@/components/index';
 import { checkUserStage } from '@/lib/utils';
+import { revalidateTag } from 'next/cache';
 
 export default async function Introduce() {
+  revalidateTag('user');
   await checkUserStage('interest');
   const user = await getCachedUser();
   if (!user) return;

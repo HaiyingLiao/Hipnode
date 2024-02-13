@@ -2,8 +2,10 @@ import { getCachedUser } from '@/lib/userCache';
 import { Contents } from '@/components/index';
 import { programmingLevels } from '@/constants';
 import { checkUserStage } from '@/lib/utils';
+import { revalidateTag } from 'next/cache';
 
 export default async function ProgrammingLevel() {
+  revalidateTag('user');
   await checkUserStage('programming-level');
   const user = await getCachedUser();
   if (!user) return;

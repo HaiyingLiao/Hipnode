@@ -81,4 +81,4 @@ export const getUserByClerkId = unstable_cache(async () => {
   } catch (error) {
     throw new Error('An error occurred while fetching the user');
   }
-});
+}, ['user']);

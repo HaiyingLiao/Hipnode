@@ -2,8 +2,10 @@ import { getCachedUser } from '@/lib/userCache';
 import { Contents } from '@/components/index';
 import { userCurrentStage } from '@/constants';
 import { checkUserStage } from '@/lib/utils';
+import { revalidateTag } from 'next/cache';
 
 export default async function CurrentStage() {
+  revalidateTag('user');
   await checkUserStage('current-stage');
   const user = await getCachedUser();
   if (!user) return;
