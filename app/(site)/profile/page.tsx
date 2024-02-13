@@ -10,46 +10,8 @@ import {
 import { cardBtns } from '@/constants';
 import { getProfilePosts } from '@/lib/actions/profile.action';
 import { timeAgo, formatDate } from '@/lib/utils';
-
-interface SearchParamsProps {
-  searchParams: {
-    type: string;
-    page: string;
-  };
-}
-
-interface Interview {
-  id: string;
-  image: string;
-  createdAt: Date;
-  title: string;
-  revenue: number;
-  updates: number;
-  website: string;
-  category: string;
-  authorclerkId: string;
-  author: {
-    name: string;
-    image: string;
-  };
-}
-
-interface Post {
-  id: string;
-  image: string;
-  createdAt: Date;
-  title: string;
-  post: string;
-  category: string;
-  tags: string[];
-  views: number;
-  authorclerkId: string;
-  likes: string[];
-  author: {
-    email: string;
-    name: string;
-  };
-}
+import { SearchParamsProps } from '@/types/searchParamsProps';
+import { Interview, Post, ProfilePostsResult } from '@/types/profilePageType';
 
 /**
  * ProfilePostsResult<T> is a generic type that takes in a type T and
@@ -67,12 +29,12 @@ interface Post {
  * Learn more about generic types here: https://www.typescriptlang.org/docs/handbook/2/generics.html
  * Blog post: https://prismic.io/blog/typescript-generics
  */
-interface ProfilePostsResult<T> {
-  data: T[];
-  totalPages: number;
-}
 
-export default async function ProfilePage({ searchParams }: SearchParamsProps) {
+export default async function ProfilePage({
+  searchParams,
+}: {
+  searchParams: Pick<SearchParamsProps['searchParams'], 'type' | 'page'>;
+}) {
   const { type, page } = searchParams;
 
   const { data: posts, totalPages } = (await getProfilePosts(
