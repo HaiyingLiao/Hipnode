@@ -40,13 +40,11 @@ export default function HeroContents({
   const answerParams = searchParams.get('answer');
 
   const handleClick = async () => {
-    if (answerParams !== null) {
-      if (path === '/programming-level') {
-        await updateBusinessStage(userClerkId, answerParams as string);
-      } else if (path === '/interest') {
-        await updateCodingLevel(userClerkId, answerParams as string);
-      }
-    }
+    if (!answerParams) return;
+
+    const updateFunction =
+      path === '/programming-level' ? updateBusinessStage : updateCodingLevel;
+    await updateFunction(userClerkId, answerParams as string);
   };
 
   return (
@@ -70,7 +68,7 @@ export default function HeroContents({
               userClerkId={userClerkId}
             />
           ))}
-          {position === 'right' && answerParams !== null && (
+          {position === 'right' && !answerParams && (
             <Link
               onClick={handleClick}
               href={path!}

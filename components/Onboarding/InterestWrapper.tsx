@@ -17,7 +17,7 @@ export default function InterestWrapper({
   const router = useRouter();
   const searchParams = useSearchParams();
   const answerParams = searchParams.get('answer')?.split('_');
-  console.log(answerParams);
+
   const [answers, setAnswers] = useState<string[]>(answerParams || []);
 
   const handleClick = (item: string) => {
