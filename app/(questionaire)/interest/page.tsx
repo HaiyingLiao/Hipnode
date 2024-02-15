@@ -1,11 +1,13 @@
-import { getCachedUser } from '@/lib/userCache';
+import { auth } from '@clerk/nextjs';
+
 import { InterestWrapper } from '@/components/index';
 import { checkUserStage } from '@/lib/utils';
+import { getUserByClerkId } from '@/lib/actions/user.action';
 
 export default async function Introduce() {
-  await checkUserStage('interest');
-  const user = await getCachedUser();
-  if (!user) return;
+  const { userId } = auth();
+  const mongoUser = await getUserByClerkId(userId!);
+  checkUserStage('current-stage', mongoUser!.onboardingProgress);
 
   return (
     <section className='flex min-h-full w-full flex-col items-center justify-center bg-white p-5 dark:bg-darkPrimary-3 lg:max-w-720'>
@@ -16,7 +18,7 @@ export default async function Introduce() {
         <p className='text-base font-semibold text-secondary-blue-80'>
           Choose as many as you like.
         </p>
-        <InterestWrapper userClerkId={user.id} />
+        <InterestWrapper userClerkId={userId!} />
       </div>
     </section>
   );

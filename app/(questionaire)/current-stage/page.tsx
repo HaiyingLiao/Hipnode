@@ -1,8 +1,9 @@
+import { auth } from '@clerk/nextjs';
+
 import { Contents } from '@/components/index';
 import { userCurrentStage } from '@/constants';
 import { getUserByClerkId } from '@/lib/actions/user.action';
 import { checkUserStage } from '@/lib/utils';
-import { auth } from '@clerk/nextjs';
 
 async function CurrentStage() {
   const { userId } = auth();

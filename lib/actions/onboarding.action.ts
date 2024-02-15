@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/prisma';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 // Update Business Stage
 export async function updateBusinessStage(
@@ -17,13 +17,15 @@ export async function updateBusinessStage(
 
     const updatedUser = await prisma.user.update({
       where: {
-        clerkId: selectedUser.clerkId,
+        clerkId,
       },
       data: {
         onboardingProgress: 'Business Stage',
         businessStage,
       },
     });
+    revalidateTag('user');
+    revalidatePath('/programming-level');
     return updatedUser;
   } catch (error) {
     throw new Error('User not updated');
@@ -48,7 +50,7 @@ export async function updateCodingLevel(clerkId: string, codingLevel: string) {
         codingLevel,
       },
     });
-
+    revalidateTag('user');
     revalidatePath('/interest');
     return updatedUser;
   } catch (error) {
@@ -77,6 +79,7 @@ export async function updateBusinessTypes(
         businessTypes,
       },
     });
+    revalidateTag('user');
     revalidatePath('/');
     return updatedUser;
   } catch (error) {

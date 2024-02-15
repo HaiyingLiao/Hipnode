@@ -1,13 +1,19 @@
+import { auth } from '@clerk/nextjs';
+
 import { EditPost } from '@/components/index';
 import { getInterviewById } from '@/lib/actions/interviews.action';
 import { checkUserStage } from '@/lib/utils';
+import { getUserByClerkId } from '@/lib/actions/user.action';
 
 export default async function EditPostPage({
   params,
 }: {
   params: { id: string };
 }) {
-  await checkUserStage('');
+  const { userId } = auth();
+  const mongoUser = await getUserByClerkId(userId!);
+  checkUserStage('current-stage', mongoUser!.onboardingProgress);
+
   const targetInterview = await getInterviewById(params.id);
   const {
     title,

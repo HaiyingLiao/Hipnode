@@ -68,7 +68,7 @@ export default function HeroContents({
               userClerkId={userClerkId}
             />
           ))}
-          {position === 'right' && !answerParams && (
+          {position === 'right' && answerParams && (
             <Link
               onClick={handleClick}
               href={path!}

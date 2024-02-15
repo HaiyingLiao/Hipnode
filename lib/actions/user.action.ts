@@ -76,10 +76,7 @@ export const getUserByClerkId = unstable_cache(
     if (!id) return null;
 
     try {
-      // const user = await getCachedUser();
-
       const selectedUser = await prisma.user.findFirst({
-        // where: { clerkId: user?.id },
         where: { clerkId: id },
       });
 

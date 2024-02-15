@@ -1,13 +1,14 @@
+import { auth } from '@clerk/nextjs';
+
 import { Contents } from '@/components/index';
 import { programmingLevels } from '@/constants';
 import { getUserByClerkId } from '@/lib/actions/user.action';
 import { checkUserStage } from '@/lib/utils';
-import { auth } from '@clerk/nextjs';
 
 export default async function ProgrammingLevel() {
   const { userId } = auth();
   const mongoUser = await getUserByClerkId(userId!);
-
+  console.log('here', mongoUser);
   checkUserStage('programming-level', mongoUser!.onboardingProgress);
 
   return (
