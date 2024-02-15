@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { interests } from '@/constants';
 import { formUrlQuery } from '@/lib/utils';
 import { Button } from '../ui/button';
-import { updateBusinessTypes } from '@/lib/actions/onboarding.action';
+import { updateUser } from '@/lib/actions/user.action';
 
 export default function InterestWrapper({
   userClerkId,
@@ -29,7 +29,11 @@ export default function InterestWrapper({
   };
 
   const handleDataUpdate = async () => {
-    await updateBusinessTypes(userClerkId, answers);
+    await updateUser({
+      clerkId: userClerkId,
+      pageType: 'interest',
+      businessTypes: answers,
+    });
   };
 
   useEffect(() => {

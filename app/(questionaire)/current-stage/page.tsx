@@ -12,13 +12,14 @@ async function CurrentStage() {
 
   return (
     <Contents
-      path='/programming-level'
+      btnPath='/programming-level'
       position='right'
       bg='bg-white dark:bg-darkPrimary-3'
       cardBg='bg-white-800 dark:bg-darkPrimary-4'
       contents={userCurrentStage}
       title="Which best describes the stage you're at right now?"
       userClerkId={userId!}
+      pageType='current-stage'
     />
   );
 }

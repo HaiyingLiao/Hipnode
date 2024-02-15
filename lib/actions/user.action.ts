@@ -9,6 +9,11 @@ interface ParamsType {
   name: string;
   email: string;
   image: string;
+  businessStage: string;
+  codingLevel: string;
+  businessTypes: string[];
+  pageType: string;
+  onboardingProgress: string;
 }
 
 export async function createUser(params: ParamsType) {
@@ -31,17 +36,31 @@ export async function createUser(params: ParamsType) {
   }
 }
 
-export async function updateUser(params: Pick<ParamsType, 'email' | 'name'>) {
-  const { email, name } = params;
+export async function updateUser(params: Partial<ParamsType>) {
+  const { name, clerkId, pageType, businessStage, codingLevel, businessTypes } =
+    params;
+
+  const updateData: Partial<ParamsType> = {
+    name,
+  };
+
+  if (pageType === 'current-stage') {
+    updateData.businessStage = businessStage;
+    updateData.onboardingProgress = 'Business Stage';
+  } else if (pageType === 'programming-level') {
+    updateData.codingLevel = codingLevel;
+    updateData.onboardingProgress = 'Coding Level';
+  } else if (pageType === 'interest') {
+    updateData.businessTypes = businessTypes;
+    updateData.onboardingProgress = 'Business Types';
+  }
 
   try {
     const updatedUser = await prisma.user.update({
       where: {
-        email,
+        clerkId,
       },
-      data: {
-        name,
-      },
+      data: updateData,
     });
     revalidateTag('user');
     revalidatePath('/');
