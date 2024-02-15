@@ -148,3 +148,18 @@ export async function deleteMeetupById(id: string) {
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
+
+export async function getMeetupById(id: string) {
+  try {
+    const foundMeetup = await prisma.meetups.findUnique({
+      where: { id },
+    });
+
+    if (!foundMeetup) throw new Error('Meetup not found.');
+
+    return foundMeetup;
+  } catch (error) {
+    console.error('Error in getMeetupById:', error);
+    throw new Error(error instanceof Error ? error.message : 'Unknown error');
+  }
+}

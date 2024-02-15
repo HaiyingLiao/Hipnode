@@ -48,18 +48,7 @@ const CreatePost = ({
   const router = useRouter();
   const { toast } = useToast();
 
-  const [imagePreview, setImagePreview] = useState<
-    {
-      fileKey: string;
-      fileName: string;
-      fileSize: number;
-      fileUrl: string;
-      key: string;
-      name: string;
-      size: number;
-      url: string;
-    }[]
-  >([]);
+  const [imagePreview, setImagePreview] = useState<string>('');
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
@@ -113,7 +102,7 @@ const CreatePost = ({
         switch (createType) {
           case 'interviews':
             await createInterview({
-              image: imagePreview[0].url,
+              image: imagePreview,
               authorclerkId,
               title,
               post,
@@ -123,45 +112,39 @@ const CreatePost = ({
               website: website || '',
               category: modifiedCategory || 'free',
             });
-            toast({
-              title: 'Success!🎉 Your interview post has been uploaded.',
-            });
-            router.push('/interviews');
+
             break;
 
           case 'post':
             await createPost({
-              image: imagePreview[0].url,
+              image: imagePreview, // '/assets/images/illustration.png'
               authorclerkId,
               tags,
               title,
               post,
               country: userCountry?.region,
             });
-
-            toast({
-              title: 'Success!🎉 Your post has been uploaded.',
-            });
             router.push('/');
             break;
 
-          case 'meetup':
+          case 'meetups':
             await createMeetup({
-              image: 'images/job3.svg',
+              image: imagePreview,
               authorclerkId,
               tags,
               title,
-              companyName,
+              companyName: companyName || '',
               location: userCountry?.region,
               description: post,
               category: modifiedCategory || 'free',
             });
-            toast({
-              title: 'Success!🎉 Your meetup post has been uploaded.',
-            });
             router.push('/meetups');
             break;
         }
+        toast({
+          title: 'Success!🎉 Your post has been uploaded.',
+        });
+        router.push(`/${createType === 'post' ? '/' : createType}`);
       } else {
         toast({
           title: 'Please log in to create posts',
@@ -291,7 +274,7 @@ const CreatePost = ({
                 url: string;
               }>,
             ) => {
-              setImagePreview(res);
+              setImagePreview(res[0].url);
             }}
             onUploadError={(error: Error) => {
               toast({
@@ -393,9 +376,9 @@ const CreatePost = ({
           />
         </div>
 
-        {imagePreview.length > 0 && (
+        {imagePreview && (
           <Image
-            src={imagePreview[0].url}
+            src={imagePreview}
             alt='cover image'
             width={870}
             height={500}
@@ -575,26 +558,65 @@ const CreatePost = ({
               />
             </div>
           </>
-        ) : selectedType === 'meetup' ? (
-          <FormField
-            control={form.control}
-            name='companyName'
-            render={({ field }) => (
-              <FormItem className='w-full '>
-                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
-                  Company Name
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='Add company name...'
-                    {...field}
-                    className='inputStyle'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        ) : selectedType === 'meetups' ? (
+          <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
+            <FormField
+              control={form.control}
+              name='companyName'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-[50%]'>
+                  <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                    Company Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder='Add company name...'
+                      {...field}
+                      className='inputStyle'
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='category'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-[50%]'>
+                  <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
+                    Category
+                  </FormLabel>
+
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className='inputStyle'>
+                        <SelectValue placeholder='Select or create a category...' />
+                        <Image
+                          src='form-down-arrow.svg'
+                          alt='icon'
+                          width={15}
+                          height={15}
+                          className='h-2.5 w-2.5 dark:brightness-0 dark:invert md:h-3.5 md:w-3.5'
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className='dark:bg-darkPrimary-4'>
+                      {categoryItems.map((item) => (
+                        <SelectItem value={item} key={item}>
+                          <p className='bodyMd-semibold p-2'>{item}</p>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         ) : (
           ''
         )}

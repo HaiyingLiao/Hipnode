@@ -67,7 +67,7 @@ export async function deleteUser(params: Pick<ParamsType, 'clerkId'>) {
   }
 }
 
-export const getUserByClerkId = unstable_cache(async () => {
+export const getUserByClerkId = async () => {
   try {
     const user = await getCachedUser();
 
@@ -81,4 +81,4 @@ export const getUserByClerkId = unstable_cache(async () => {
   } catch (error) {
     throw new Error('An error occurred while fetching the user');
   }
-});
+};

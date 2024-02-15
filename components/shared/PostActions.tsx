@@ -52,7 +52,10 @@ export default function PostActions({
       </DropdownMenuTrigger>
       <DropdownMenuContent className='mr-10 border border-darkSecondary-600 bg-white-800 p-2 dark:border-darkSecondary-900 dark:bg-darkPrimary-4 md:mr-20'>
         <DropdownMenuItem>
-          <Link href={`/edit-post/${postId}`} className='flex gap-2'>
+          <Link
+            href={`/edit-post/${postType}/${postId}`}
+            className='flex gap-2'
+          >
             <Image
               src='edit.svg'
               alt='see more icon'
