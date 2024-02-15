@@ -135,8 +135,9 @@ model Podcasts {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   location      String
-  description   String
+  post          String
   category      String
+  image         String
   createdAt     DateTime @default(now())
   updateAt      DateTime @default(now()) @updatedAt
   author        User     @relation(fields: [authorclerkId], references: [clerkId], onDelete: Cascade)

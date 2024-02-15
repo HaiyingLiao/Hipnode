@@ -5,11 +5,22 @@ import {
   Pagination,
   PodcastChip,
 } from '@/components/index';
-import { cardBtns, podcastDatas } from '@/constants';
+import { cardBtns } from '@/constants';
 import { checkUserStage } from '@/lib/utils';
+import { getPodcasts } from '@/lib/actions/podcasts.action';
 
-const Podcasts = async () => {
+interface SearchParamsProps {
+  searchParams: {
+    page: string;
+    category: string;
+  };
+}
+
+export default async function Podcasts({ searchParams }: SearchParamsProps) {
   await checkUserStage('');
+  const page = Number(searchParams.page) || 1;
+  const category = searchParams.category;
+  const { data: podcasts, totalPages } = await getPodcasts(page, 10, category);
 
   return (
     <>
@@ -26,8 +37,15 @@ const Podcasts = async () => {
               </aside>
               <div className='w-full lg:w-5/6'>
                 <div className='columns-1 md:columns-2'>
-                  {podcastDatas?.map((podcast) => (
-                    <PodcastChip podcastData={podcast} key={podcast.author} />
+                  {podcasts?.map((podcast) => (
+                    <PodcastChip
+                      title={podcast.title}
+                      post={podcast.post}
+                      avatar={podcast.author.image}
+                      location={podcast.location}
+                      author={podcast.author.name}
+                      key={podcast.id}
+                    />
                   ))}
                 </div>
               </div>
@@ -42,9 +60,7 @@ const Podcasts = async () => {
           </div>
         </div>
       </section>
-      <Pagination totalPages={10} />
+      <Pagination totalPages={totalPages} />
     </>
   );
-};
-
-export default Podcasts;
+}

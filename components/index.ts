@@ -1,5 +1,4 @@
 export { default as Filter } from './shared/Filter';
-export { default as PodcastsCard } from './shared/PodcastCard';
 export { default as Contents } from '@/components/shared/Contents/Contents';
 export { default as InterestWrapper } from '@/components/Onboarding/InterestWrapper';
 export { default as SidePodcasts } from '@/components/SidePodcasts/SidePodcasts';
