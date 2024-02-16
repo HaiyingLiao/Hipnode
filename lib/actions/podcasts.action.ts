@@ -11,7 +11,7 @@ export async function createPodcast(podcastData: PodcastsType) {
     const validation = PodcastsSchema.safeParse(podcastData);
     if (!validation.success) throw new Error(validation.error.message);
 
-    const { title, location, authorclerkId, category, post, image } =
+    const { title, location, authorclerkId, category, post, image, audio } =
       podcastData;
     const podcast = await prisma.podcasts.create({
       data: {
@@ -21,6 +21,7 @@ export async function createPodcast(podcastData: PodcastsType) {
         category,
         post,
         image,
+        audio,
       },
     });
 
@@ -111,7 +112,7 @@ export async function updatePodcast(id: string, updateData: PodcastsType) {
     if (user.id !== updateData.authorclerkId)
       throw new Error('You are not allowed to delete this post');
 
-    const { title, location, authorclerkId, category, post, image } =
+    const { title, location, authorclerkId, category, post, image, audio } =
       updateData;
 
     const updatedPodcast = await prisma.podcasts.update({
@@ -125,6 +126,7 @@ export async function updatePodcast(id: string, updateData: PodcastsType) {
         category,
         post,
         image,
+        audio,
       },
     });
 

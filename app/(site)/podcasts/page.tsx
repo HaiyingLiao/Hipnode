@@ -44,6 +44,7 @@ export default async function Podcasts({ searchParams }: SearchParamsProps) {
                       avatar={podcast.author.image}
                       location={podcast.location}
                       author={podcast.author.name}
+                      id={podcast.id}
                       key={podcast.id}
                     />
                   ))}

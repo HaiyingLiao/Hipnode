@@ -138,6 +138,7 @@ model Podcasts {
   post          String
   category      String
   image         String
+  audio         String
   createdAt     DateTime @default(now())
   updateAt      DateTime @default(now()) @updatedAt
   author        User     @relation(fields: [authorclerkId], references: [clerkId], onDelete: Cascade)

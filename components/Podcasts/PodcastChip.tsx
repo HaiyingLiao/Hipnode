@@ -1,6 +1,7 @@
 'use client';
 
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
+import Link from 'next/link';
 
 interface PodcastChipProps {
   title: string;
@@ -8,6 +9,7 @@ interface PodcastChipProps {
   avatar: string;
   location: string;
   author: string;
+  id: string;
 }
 
 const PodcastChip = ({
@@ -16,12 +18,16 @@ const PodcastChip = ({
   avatar,
   location,
   author,
+  id,
 }: PodcastChipProps) => {
   return (
-    <section className='mb-3 w-full overflow-hidden rounded-2xl bg-white p-5 transition-all hover:shadow-md dark:bg-darkPrimary-3'>
-      <h3 className='heading3 mb-2.5 text-darkSecondary-900 dark:text-white'>
+    <div className='mb-3 w-full overflow-hidden rounded-2xl bg-white p-5 transition-all hover:shadow-md dark:bg-darkPrimary-3'>
+      <Link
+        href={`/podcasts/${id}`}
+        className='heading3 mb-2.5 text-darkSecondary-900 dark:text-white'
+      >
         {title}
-      </h3>
+      </Link>
       <p className='body-regular text-darkSecondary-800 dark:text-white-700'>
         {post}
       </p>
@@ -42,7 +48,7 @@ const PodcastChip = ({
           <p className='bodySm-regular text-darkSecondary-800'>{location}</p>
         </div>
       </main>
-    </section>
+    </div>
   );
 };
 

@@ -36,3 +36,4 @@ export { default as PostActions } from '@/components/shared/PostActions';
 export { default as EditPost } from '@/components/forms/EditPost';
 export { default as SharePost } from '@/components/Post/Share';
 export { default as MeetupCard } from '@/components/meetups/MeetupCard';
+export { default as AudioSection } from '@/components/Podcasts/AudioSection';

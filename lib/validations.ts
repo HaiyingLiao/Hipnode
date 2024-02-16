@@ -58,6 +58,7 @@ export const PodcastsSchema = z.object({
   authorclerkId: z.string(),
   category: z.string(),
   image: z.string(),
+  audio: z.string(),
 });
 
 export type CreatePostType = z.infer<typeof CreatePostSchema>;
