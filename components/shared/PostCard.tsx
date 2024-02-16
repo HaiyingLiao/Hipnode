@@ -18,14 +18,14 @@ interface PostCardProps {
   createdAt: string;
   views: number;
   likes: string[];
-  // comments: Comment[];
+  commentsLength: number;
   styles?: string;
   id: string;
 }
 
 const PostCard = ({
   avatar,
-  // comments,
+  commentsLength,
   createdAt,
   id,
   styles,
@@ -101,8 +101,7 @@ const PostCard = ({
         <ul className='viewsList'>
           <li>{views} Views</li>
           <li>{likes.length} Likes</li>
-          {/* <li>{comments.length} Comments</li> */}
-          <li>0 Comments</li>
+          <li>{commentsLength} Comments</li>
         </ul>
       </div>
     </div>

@@ -129,6 +129,7 @@ export async function getPostById(id: string) {
               name: true,
               image: true,
               email: true,
+              createdAt: true,
             },
           },
           comments: {
@@ -175,7 +176,7 @@ export async function deletePost(id: string) {
 
     const foundPost = await prisma.post.findFirst({ where: { id } });
 
-    if (session.emailAddresses[0].emailAddress !== foundPost?.authorEmail)
+    if (session.id !== foundPost?.authorclerkId)
       throw new Error('You are not allowed to delete this post');
 
     const tags = await prisma.tag.findMany();
@@ -232,7 +233,7 @@ export async function updatePost({
     const foundPost = await prisma.post.findFirst({ where: { id } });
     if (!foundPost) return notFound();
 
-    if (foundPost?.authorEmail !== session.emailAddresses[0].emailAddress)
+    if (foundPost?.authorclerkId !== session.id)
       throw new Error('You not allowed edit this post');
 
     await prisma.post.update({
@@ -358,11 +359,11 @@ export async function likeComments(
   }
 }
 
-export async function getRelatedPosts(authorName: string, title: string) {
+export async function getRelatedPosts(authorclerkId: string, title: string) {
   try {
     return await prisma.post.findMany({
       where: {
-        authorName,
+        authorclerkId,
         title: {
           not: title,
         },
