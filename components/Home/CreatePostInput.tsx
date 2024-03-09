@@ -1,7 +1,7 @@
 'use client';
 
 import type { FormEvent } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 import { Input } from '../ui/input';
 import { filterWords, formUrlQuery } from '@/lib/utils';
@@ -19,6 +19,7 @@ export default function CreatePostInput({
   username,
 }: CreatePostInputProps) {
   const params = useSearchParams();
+  const pathName = usePathname();
   const router = useRouter();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -35,7 +36,12 @@ export default function CreatePostInput({
       });
       return;
     }
-    const urlQuery = formUrlQuery(params.toString(), 'title', titleInput.value);
+    const urlQuery = formUrlQuery(
+      params.toString(),
+      'title',
+      titleInput.value,
+      pathName,
+    );
     router.push(`/create-post${urlQuery as string}`);
   };
 

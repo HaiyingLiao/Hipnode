@@ -11,7 +11,7 @@ import {
   updateView,
 } from '@/lib/actions/post.action';
 // import { getUserByPostAuthor } from '@/lib/actions/user.action';
-import { checkUserStage, getCreatedDate, getPostStats } from '@/lib/utils';
+import { getCreatedDate, getPostStats } from '@/lib/utils';
 
 type URLProps = {
   params: {
@@ -20,7 +20,6 @@ type URLProps = {
 };
 
 const Page = async ({ params }: URLProps) => {
-  await checkUserStage('');
   const { post, totalComments } = await getPostById(params.id);
   if (!post) return <NotFound />;
 
@@ -29,6 +28,7 @@ const Page = async ({ params }: URLProps) => {
     // getUserByPostAuthor(post.authorEmail),
     updateView(post.id),
   ]);
+
   const postStats = getPostStats(post.likes.length, totalComments, post.share);
 
   return (

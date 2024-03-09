@@ -4,8 +4,20 @@ import { ThemeProvider } from '@/components/shared/TopBar/ThemeProvider';
 import BottomBar from '@/components/shared/BottomBar';
 import TopBar from '@/components/shared/TopBar/TopBar';
 import NavProfileMenu from '@/components/shared/TopBar/NavProfileMenu';
+import { auth } from '@clerk/nextjs';
+import { getUserByClerkId } from '@/lib/actions/user.action';
+import { checkUserStage } from '@/lib/utils';
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const { userId } = auth();
+  const mongoUser = await getUserByClerkId(userId!);
+
+  if (mongoUser) checkUserStage('', mongoUser.onboardingProgress);
+
   return (
     <main>
       <ThemeProvider

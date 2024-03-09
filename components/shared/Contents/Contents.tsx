@@ -5,10 +5,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import ContentCard from './Card';
-import {
-  updateBusinessStage,
-  updateCodingLevel,
-} from '@/lib/actions/onboarding.action';
+import { updateUser } from '@/lib/actions/user.action';
 
 type ContentsTypes = {
   background: string;
@@ -23,8 +20,9 @@ type HeroContentsProps = {
   bg?: string;
   cardBg?: string;
   position: 'left' | 'right';
-  path?: string;
+  btnPath?: string;
   userClerkId: string;
+  pageType: string;
 };
 
 export default function HeroContents({
@@ -33,20 +31,27 @@ export default function HeroContents({
   bg,
   cardBg,
   position,
-  path,
+  btnPath,
   userClerkId,
+  pageType,
 }: HeroContentsProps) {
   const searchParams = useSearchParams();
   const answerParams = searchParams.get('answer');
 
   const handleClick = async () => {
-    if (answerParams !== null) {
-      if (path === '/programming-level') {
-        await updateBusinessStage(userClerkId, answerParams as string);
-      } else if (path === '/interest') {
-        await updateCodingLevel(userClerkId, answerParams as string);
-      }
-    }
+    if (!answerParams) return;
+
+    pageType === 'current-stage'
+      ? await updateUser({
+          pageType,
+          clerkId: userClerkId,
+          businessStage: answerParams as string,
+        })
+      : await updateUser({
+          pageType,
+          clerkId: userClerkId,
+          codingLevel: answerParams as string,
+        });
   };
 
   return (
@@ -70,10 +75,10 @@ export default function HeroContents({
               userClerkId={userClerkId}
             />
           ))}
-          {position === 'right' && answerParams !== null && (
+          {position === 'right' && answerParams && (
             <Link
               onClick={handleClick}
-              href={path!}
+              href={btnPath!}
               className='mt-5 block w-min rounded bg-secondary-red-60 px-10 py-3 text-white-700'
             >
               Next

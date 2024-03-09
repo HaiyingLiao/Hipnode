@@ -6,7 +6,6 @@ import {
   MeetupCard,
 } from '@/components/index';
 import { cardBtns } from '@/constants';
-import { checkUserStage } from '@/lib/utils';
 import { getMeetups } from '@/lib/actions/meetups.action';
 
 interface SearchParamsProps {
@@ -17,7 +16,6 @@ interface SearchParamsProps {
 }
 
 export default async function Meetups({ searchParams }: SearchParamsProps) {
-  await checkUserStage('');
   const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
   const { data: meetups, totalPages } = await getMeetups(page, 10, category);
