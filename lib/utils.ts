@@ -13,6 +13,7 @@ export const formUrlQuery = (
   params: string,
   key: string,
   value: string | string[] | null,
+  pathName: string,
 ) => {
   const currentQuery = queryString.parse(params as string);
 
@@ -25,7 +26,7 @@ export const formUrlQuery = (
 
   return queryString.stringifyUrl(
     {
-      url: window.location.pathname,
+      url: pathName,
       query: currentQuery,
     },
     { skipNull: true },

@@ -25,8 +25,6 @@ type URLProps = {
 
 export default async function Home({ searchParams }: URLProps) {
   const { user } = auth();
-  // const mongoUser = await getUserByClerkId(userId!);
-  // if (mongoUser) checkUserStage('/', mongoUser.onboardingProgress);
 
   const page = searchParams.page ? +searchParams.page : 1;
 

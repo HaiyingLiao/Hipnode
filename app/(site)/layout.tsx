@@ -15,7 +15,6 @@ export default async function RootLayout({
 }) {
   const { userId } = auth();
   const mongoUser = await getUserByClerkId(userId!);
-  console.log('user', mongoUser);
 
   if (mongoUser) checkUserStage('', mongoUser.onboardingProgress);
 

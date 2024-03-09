@@ -3,6 +3,7 @@
 import prisma from '@/prisma';
 
 import { revalidatePath, revalidateTag } from 'next/cache';
+import { cache } from 'react';
 
 interface ParamsType {
   clerkId: string;
@@ -85,7 +86,7 @@ export async function deleteUser(params: Pick<ParamsType, 'clerkId'>) {
   }
 }
 
-export const getUserByClerkId = async (id: string) => {
+export const getUserByClerkId = cache(async (id: string) => {
   if (!id) return null;
 
   try {
@@ -99,4 +100,4 @@ export const getUserByClerkId = async (id: string) => {
   } catch (error) {
     throw new Error('An error occurred while fetching the user');
   }
-};
+});

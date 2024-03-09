@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 import { interests } from '@/constants';
@@ -15,6 +15,7 @@ export default function InterestWrapper({
   userClerkId: string;
 }) {
   const router = useRouter();
+  const pathName = usePathname();
   const searchParams = useSearchParams();
   const answerParams = searchParams.get('answer')?.split('_');
 
@@ -38,10 +39,20 @@ export default function InterestWrapper({
 
   useEffect(() => {
     if (answers.length > 0) {
-      const newUrl = formUrlQuery(searchParams.toString(), 'answer', answers);
+      const newUrl = formUrlQuery(
+        searchParams.toString(),
+        'answer',
+        answers,
+        pathName,
+      );
       router.push(newUrl);
     } else if (answers.length === 0) {
-      const newUrl = formUrlQuery(searchParams.toString(), 'answer', null);
+      const newUrl = formUrlQuery(
+        searchParams.toString(),
+        'answer',
+        null,
+        pathName,
+      );
       router.push(newUrl);
     }
   }, [answers, router, searchParams]);

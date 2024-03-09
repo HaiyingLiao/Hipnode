@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { cn, formUrlQuery } from '@/lib/utils';
@@ -26,6 +26,7 @@ export default function ContentCard({
   userClerkId,
 }: ContentCardProps) {
   const router = useRouter();
+  const pathName = usePathname();
   const searchParams = useSearchParams();
 
   const answerParams = searchParams.get('answer');
@@ -37,13 +38,19 @@ export default function ContentCard({
     if (position === 'right') {
       if (active === item) {
         setActive('');
-        newUrl = formUrlQuery(searchParams.toString(), 'answer', null);
+        newUrl = formUrlQuery(
+          searchParams.toString(),
+          'answer',
+          null,
+          pathName,
+        );
       } else {
         setActive(item);
         newUrl = formUrlQuery(
           searchParams.toString(),
           'answer',
           item.toLowerCase(),
+          pathName,
         );
       }
 

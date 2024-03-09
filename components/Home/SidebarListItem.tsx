@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import { formUrlQuery } from '@/lib/utils';
 interface SidebarListItemProps {
@@ -50,7 +50,9 @@ const SidebarListItem = ({
   label,
 }: SidebarListItemProps) => {
   const params = useSearchParams();
-  const path = formUrlQuery(params.toString(), 'sort', label ?? '');
+  const pathName = usePathname();
+
+  const path = formUrlQuery(params.toString(), 'sort', label ?? '', pathName);
   const sort = params.get('sort');
 
   return (

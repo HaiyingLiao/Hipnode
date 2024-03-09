@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 import { formUrlQuery } from '@/lib/utils';
 import { GlobalSearchFilters } from '@/constants/filters';
 
 const GlobalFilters = () => {
   const router = useRouter();
+  const pathName = usePathname();
   const searchParams = useSearchParams();
 
   const typeParams = searchParams.get('type');
@@ -19,7 +20,7 @@ const GlobalFilters = () => {
 
     if (active === item) {
       setActive('');
-      newUrl = formUrlQuery(searchParams.toString(), 'type', null);
+      newUrl = formUrlQuery(searchParams.toString(), 'type', null, pathName);
 
       router.push(newUrl, { scroll: false });
     } else {
@@ -28,6 +29,7 @@ const GlobalFilters = () => {
         searchParams.toString(),
         'type',
         item.toLowerCase(),
+        pathName,
       );
     }
 
