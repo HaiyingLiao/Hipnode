@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 'use server';
 
 import prisma from '@/prisma';
