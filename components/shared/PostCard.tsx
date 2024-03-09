@@ -7,34 +7,30 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { IsLiked } from '../Home/IsLiked';
 
-type User = {
+interface PostCardProps {
   username: string;
   emailAddress: string;
-};
-interface PostCardProps extends User {
-  postImage: string;
+  image: string;
   title: string;
   tags: string[];
   avatar: string;
-  authorName: string;
   online?: boolean;
   createdAt: string;
   views: number;
-  // likes: string[];
+  likes: string[];
   // comments: Comment[];
   styles?: string;
   id: string;
 }
 
 const PostCard = ({
-  authorName,
   avatar,
   // comments,
   createdAt,
   id,
   styles,
-  // likes,
-  postImage,
+  likes,
+  image,
   tags,
   title,
   views,
@@ -48,7 +44,7 @@ const PostCard = ({
         <Image
           priority
           fetchPriority='high'
-          src={postImage}
+          src={image}
           alt='Post image'
           width={156}
           height={156}
@@ -72,7 +68,7 @@ const PostCard = ({
       <IsLiked
         avatar={avatar}
         id={id}
-        // likes={likes}
+        likes={likes}
         emailAddress={emailAddress}
         username={username}
       />
@@ -86,11 +82,11 @@ const PostCard = ({
             height={40}
             className='rounded-full'
           />
-          <AvatarFallback>{authorName}</AvatarFallback>
+          <AvatarFallback>{username}</AvatarFallback>
         </Avatar>
         <div>
           <div className='flex items-center justify-between'>
-            <p className='avatarName'>{authorName}</p>
+            <p className='avatarName'>{username}</p>
             <div
               className={`online ${
                 online ? 'bg-green-500' : 'bg-darkSecondary-600'
@@ -104,8 +100,7 @@ const PostCard = ({
       <div className='postCardGridItem5'>
         <ul className='viewsList'>
           <li>{views} Views</li>
-          {/* <li>{likes.length} Likes</li> */}
-          <li>10 Likes</li>
+          <li>{likes.length} Likes</li>
           {/* <li>{comments.length} Comments</li> */}
           <li>0 Comments</li>
         </ul>

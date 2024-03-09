@@ -1,8 +1,9 @@
 'use client';
 
 import { AiOutlineCaretDown } from 'react-icons/ai';
-import { Separator } from '@radix-ui/react-separator';
+import { SignOutButton } from '@clerk/nextjs';
 
+import { Separator } from '@radix-ui/react-separator';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -33,7 +34,11 @@ const ProfileDropDown = () => {
                 className='mb-4 flex items-center hover:text-primary'
               >
                 <link.IconComponent className='mr-2' />
-                <h6 className='display-semibold mr-2'>{link.label}</h6>
+                {link.label === 'logout' ? (
+                  <SignOutButton />
+                ) : (
+                  <h6 className='display-semibold mr-2'>{link.label}</h6>
+                )}
               </NavigationMenuLink>
             ))}
 

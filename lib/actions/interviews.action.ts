@@ -1,9 +1,10 @@
 'use server';
 
 import prisma from '@/prisma';
+import { revalidatePath } from 'next/cache';
+import { currentUser } from '@clerk/nextjs/server';
 
 import { InterviewsSchema, InterviewsType } from '../validations';
-import { revalidatePath } from 'next/cache';
 
 export async function createInterview(interviewData: InterviewsType) {
   try {
@@ -17,7 +18,7 @@ export async function createInterview(interviewData: InterviewsType) {
       revenue,
       updates,
       website,
-      authorId,
+      authorclerkId,
       category,
       tags,
     } = interviewData;
@@ -29,7 +30,7 @@ export async function createInterview(interviewData: InterviewsType) {
         revenue,
         updates,
         website,
-        authorId,
+        authorclerkId,
         category,
         tags,
       },
@@ -62,7 +63,7 @@ export async function getInterviews(
     });
     const totalPages = Math.ceil(totalPosts / pageSize);
 
-    const interviews = await prisma.interviews.findMany({
+    const data = await prisma.interviews.findMany({
       take: pageSize,
       skip: pageSize * (page - 1),
       include: {
@@ -78,7 +79,10 @@ export async function getInterviews(
       },
       where: whereClause,
     });
-    return { interviews, totalPages };
+
+    if (!data) throw new Error('Interviews not found.');
+
+    return { data, totalPages };
   } catch (error) {
     console.error('Error in getInterviews:', error);
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
@@ -110,8 +114,14 @@ export async function getInterviewById(id: string) {
 
 export async function updateInterview(id: string, updateData: InterviewsType) {
   try {
+    const user = await currentUser();
+    if (!user) throw new Error('You must sign in to perform this action');
+
     const validation = InterviewsSchema.safeParse(updateData);
     if (!validation.success) throw new Error('validation not successful');
+
+    if (user.id !== updateData.authorclerkId)
+      throw new Error('You are not allowed to delete this post');
 
     const updatedInterview = await prisma.interviews.update({
       where: {
@@ -124,7 +134,7 @@ export async function updateInterview(id: string, updateData: InterviewsType) {
         revenue: updateData.revenue,
         updates: updateData.updates,
         website: updateData.website,
-        authorId: updateData.authorId,
+        authorclerkId: updateData.authorclerkId,
         category: updateData.category,
         tags: updateData.tags,
       },
@@ -138,6 +148,14 @@ export async function updateInterview(id: string, updateData: InterviewsType) {
 }
 
 export async function deleteInterviewById(id: string) {
+  const user = await currentUser();
+  if (!user) throw new Error('You must sign in to perform this action');
+
+  const foundInterview = await prisma.interviews.findFirst({ where: { id } });
+
+  if (user.id !== foundInterview?.authorclerkId)
+    throw new Error('You are not allowed to delete this post');
+
   try {
     const deleteinterview = await prisma.interviews.delete({
       where: {

@@ -41,6 +41,22 @@ export const formatDate = (originalDate: Date) => {
   return formattedDate;
 };
 
+export const timeAgo = (timestamp: Date): string => {
+  const now = new Date();
+  const diff = now.getTime() - new Date(timestamp).getTime();
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+
+  if (days >= 1) {
+    return `${days} days ago`;
+  } else if (hours >= 1) {
+    return `${hours} hours ago`;
+  } else {
+    return 'just now';
+  }
+};
+
 const roundDown = (value: number) => Math.floor(value);
 
 export const getCreatedDate = (createdAt: Date) => {

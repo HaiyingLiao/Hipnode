@@ -33,7 +33,7 @@ export { default as CreateGroupForm } from '@/components/group/CreateForm/Create
 export { default as HostMeetupCard } from './shared/HostMeetupCard';
 export { default as CreatePostInput } from '@/components/Home/CreatePostInput';
 export { default as SidebarListItem } from '@/components/Home/SidebarListItem';
-export { default as InterviewPostActions } from '@/components/interviews/InterviewPostActions';
 export { default as Statistic } from '@/components/interviews/statistic';
+export { default as InterviewPostActions } from '@/components/interviews/InterviewPostActions';
 export { default as EditPost } from '@/components/forms/EditPost';
 export { default as SharePost } from '@/components/Post/Share';

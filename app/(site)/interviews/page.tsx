@@ -8,18 +8,20 @@ import {
 import { interviewCards } from '@/constants';
 import { getInterviews } from '@/lib/actions/interviews.action';
 import { formatDate } from '@/lib/utils';
+import { SearchParamsProps } from '@/types/searchParamsProps';
 
-interface SearchParamsProps {
-  searchParams: {
-    page: string;
-    category: string;
-  };
-}
-
-export default async function Interviews({ searchParams }: SearchParamsProps) {
+export default async function Interviews({
+  searchParams,
+}: {
+  searchParams: Pick<SearchParamsProps['searchParams'], 'category' | 'page'>;
+}) {
   const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
-  const { interviews, totalPages } = await getInterviews(page, 10, category);
+  const { data: interviews, totalPages } = await getInterviews(
+    page,
+    10,
+    category,
+  );
 
   return (
     <div className='mt-28 flex h-full w-full flex-col gap-5 lg:flex-row '>

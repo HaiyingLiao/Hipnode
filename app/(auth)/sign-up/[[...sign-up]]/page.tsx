@@ -12,7 +12,7 @@ export default function Signup() {
         contents={signupContents}
       />
       <div className='flex w-full items-center justify-center py-10 dark:bg-darkPrimary-3'>
-        <SignUp redirectUrl={'/current-stage'} />
+        <SignUp />
       </div>
     </>
   );

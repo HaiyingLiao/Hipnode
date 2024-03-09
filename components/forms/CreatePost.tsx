@@ -28,21 +28,40 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
-import { CreatePostSchema } from '@/lib/validations';
 import { createPostData, categoryItems } from '@/constants';
 import GroupSelectContent from './GroupSelectContent';
+import { CreatePostSchema } from '@/lib/validations';
 import { createInterview } from '@/lib/actions/interviews.action';
 import { createPost } from '@/lib/actions/post.action';
 import { uploadImageToS3 } from '@/lib/aws_s3';
-import { filterWords } from '@/lib/utils';
+import { filterWords, getUserCountry } from '@/lib/utils';
 import useUploadFile from '@/hooks/useUploadFile';
+import { UploadButton } from '@/lib/uploadthing';
+import { UploadthingType } from '@/types/uploadthing.type';
 
-const CreatePost = () => {
+const CreatePost = ({
+  authorclerkId,
+}: {
+  authorclerkId: string | undefined | null;
+}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { theme } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
   const { toast } = useToast();
+
+  const [imagePreview, setImagePreview] = useState<
+    {
+      fileKey: string;
+      fileName: string;
+      fileSize: number;
+      fileUrl: string;
+      key: string;
+      name: string;
+      size: number;
+      url: string;
+    }[]
+  >([]);
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
@@ -56,8 +75,6 @@ const CreatePost = () => {
       createType: '',
       group: '',
       post: '',
-      postImage: '',
-      postImageKey: '',
     },
   });
 
@@ -78,7 +95,9 @@ const CreatePost = () => {
       group,
     } = values;
     const modifiedCategory = category?.replace(/\W/g, '');
+
     setLoading(true);
+
     const isContainBadWord = filterWords(post);
     if (isContainBadWord) {
       toast({
@@ -89,12 +108,16 @@ const CreatePost = () => {
     }
 
     try {
+      if (!authorclerkId)
+        return toast({
+          title: 'Please log in to create posts',
+        });
+
       switch (createType) {
         case 'interviews':
           await createInterview({
-            // replace image path when implement image function
-            image: '/assets/images/illustration.png',
-            authorId: '657ddd2e3647ac6914ff58c7',
+            image: imagePreview[0].url,
+            authorclerkId,
             title,
             post,
             tags,
@@ -110,27 +133,21 @@ const CreatePost = () => {
           break;
 
         case 'post':
-          if (files && files.postImage) {
-            // const userCountry = await getUserCountry();
-
-            const postImage = await uploadImageToS3(files.postImage);
+          {
+            const userCountry = await getUserCountry();
             await createPost({
-              postData: {
-                createType: '',
-                group,
-                post,
-                postImage: postImage?.Location as string,
-                tags,
-                title,
-                postImageKey: files.postImage.name,
-                // country: userCountry?.region,
-              },
+              image: imagePreview[0].url,
+              authorclerkId,
+              tags,
+              title,
+              post,
+              country: userCountry?.region,
             });
-            toast({
-              title: 'Your Post has been uploaded🎉',
-            });
-            router.push('/');
           }
+          toast({
+            title: 'Success!🎉 Your post has been uploaded.',
+          });
+          router.push('/');
           break;
       }
     } catch (error) {
@@ -199,7 +216,7 @@ const CreatePost = () => {
         />
 
         <div className='flex gap-5'>
-          <FormField
+          {/* <FormField
             control={form.control}
             name='postImage'
             render={() => (
@@ -236,7 +253,45 @@ const CreatePost = () => {
                 <FormMessage />
               </FormItem>
             )}
+          /> */}
+
+          {/* @ts-ignore */}
+          <UploadButton
+            appearance={{
+              button:
+                'px-2.5 py-2 text-darkSecondary-900 bodyXs-regular md:body-semibold dark:bg-darkPrimary-4 dark:text-white-800 ut-uploading:cursor-not-allowed rounded-r-none bg-white-800 bg-none',
+            }}
+            endpoint='imageUploader'
+            onClientUploadComplete={(res: UploadthingType) => {
+              setImagePreview(res);
+            }}
+            onUploadError={(error: Error) => {
+              toast({
+                title: `ERROR! ${error.message}`,
+                variant: 'destructive',
+              });
+            }}
+            content={{
+              button() {
+                return (
+                  <div className='flex items-center gap-2'>
+                    <Image
+                      src='uploadIcon.svg'
+                      alt='upload icon'
+                      width={20}
+                      height={20}
+                      className='h-5 w-5 dark:brightness-0 dark:invert'
+                    />
+                    <p>Change Cover</p>
+                  </div>
+                );
+              },
+              allowedContent() {
+                return '';
+              },
+            }}
           />
+
           <FormField
             control={form.control}
             name='group'
@@ -266,7 +321,6 @@ const CreatePost = () => {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name='createType'
@@ -310,16 +364,15 @@ const CreatePost = () => {
             )}
           />
         </div>
-        {preview && (
-          <div className='relative min-h-[350px] w-full'>
-            <Image
-              src={preview.postImage as string}
-              alt='cover'
-              fill
-              className='rounded-lg object-cover'
-              priority
-            />
-          </div>
+
+        {imagePreview.length > 0 && (
+          <Image
+            src={imagePreview[0].url}
+            alt='cover image'
+            width={870}
+            height={500}
+            className='w-full rounded-lg'
+          />
         )}
 
         <FormField
@@ -536,12 +589,12 @@ const CreatePost = () => {
           <Button
             disabled={loading}
             type='submit'
-            className='body-semibold md:display-semibold rounded-lg bg-secondary-blue px-10 py-[10px] text-secondary-blue-10 hover:bg-[#347ae2e6] dark:bg-secondary-blue dark:text-secondary-blue-10 dark:hover:bg-[#347ae2e6]'
+            className='body-semibold md:display-semibold rounded-lg bg-secondary-blue px-10 py-[10px] text-secondary-blue-10 hover:bg-secondary-blue-btnhover dark:bg-secondary-blue dark:text-secondary-blue-10 dark:hover:bg-secondary-blue-btnhover'
           >
             {loading ? 'Publishing...' : 'Publish'}
           </Button>
           <Link
-            href={'/'}
+            href='/'
             type='button'
             className='md:display-regular body-semibold bg-white text-darkSecondary-800 hover:bg-white dark:bg-darkPrimary-3 dark:text-darkSecondary-800'
           >

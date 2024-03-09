@@ -1,8 +1,9 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -40,7 +41,7 @@ interface EditPostProps {
   website: string;
   category: string;
   tags: string[];
-  authorId: string;
+  authorclerkId: string;
   createType: string;
   postId: string;
 }
@@ -53,10 +54,11 @@ export default function EditPost({
   website,
   category,
   tags,
-  authorId,
+  authorclerkId,
   createType,
   postId,
 }: EditPostProps) {
+  const [loading, setLoading] = useState<boolean>(false);
   const { theme } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
@@ -97,13 +99,15 @@ export default function EditPost({
       createType,
     } = values;
 
+    setLoading(true);
+
     try {
       switch (createType) {
         case 'interviews':
           await updateInterview(postId, {
             // replace image path when implement image function
             image: '/assets/images/illustration.png',
-            authorId,
+            authorclerkId,
             title,
             post,
             tags,
@@ -125,6 +129,8 @@ export default function EditPost({
           variant: 'destructive',
         });
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -468,19 +474,22 @@ export default function EditPost({
             </FormItem>
           )}
         />
-
-        <Button
-          type='submit'
-          className='body-semibold md:display-semibold rounded-lg bg-secondary-blue px-10 py-[10px] text-secondary-blue-10 hover:bg-[#347ae2e6] dark:bg-secondary-blue dark:text-secondary-blue-10 dark:hover:bg-[#347ae2e6]'
-        >
-          Publish
-        </Button>
-        <Button
-          type='button'
-          className='md:display-regular body-semibold bg-white text-darkSecondary-800 hover:bg-white dark:bg-darkPrimary-3 dark:text-darkSecondary-800'
-        >
-          Cancel
-        </Button>
+        <div className='flex items-center gap-4'>
+          <Button
+            disabled={loading}
+            type='submit'
+            className='body-semibold md:display-semibold rounded-lg bg-secondary-blue px-10 py-[10px] text-secondary-blue-10 hover:bg-secondary-blue-btnhover dark:bg-secondary-blue dark:text-secondary-blue-10 dark:hover:bg-secondary-blue-btnhover'
+          >
+            {loading ? 'Publishing...' : 'Publish'}
+          </Button>
+          <Link
+            href='/'
+            type='button'
+            className='md:display-regular body-semibold bg-white text-darkSecondary-800 hover:bg-white dark:bg-darkPrimary-3 dark:text-darkSecondary-800'
+          >
+            Cancel
+          </Link>
+        </div>
       </form>
     </Form>
   );
