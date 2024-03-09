@@ -10,10 +10,9 @@ import {
   SidebarListItem,
 } from '@/components/index';
 import { getAllPosts } from '@/lib/actions/post.action';
-import { checkUserStage, timeAgo } from '@/lib/utils';
+import { timeAgo } from '@/lib/utils';
 import SortMobile from '@/components/Home/SortMobile';
 import { auth } from '@clerk/nextjs';
-import { getUserByClerkId } from '@/lib/actions/user.action';
 
 type URLProps = {
   searchParams: {
@@ -25,9 +24,9 @@ type URLProps = {
 };
 
 export default async function Home({ searchParams }: URLProps) {
-  const { userId, user } = auth();
-  const mongoUser = await getUserByClerkId(userId!);
-  if (mongoUser) checkUserStage('/', mongoUser.onboardingProgress);
+  const { user } = auth();
+  // const mongoUser = await getUserByClerkId(userId!);
+  // if (mongoUser) checkUserStage('/', mongoUser.onboardingProgress);
 
   const page = searchParams.page ? +searchParams.page : 1;
 

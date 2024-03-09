@@ -1,9 +1,8 @@
-/* eslint-disable camelcase */
 'use server';
 
 import prisma from '@/prisma';
 
-import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 interface ParamsType {
   clerkId: string;
@@ -64,7 +63,6 @@ export async function updateUser(params: Partial<ParamsType>) {
       data: updateData,
     });
     revalidateTag('user');
-    revalidatePath('/');
     return updatedUser;
   } catch (error) {
     console.log('Error with update user', error);
@@ -87,25 +85,18 @@ export async function deleteUser(params: Pick<ParamsType, 'clerkId'>) {
   }
 }
 
-export const getUserByClerkId = unstable_cache(
-  async (id: string) => {
-    // get random number between 1 to 100
-    const randomNumber = Math.floor(Math.random() * 100 + 1);
-    console.log('randomNumber', randomNumber);
+export const getUserByClerkId = async (id: string) => {
+  if (!id) return null;
 
-    if (!id) return null;
+  try {
+    const selectedUser = await prisma.user.findFirst({
+      where: { clerkId: id },
+    });
 
-    try {
-      const selectedUser = await prisma.user.findFirst({
-        where: { clerkId: id },
-      });
+    if (!selectedUser) return;
 
-      if (!selectedUser) return;
-
-      return selectedUser;
-    } catch (error) {
-      throw new Error('An error occurred while fetching the user');
-    }
-  },
-  ['user'],
-);
+    return selectedUser;
+  } catch (error) {
+    throw new Error('An error occurred while fetching the user');
+  }
+};

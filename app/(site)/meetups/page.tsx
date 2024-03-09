@@ -4,21 +4,19 @@ import {
   MeetupsWrapper,
   SidePodcasts,
 } from '@/components/index';
-import { checkUserStage } from '@/lib/utils';
+
+const cardBtns = [
+  {
+    name: 'Host a Meetup',
+    link: '/host-meetup',
+  },
+  {
+    name: 'Code of Conduct',
+    link: '/code-of-conduct',
+  },
+];
 
 const Page = async () => {
-  await checkUserStage('');
-  const cardBtns = [
-    {
-      name: 'Host a Meetup',
-      link: '/host-meetup',
-    },
-    {
-      name: 'Code of Conduct',
-      link: '/code-of-conduct',
-    },
-  ];
-
   return (
     <section className='flex flex-col gap-4 bg-white-700 dark:bg-darkPrimary-2 md:flex-row'>
       <main className='flex flex-col gap-4 lg:flex lg:flex-row '>

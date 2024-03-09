@@ -237,8 +237,6 @@ export const checkUserStage = (
   currentPage: string,
   onboardingProgress: string,
 ) => {
-  console.log(currentPage, onboardingProgress);
-
   if (onboardingProgress === '') {
     currentPage !== 'current-stage' && redirect('/current-stage');
   } else if (onboardingProgress === 'Business Stage') {
