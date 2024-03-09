@@ -11,6 +11,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           position='left'
           contents={introductionItems}
           title='Tell us a little about yourself!'
+          userClerkId=''
         />
       </aside>
       {children}

@@ -3,6 +3,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import queryString from 'query-string';
 import Filter from 'bad-words';
+import { redirect } from 'next/navigation';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -12,6 +13,7 @@ export const formUrlQuery = (
   params: string,
   key: string,
   value: string | string[] | null,
+  pathName: string,
 ) => {
   const currentQuery = queryString.parse(params as string);
 
@@ -24,7 +26,7 @@ export const formUrlQuery = (
 
   return queryString.stringifyUrl(
     {
-      url: window.location.pathname,
+      url: pathName,
       query: currentQuery,
     },
     { skipNull: true },
@@ -231,3 +233,18 @@ export function removeKeysFromQuery(params: string, keysToRemove: string[]) {
     { skipNull: true },
   );
 }
+
+export const checkUserStage = (
+  currentPage: string,
+  onboardingProgress: string,
+) => {
+  if (onboardingProgress === '') {
+    currentPage !== 'current-stage' && redirect('/current-stage');
+  } else if (onboardingProgress === 'Business Stage') {
+    currentPage !== 'programming-level' && redirect('/programming-level');
+  } else if (onboardingProgress === 'Coding Level') {
+    currentPage !== 'interest' && redirect('/interest');
+  } else {
+    currentPage !== '' && redirect('/');
+  }
+};

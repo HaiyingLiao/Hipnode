@@ -1,4 +1,3 @@
-import { currentUser } from '@clerk/nextjs';
 import Image from 'next/image';
 
 import { popularTags, pinnedGroups, newAndPopular } from '@/constants';
@@ -13,6 +12,7 @@ import {
 import { getAllPosts } from '@/lib/actions/post.action';
 import { timeAgo } from '@/lib/utils';
 import SortMobile from '@/components/Home/SortMobile';
+import { auth } from '@clerk/nextjs';
 
 type URLProps = {
   searchParams: {
@@ -24,9 +24,11 @@ type URLProps = {
 };
 
 export default async function Home({ searchParams }: URLProps) {
-  const user = await currentUser();
+  const { user } = auth();
+
   const page = searchParams.page ? +searchParams.page : 1;
-  const { posts, totalPages } = await getAllPosts(
+
+  const { data: posts, totalPages } = await getAllPosts(
     searchParams.sort,
     page,
     10,
