@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 import { interests } from '@/constants';
 import { formUrlQuery } from '@/lib/utils';
 import { Button } from '../ui/button';
-import { updateBusinessTypes } from '@/lib/actions/onboarding.action';
+import { updateUser } from '@/lib/actions/user.action';
 
 export default function InterestWrapper({
   userClerkId,
@@ -15,9 +15,10 @@ export default function InterestWrapper({
   userClerkId: string;
 }) {
   const router = useRouter();
+  const pathName = usePathname();
   const searchParams = useSearchParams();
   const answerParams = searchParams.get('answer')?.split('_');
-  console.log(answerParams);
+
   const [answers, setAnswers] = useState<string[]>(answerParams || []);
 
   const handleClick = (item: string) => {
@@ -29,15 +30,29 @@ export default function InterestWrapper({
   };
 
   const handleDataUpdate = async () => {
-    await updateBusinessTypes(userClerkId, answers);
+    await updateUser({
+      clerkId: userClerkId,
+      pageType: 'interest',
+      businessTypes: answers,
+    });
   };
 
   useEffect(() => {
     if (answers.length > 0) {
-      const newUrl = formUrlQuery(searchParams.toString(), 'answer', answers);
+      const newUrl = formUrlQuery(
+        searchParams.toString(),
+        'answer',
+        answers,
+        pathName,
+      );
       router.push(newUrl);
     } else if (answers.length === 0) {
-      const newUrl = formUrlQuery(searchParams.toString(), 'answer', null);
+      const newUrl = formUrlQuery(
+        searchParams.toString(),
+        'answer',
+        null,
+        pathName,
+      );
       router.push(newUrl);
     }
   }, [answers, router, searchParams]);

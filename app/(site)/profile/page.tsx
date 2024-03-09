@@ -9,22 +9,17 @@ import {
 } from '@/components/index';
 import { cardBtns } from '@/constants';
 import { getProfilePosts } from '@/lib/actions/profile.action';
-import { timeAgo, formatDate, checkUserStage } from '@/lib/utils';
-
-interface SearchParamsProps {
-  searchParams: {
-    type: string;
-    page: string;
-  };
-}
+import { timeAgo, formatDate } from '@/lib/utils';
+import { SearchParamsProps } from '@/types/searchParamsProps';
+import { Interview, Post, ProfilePostsResult } from '@/types/profilePageType';
 
 export default async function ProfilePage({ searchParams }: SearchParamsProps) {
-  await checkUserStage('');
   const { type, page } = searchParams;
 
-  const postData = await getProfilePosts(type, page);
-  const posts = postData?.data;
-  const totalPages = postData?.totalPages || 1;
+  const { data: posts, totalPages } = (await getProfilePosts(
+    type,
+    page,
+  )) as ProfilePostsResult<Interview & Post>;
 
   return (
     <div className='flex flex-col items-start justify-center gap-6 py-[90px] lg:flex-row lg:py-[100px]'>

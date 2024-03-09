@@ -1,11 +1,9 @@
 import Image from 'next/image';
 
-import { checkUserStage } from '@/lib/utils';
 import { getPodcastById } from '@/lib/actions/podcasts.action';
 import { AudioSection } from '@/components/index';
 
 const Podcast = async ({ params: { id } }: { params: { id: string } }) => {
-  await checkUserStage('');
   const { audio, author, title, post } = await getPodcastById(id);
 
   return (

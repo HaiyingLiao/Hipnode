@@ -75,11 +75,11 @@ export async function POST(req: Request) {
   }
 
   if (eventType === 'user.updated') {
-    const { email_addresses, first_name, last_name } = evt.data;
+    const { first_name, last_name, id: clerkId } = evt.data;
 
     // updated user
     const updatedUser = await updateUser({
-      email: email_addresses[0].email_address,
+      clerkId,
       name: `${first_name} ${last_name || ''}`,
     });
     return NextResponse.json({ updatedUser }, { status: 200 });

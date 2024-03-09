@@ -2,17 +2,23 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import { newAndPopularMobile } from '@/constants';
 import { formUrlQuery } from '@/lib/utils';
 
 export default function SortMobile() {
   const params = useSearchParams();
+  const pathName = usePathname();
   const sort = params.get('sort');
 
   const path = (label: string) => {
-    return formUrlQuery(params.toString(), 'sort', label ?? '#') as string;
+    return formUrlQuery(
+      params.toString(),
+      'sort',
+      label ?? '#',
+      pathName,
+    ) as string;
   };
 
   return (

@@ -3,7 +3,6 @@
 import { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { useUser } from '@clerk/nextjs';
-import { Comment as PostComment } from '@/prisma/generated/client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { CommentInput } from '@/components/index';
@@ -14,6 +13,7 @@ import {
 } from '@/lib/actions/post.action';
 import { cn } from '@/lib/utils';
 import { toast } from '../ui/use-toast';
+import { usePathname } from 'next/navigation';
 
 type ExtendedTypes = {
   children?: ReactNode;
@@ -21,7 +21,7 @@ type ExtendedTypes = {
   className?: string;
 };
 
-type PostCommentsTypes = PostComment;
+type PostCommentsTypes = any;
 
 const Comment = ({
   authorImage,
@@ -35,6 +35,8 @@ const Comment = ({
   className,
   type,
 }: PostCommentsTypes & ExtendedTypes) => {
+  const pathname = usePathname();
+
   const [showReplyInput, setShowReplyInput] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [replies, setReplies] = useState<PostCommentsTypes[]>([]);
@@ -51,7 +53,7 @@ const Comment = ({
       await uploadComment({
         message: text,
         parentId: id,
-        path: window.location.pathname,
+        path: pathname,
         postId,
         type: 'children',
       });
@@ -70,7 +72,7 @@ const Comment = ({
 
   const handleLike = async () => {
     try {
-      await likeComments(id, window.location.pathname, type);
+      await likeComments(id, pathname, type);
     } catch (error) {
       if (error instanceof Error) {
         toast({

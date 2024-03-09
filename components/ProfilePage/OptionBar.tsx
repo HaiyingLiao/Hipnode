@@ -2,9 +2,10 @@
 
 import { optionBar } from '@/constants';
 import { formUrlQuery } from '@/lib/utils';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 const OptionBar = () => {
+  const pathName = usePathname();
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
 
@@ -15,6 +16,7 @@ const OptionBar = () => {
       searchParams.toString(),
       'type',
       option.toLowerCase(),
+      pathName,
     );
     router.push(newUrl);
   };

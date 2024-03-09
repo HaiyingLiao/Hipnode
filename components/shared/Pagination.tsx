@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { Button } from '../ui/button';
 import { formUrlQuery } from '@/lib/utils';
@@ -11,6 +11,7 @@ type PaginationProps = {
 
 export default function Pagination({ totalPages }: PaginationProps) {
   const router = useRouter();
+  const pathName = usePathname();
   const params = useSearchParams();
   let page = params.get('page') ?? 1;
 
@@ -36,6 +37,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
       params.toString(),
       'page',
       page.toString(),
+      pathName,
     );
 
     router.push(newQueryString);

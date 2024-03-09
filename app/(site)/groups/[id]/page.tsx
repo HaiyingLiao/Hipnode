@@ -9,7 +9,6 @@ import {
   HostMeetupCard,
   Pagination,
 } from '@/components/index';
-import { checkUserStage } from '@/lib/utils';
 
 const cardBtns = [
   {
@@ -23,7 +22,6 @@ const cardBtns = [
 ];
 
 export default async function GroupDetail() {
-  await checkUserStage('');
   return (
     <div className='mt-24 h-full min-h-full w-full p-5'>
       <div className='flex w-full justify-between gap-5 max-lg:flex-wrap'>

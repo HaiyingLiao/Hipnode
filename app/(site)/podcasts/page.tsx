@@ -6,7 +6,6 @@ import {
   PodcastChip,
 } from '@/components/index';
 import { cardBtns } from '@/constants';
-import { checkUserStage } from '@/lib/utils';
 import { getPodcasts } from '@/lib/actions/podcasts.action';
 
 interface SearchParamsProps {
@@ -17,7 +16,6 @@ interface SearchParamsProps {
 }
 
 export default async function Podcasts({ searchParams }: SearchParamsProps) {
-  await checkUserStage('');
   const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
   const { data: podcasts, totalPages } = await getPodcasts(page, 10, category);
