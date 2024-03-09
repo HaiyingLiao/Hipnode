@@ -33,11 +33,9 @@ import GroupSelectContent from './GroupSelectContent';
 import { CreatePostSchema } from '@/lib/validations';
 import { createInterview } from '@/lib/actions/interviews.action';
 import { createPost } from '@/lib/actions/post.action';
-import { uploadImageToS3 } from '@/lib/aws_s3';
+import { createMeetup } from '@/lib/actions/meetups.action';
 import { filterWords, getUserCountry } from '@/lib/utils';
-import useUploadFile from '@/hooks/useUploadFile';
 import { UploadButton } from '@/lib/uploadthing';
-import { UploadthingType } from '@/types/uploadthing.type';
 
 const CreatePost = ({
   authorclerkId,
@@ -50,18 +48,7 @@ const CreatePost = ({
   const router = useRouter();
   const { toast } = useToast();
 
-  const [imagePreview, setImagePreview] = useState<
-    {
-      fileKey: string;
-      fileName: string;
-      fileSize: number;
-      fileUrl: string;
-      key: string;
-      name: string;
-      size: number;
-      url: string;
-    }[]
-  >([]);
+  const [imagePreview, setImagePreview] = useState<string>('');
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
@@ -75,12 +62,12 @@ const CreatePost = ({
       createType: '',
       group: '',
       post: '',
+      companyName: '',
     },
   });
 
-  // interview post related field show up based on selectedType
+  // interview and meetup post related field show up based on selectedType
   const selectedType = form.watch('createType');
-  const { handleChange, isChecking, preview, files } = useUploadFile(form);
 
   async function onSubmit(values: z.infer<typeof CreatePostSchema>) {
     const {
@@ -92,6 +79,7 @@ const CreatePost = ({
       website,
       category,
       createType,
+      companyName,
       group,
     } = values;
     const modifiedCategory = category?.replace(/\W/g, '');
@@ -107,48 +95,60 @@ const CreatePost = ({
       return;
     }
 
+    const userCountry = await getUserCountry();
+
     try {
-      if (!authorclerkId)
-        return toast({
-          title: 'Please log in to create posts',
-        });
+      if (authorclerkId) {
+        switch (createType) {
+          case 'interviews':
+            await createInterview({
+              image: imagePreview,
+              authorclerkId,
+              title,
+              post,
+              tags,
+              revenue: revenue || 0,
+              updates: updates || 0,
+              website: website || '',
+              category: modifiedCategory || 'free',
+            });
 
-      switch (createType) {
-        case 'interviews':
-          await createInterview({
-            image: imagePreview[0].url,
-            authorclerkId,
-            title,
-            post,
-            tags,
-            revenue: revenue || 0,
-            updates: updates || 0,
-            website: website || '',
-            category: modifiedCategory || 'free',
-          });
-          toast({
-            title: 'Success!🎉 Your interview post has been uploaded.',
-          });
-          router.push('/interviews');
-          break;
+            break;
 
-        case 'post':
-          {
-            const userCountry = await getUserCountry();
+          case 'post':
             await createPost({
-              image: imagePreview[0].url,
+              image: imagePreview, // '/assets/images/illustration.png'
               authorclerkId,
               tags,
               title,
               post,
               country: userCountry?.region,
             });
-          }
-          toast({
-            title: 'Success!🎉 Your post has been uploaded.',
-          });
-          router.push('/');
-          break;
+            router.push('/');
+            break;
+
+          case 'meetups':
+            await createMeetup({
+              image: imagePreview,
+              authorclerkId,
+              tags,
+              title,
+              companyName: companyName || '',
+              location: userCountry?.region,
+              description: post,
+              category: modifiedCategory || 'free',
+            });
+            router.push('/meetups');
+            break;
+        }
+        toast({
+          title: 'Success!🎉 Your post has been uploaded.',
+        });
+        router.push(`/${createType === 'post' ? '/' : createType}`);
+      } else {
+        toast({
+          title: 'Please log in to create posts',
+        });
       }
     } catch (error) {
       console.error('Error in form:', error);
@@ -262,8 +262,19 @@ const CreatePost = ({
                 'px-2.5 py-2 text-darkSecondary-900 bodyXs-regular md:body-semibold dark:bg-darkPrimary-4 dark:text-white-800 ut-uploading:cursor-not-allowed rounded-r-none bg-white-800 bg-none',
             }}
             endpoint='imageUploader'
-            onClientUploadComplete={(res: UploadthingType) => {
-              setImagePreview(res);
+            onClientUploadComplete={(
+              res: Array<{
+                fileKey: string;
+                fileName: string;
+                fileSize: number;
+                fileUrl: string;
+                key: string;
+                name: string;
+                size: number;
+                url: string;
+              }>,
+            ) => {
+              setImagePreview(res[0].url);
             }}
             onUploadError={(error: Error) => {
               toast({
@@ -365,9 +376,9 @@ const CreatePost = ({
           />
         </div>
 
-        {imagePreview.length > 0 && (
+        {imagePreview && (
           <Image
-            src={imagePreview[0].url}
+            src={imagePreview}
             alt='cover image'
             width={870}
             height={500}
@@ -442,7 +453,7 @@ const CreatePost = ({
           )}
         />
 
-        {selectedType === 'interviews' && (
+        {selectedType === 'interviews' ? (
           <>
             <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
               <FormField
@@ -547,6 +558,67 @@ const CreatePost = ({
               />
             </div>
           </>
+        ) : selectedType === 'meetups' ? (
+          <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
+            <FormField
+              control={form.control}
+              name='companyName'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-[50%]'>
+                  <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                    Company Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder='Add company name...'
+                      {...field}
+                      className='inputStyle'
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='category'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-[50%]'>
+                  <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
+                    Category
+                  </FormLabel>
+
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className='inputStyle'>
+                        <SelectValue placeholder='Select or create a category...' />
+                        <Image
+                          src='form-down-arrow.svg'
+                          alt='icon'
+                          width={15}
+                          height={15}
+                          className='h-2.5 w-2.5 dark:brightness-0 dark:invert md:h-3.5 md:w-3.5'
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className='dark:bg-darkPrimary-4'>
+                      {categoryItems.map((item) => (
+                        <SelectItem value={item} key={item}>
+                          <p className='bodyMd-semibold p-2'>{item}</p>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        ) : (
+          ''
         )}
 
         <FormField

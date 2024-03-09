@@ -20,7 +20,7 @@ const PodcastsCard = ({ cardData }: Props) => {
         height={100}
       />
 
-      <div className='px-3'>
+      <div className='flex flex-1 flex-col items-start justify-start px-3'>
         <p className='bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
           {cardData.title}
         </p>

@@ -15,6 +15,7 @@ export const CreatePostSchema = PostSchema.extend({
   website: z.string().optional(),
   authorclerkId: z.string().optional(),
   category: z.string().optional(),
+  companyName: z.string().optional(),
 });
 
 // for server action
@@ -39,7 +40,19 @@ export const PostsSchema = z.object({
   country: z.string(),
 });
 
+export const MeetupsSchema = z.object({
+  title: z.string().min(5).max(130),
+  companyName: z.string().max(50),
+  location: z.string(),
+  description: z.string().min(80),
+  image: z.string(),
+  authorclerkId: z.string(),
+  tags: z.array(z.string().min(1).max(15)).min(1).max(5),
+  category: z.string(),
+});
+
 export type CreatePostType = z.infer<typeof CreatePostSchema>;
 export type UpdatePostSchemaType = z.infer<typeof PostSchema>;
 export type InterviewsType = z.infer<typeof InterviewsSchema>;
 export type PostsType = z.infer<typeof PostsSchema>;
+export type MeetupsType = z.infer<typeof MeetupsSchema>;

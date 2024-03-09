@@ -8,7 +8,6 @@ export default async function Introduce() {
   const { userId } = auth();
   const mongoUser = await getUserByClerkId(userId!);
   checkUserStage('interest', mongoUser!.onboardingProgress);
-  console.log('here', mongoUser);
 
   return (
     <section className='flex min-h-full w-full flex-col items-center justify-center bg-white p-5 dark:bg-darkPrimary-3 lg:max-w-720'>

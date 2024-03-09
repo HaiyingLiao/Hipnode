@@ -10,14 +10,28 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { deleteInterviewById } from '@/lib/actions/interviews.action';
+import { deleteMeetupById } from '@/lib/actions/meetups.action';
 import { useToast } from '@/components/ui/use-toast';
 
-export default function InterviewPostActions({ postId }: { postId: string }) {
+export default function PostActions({
+  postId,
+  postType,
+}: {
+  postId: string;
+  postType: string;
+}) {
   const { toast } = useToast();
 
   const deletePost = async (id: string) => {
     try {
-      await deleteInterviewById(id);
+      switch (postType) {
+        case 'interviews':
+          return await deleteInterviewById(id);
+
+        case 'meetups':
+          return await deleteMeetupById(id);
+      }
+
       toast({
         title: 'Success!🎉 Your interview post has been deleted.',
       });
@@ -38,7 +52,10 @@ export default function InterviewPostActions({ postId }: { postId: string }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className='mr-10 border border-darkSecondary-600 bg-white-800 p-2 dark:border-darkSecondary-900 dark:bg-darkPrimary-4 md:mr-20'>
         <DropdownMenuItem>
-          <Link href={`/edit-post/${postId}`} className='flex gap-2'>
+          <Link
+            href={`/edit-post/${postId}/${postType}`}
+            className='flex gap-2'
+          >
             <Image
               src='edit.svg'
               alt='see more icon'

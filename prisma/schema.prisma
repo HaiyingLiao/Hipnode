@@ -112,4 +112,20 @@ model User {
   businessTypes      String[]
 
   notifications Notification[]
+  Meetups       Meetups[]
+}
+
+model Meetups {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  companyName   String
+  location      String
+  description   String
+  tags          String[]
+  image         String
+  category      String
+  createdAt     DateTime @default(now())
+  updateAt      DateTime @default(now()) @updatedAt
+  author        User     @relation(fields: [authorclerkId], references: [clerkId], onDelete: Cascade)
+  authorclerkId String
 }

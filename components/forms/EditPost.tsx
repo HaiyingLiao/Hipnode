@@ -32,21 +32,13 @@ import { CreatePostSchema } from '@/lib/validations';
 import { createPostData, categoryItems } from '@/constants';
 import GroupSelectContent from './GroupSelectContent';
 import { updateInterview } from '@/lib/actions/interviews.action';
-
-interface EditPostProps {
-  title: string;
-  post: string;
-  revenue: number;
-  updates: number;
-  website: string;
-  category: string;
-  tags: string[];
-  authorclerkId: string;
-  createType: string;
-  postId: string;
-}
+import { updateMeetup } from '@/lib/actions/meetups.action';
+import { getUserCountry } from '@/lib/utils';
+import { UploadButton } from '@/lib/uploadthing';
+import { EditPostProps, EditMeetupProps } from '@/types/editForm';
 
 export default function EditPost({
+  image,
   title,
   post,
   revenue,
@@ -57,12 +49,15 @@ export default function EditPost({
   authorclerkId,
   createType,
   postId,
-}: EditPostProps) {
+  companyName,
+}: EditPostProps & EditMeetupProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const { theme } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
   const { toast } = useToast();
+
+  const [imagePreview, setImagePreview] = useState<string>(image);
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
@@ -75,6 +70,7 @@ export default function EditPost({
       revenue,
       updates,
       website,
+      companyName,
       category:
         category === 'fulltime'
           ? 'full time'
@@ -97,16 +93,16 @@ export default function EditPost({
       website,
       category,
       createType,
+      companyName,
     } = values;
-
+    const userCountry = await getUserCountry();
     setLoading(true);
 
     try {
       switch (createType) {
         case 'interviews':
           await updateInterview(postId, {
-            // replace image path when implement image function
-            image: '/assets/images/illustration.png',
+            image: imagePreview,
             authorclerkId,
             title,
             post,
@@ -116,11 +112,24 @@ export default function EditPost({
             website: website || '',
             category: category || 'free',
           });
-          toast({
-            title: 'Success!🎉 Your interview post has been updated.',
+          break;
+        case 'meetups':
+          await updateMeetup(postId, {
+            image: imagePreview,
+            title,
+            companyName: companyName || '',
+            location: userCountry?.region,
+            description: post,
+            authorclerkId,
+            tags,
+            category: category || 'free',
           });
-          router.push('/interviews');
+          break;
       }
+      toast({
+        title: 'Success!🎉 Your post has been updated.',
+      });
+      router.push(`/${createType}`);
     } catch (error) {
       console.error('Error in form:', error);
       if (error instanceof Error) {
@@ -190,7 +199,53 @@ export default function EditPost({
         />
 
         <div className='flex gap-5'>
-          {/* implement AWS here */}
+          {/* @ts-ignore */}
+          <UploadButton
+            appearance={{
+              button:
+                'px-2.5 py-2 text-darkSecondary-900 bodyXs-regular md:body-semibold dark:bg-darkPrimary-4 dark:text-white-800 ut-uploading:cursor-not-allowed rounded-r-none bg-white-800 bg-none',
+            }}
+            endpoint='imageUploader'
+            onClientUploadComplete={(
+              res: Array<{
+                fileKey: string;
+                fileName: string;
+                fileSize: number;
+                fileUrl: string;
+                key: string;
+                name: string;
+                size: number;
+                url: string;
+              }>,
+            ) => {
+              setImagePreview(res[0].url);
+            }}
+            onUploadError={(error: Error) => {
+              toast({
+                title: `ERROR! ${error.message}`,
+                variant: 'destructive',
+              });
+            }}
+            content={{
+              button() {
+                return (
+                  <div className='flex items-center gap-2'>
+                    <Image
+                      src='/uploadIcon.svg'
+                      alt='upload icon'
+                      width={20}
+                      height={20}
+                      className='h-5 w-5 dark:brightness-0 dark:invert'
+                    />
+                    <p>Change Cover</p>
+                  </div>
+                );
+              },
+              allowedContent() {
+                return '';
+              },
+            }}
+          />
 
           <FormField
             control={form.control}
@@ -266,6 +321,16 @@ export default function EditPost({
           />
         </div>
 
+        {imagePreview && (
+          <Image
+            src={imagePreview}
+            alt='cover image'
+            width={870}
+            height={500}
+            className='w-full rounded-lg'
+          />
+        )}
+
         <FormField
           control={form.control}
           name='post'
@@ -332,7 +397,7 @@ export default function EditPost({
           )}
         />
 
-        {selectedType === 'interviews' && (
+        {selectedType === 'interviews' ? (
           <>
             <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
               <FormField
@@ -437,6 +502,67 @@ export default function EditPost({
               />
             </div>
           </>
+        ) : selectedType === 'meetups' ? (
+          <div className='flex w-full flex-wrap gap-3 md:flex-nowrap'>
+            <FormField
+              control={form.control}
+              name='companyName'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-[50%]'>
+                  <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800 '>
+                    Company Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder='Add company name...'
+                      {...field}
+                      className='inputStyle'
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='category'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-[50%]'>
+                  <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
+                    Category
+                  </FormLabel>
+
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className='inputStyle'>
+                        <SelectValue placeholder='Select or create a category...' />
+                        <Image
+                          src='/form-down-arrow.svg'
+                          alt='icon'
+                          width={15}
+                          height={15}
+                          className='h-2.5 w-2.5 dark:brightness-0 dark:invert md:h-3.5 md:w-3.5'
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className='dark:bg-darkPrimary-4'>
+                      {categoryItems.map((item) => (
+                        <SelectItem value={item} key={item}>
+                          <p className='bodyMd-semibold p-2'>{item}</p>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        ) : (
+          ''
         )}
 
         <FormField

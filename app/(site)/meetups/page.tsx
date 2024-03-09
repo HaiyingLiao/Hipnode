@@ -1,49 +1,73 @@
 import {
   Filter,
   HostMeetupCard,
-  MeetupsWrapper,
+  Pagination,
   SidePodcasts,
+  MeetupCard,
 } from '@/components/index';
+import { cardBtns } from '@/constants';
+import { getMeetups } from '@/lib/actions/meetups.action';
 
-const cardBtns = [
-  {
-    name: 'Host a Meetup',
-    link: '/host-meetup',
-  },
-  {
-    name: 'Code of Conduct',
-    link: '/code-of-conduct',
-  },
-];
+interface SearchParamsProps {
+  searchParams: {
+    page: string;
+    category: string;
+  };
+}
 
-const Page = async () => {
+export default async function Meetups({ searchParams }: SearchParamsProps) {
+  const page = Number(searchParams.page) || 1;
+  const category = searchParams.category;
+  const { data: meetups, totalPages } = await getMeetups(page, 10, category);
+
   return (
-    <section className='flex flex-col gap-4 bg-white-700 dark:bg-darkPrimary-2 md:flex-row'>
-      <main className='flex flex-col gap-4 lg:flex lg:flex-row '>
-        <div className='flex flex-col gap-4 lg:flex-row'>
+    <section className='flex flex-col gap-4 bg-white-700 pb-20 pt-28 dark:bg-darkPrimary-2 md:flex-row md:pb-10'>
+      <div className='flex w-full flex-col gap-4 lg:flex lg:flex-row'>
+        <div className='flex w-full flex-col gap-4 lg:flex-row'>
           <div className='w-full lg:hidden'>
             <HostMeetupCard cardBtns={cardBtns} />
           </div>
 
-          <div className='flex flex-col gap-4 md:flex-row'>
-            <aside className='w-full md:max-w-[210px]'>
+          <div className='flex w-full flex-1 flex-col gap-4 md:flex-row'>
+            <aside className='w-full md:w-[210px]'>
               <Filter />
             </aside>
-            <div className='w-full lg:w-5/6'>
-              <MeetupsWrapper />
+            <div className='w-full flex-1'>
+              <section className='flex w-full flex-col gap-3'>
+                {meetups?.length > 0 ? (
+                  meetups.map((meetupData) => (
+                    <MeetupCard
+                      key={meetupData.id}
+                      id={meetupData.id}
+                      title={meetupData.title}
+                      companyName={meetupData.companyName}
+                      location={meetupData.companyName}
+                      description={meetupData.description}
+                      tags={meetupData.tags}
+                      image={meetupData.image}
+                      updateAt={meetupData.updateAt}
+                    />
+                  ))
+                ) : (
+                  <div className='flex w-full items-center justify-center'>
+                    <p className='text-lg font-bold text-gray-500 dark:text-gray-400'>
+                      No meetups found
+                    </p>
+                  </div>
+                )}
+              </section>
+              <Pagination totalPages={totalPages} />
             </div>
           </div>
         </div>
 
-        <div className='flex w-full flex-col gap-5 lg:max-w-[360px]'>
+        <aside className='flex w-full flex-col gap-5 lg:w-[450px]'>
           <div className='hidden lg:block'>
             <HostMeetupCard cardBtns={cardBtns} />
           </div>
           <SidePodcasts />
-        </div>
-      </main>
+        </aside>
+      </div>
     </section>
   );
-};
-
-export default Page;
+}

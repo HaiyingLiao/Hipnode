@@ -5,8 +5,8 @@ export const createPostData = [
     icon: 'form-post.svg',
   },
   {
-    title: 'Meetup',
-    value: 'meetup',
+    title: 'Meetups',
+    value: 'meetups',
     icon: 'form-meetup.svg',
   },
   {

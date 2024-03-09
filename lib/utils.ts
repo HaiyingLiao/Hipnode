@@ -248,3 +248,37 @@ export const checkUserStage = (
     currentPage !== '' && redirect('/');
   }
 };
+
+export const getMonth = (originalDate: Date) => {
+  // Create a Date object from the given timestamp
+  const date = new Date(originalDate);
+
+  // Get the month and convert it to the shortened month name
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  const month = monthNames[date.getMonth()];
+
+  return month;
+};
+
+export const getDay = (originalDate: Date) => {
+  // Create a Date object from the given timestamp
+  const date = new Date(originalDate);
+
+  // Get the day of the month
+  const day = date.getDate();
+
+  return day;
+};
