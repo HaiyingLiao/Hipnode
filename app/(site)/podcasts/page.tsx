@@ -7,17 +7,18 @@ import {
 } from '@/components/index';
 import { podcastDatas } from '@/constants';
 
-const Podcasts = () => {
-  const cardBtns = [
-    {
-      name: 'Host a Podcast',
-      link: '/host-podcast',
-    },
-    {
-      name: 'Code of Conduct',
-      link: '/code-of-conduct',
-    },
-  ];
+const cardBtns = [
+  {
+    name: 'Host a Podcast',
+    link: '/host-podcast',
+  },
+  {
+    name: 'Code of Conduct',
+    link: '/code-of-conduct',
+  },
+];
+
+const Podcasts = async () => {
   return (
     <>
       <section className='flex flex-col gap-4 bg-white-700 pb-12 pt-28 dark:bg-darkPrimary-2 md:flex-row'>

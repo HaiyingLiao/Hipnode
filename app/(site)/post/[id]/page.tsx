@@ -28,6 +28,7 @@ const Page = async ({ params }: URLProps) => {
     // getUserByPostAuthor(post.authorEmail),
     updateView(post.id),
   ]);
+
   const postStats = getPostStats(post.likes.length, totalComments, post.share);
 
   return (

@@ -13,28 +13,7 @@ import { timeAgo, formatDate } from '@/lib/utils';
 import { SearchParamsProps } from '@/types/searchParamsProps';
 import { Interview, Post, ProfilePostsResult } from '@/types/profilePageType';
 
-/**
- * ProfilePostsResult<T> is a generic type that takes in a type T and
- * Returns an object with a data property of type T[] and a totalPages property of type number
- *
- * T is a union type of Interview and Post. We used & to create a new type that is a combination of Interview and Post.
- * If we use | instead of &, the type of data will be Interview[] | Post[] which kinda doesn't work as in JSX we're using
- * switch case and passing the data to different fields to different components. So typescript will throw an error.
- *
- * To avoid that, we use & and specify that ProfilePostResult is a combination of Interview and Post.
- *
- * We don't know the type of data that will be returned from the getProfilePosts function. It could be an array of Interview
- * or Post. So we use a generic type to handle both cases and return the data and totalPages properties.
- *
- * Learn more about generic types here: https://www.typescriptlang.org/docs/handbook/2/generics.html
- * Blog post: https://prismic.io/blog/typescript-generics
- */
-
-export default async function ProfilePage({
-  searchParams,
-}: {
-  searchParams: Pick<SearchParamsProps['searchParams'], 'type' | 'page'>;
-}) {
+export default async function ProfilePage({ searchParams }: SearchParamsProps) {
   const { type, page } = searchParams;
 
   const { data: posts, totalPages } = (await getProfilePosts(

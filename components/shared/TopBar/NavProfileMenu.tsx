@@ -1,15 +1,17 @@
 import Link from 'next/link';
-import { UserButton } from '@clerk/nextjs';
-import { currentUser } from '@clerk/nextjs/server';
+import { UserButton, auth } from '@clerk/nextjs';
 
 import ProfileDropDown from './ProfileDropDown';
 import { Button } from '@/components/ui/button';
 import DarkModeToggle from './DarkModeToggle';
 import MessageDropDown from './MessageDropDown';
+import { getUserByClerkId } from '@/lib/actions/user.action';
 
 const NavProfileMenu = async () => {
-  const user = await currentUser();
-  const isLoggedIn: boolean = !!user;
+  const { userId } = auth();
+  const isLoggedIn: boolean = !!userId;
+
+  const mongoUser = await getUserByClerkId(userId!);
 
   return (
     <section className='relative flex h-[60px] shrink-0 items-center justify-between md:h-[64px]'>
@@ -21,7 +23,7 @@ const NavProfileMenu = async () => {
             </div>
             <UserButton afterSignOutUrl='/' />
             <div className='flex items-center justify-between gap-[5px] lg:gap-2.5'>
-              <h6 className='navProfileName'>{user?.username}</h6>
+              <h6 className='navProfileName'>{mongoUser?.name}</h6>
               <ProfileDropDown />
             </div>
           </>

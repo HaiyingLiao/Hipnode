@@ -5,18 +5,18 @@ import {
   SidePodcasts,
 } from '@/components/index';
 
-const Page = () => {
-  const cardBtns = [
-    {
-      name: 'Host a Meetup',
-      link: '/host-meetup',
-    },
-    {
-      name: 'Code of Conduct',
-      link: '/code-of-conduct',
-    },
-  ];
+const cardBtns = [
+  {
+    name: 'Host a Meetup',
+    link: '/host-meetup',
+  },
+  {
+    name: 'Code of Conduct',
+    link: '/code-of-conduct',
+  },
+];
 
+const Page = async () => {
   return (
     <section className='flex flex-col gap-4 bg-white-700 dark:bg-darkPrimary-2 md:flex-row'>
       <main className='flex flex-col gap-4 lg:flex lg:flex-row '>

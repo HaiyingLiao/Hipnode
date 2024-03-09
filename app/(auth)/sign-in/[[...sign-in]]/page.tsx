@@ -10,6 +10,7 @@ export default function Signin() {
         position='left'
         title='Sign in to Hipnode.'
         contents={signInContents}
+        userClerkId=''
       />
       <div className='flex w-full items-center justify-center dark:bg-darkPrimary-3'>
         <SignIn />

@@ -1,13 +1,14 @@
 'use client';
 
 import { ChangeEvent, useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { categoryData } from '@/constants/categories';
 import { formUrlQuery } from '@/lib/utils';
 
 const Filter = () => {
   const router = useRouter();
+  const pathName = usePathname();
   const searchParams = useSearchParams();
   const categories = searchParams.get('category')?.split('_');
 
@@ -33,10 +34,16 @@ const Filter = () => {
         searchParams.toString(),
         'category',
         checkvalues,
+        pathName,
       );
       router.push(newUrl);
     } else if (checkvalues.length === 0) {
-      const newUrl = formUrlQuery(searchParams.toString(), 'category', null);
+      const newUrl = formUrlQuery(
+        searchParams.toString(),
+        'category',
+        null,
+        pathName,
+      );
       router.push(newUrl);
     }
   }, [checkvalues, router, searchParams]);

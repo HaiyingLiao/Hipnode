@@ -47,7 +47,12 @@ const Searchbar = ({ showSearchBar, setShowSearchBar }: SearchBarProps) => {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (search) {
-        const newUrl = formUrlQuery(searchParams.toString(), 'global', search);
+        const newUrl = formUrlQuery(
+          searchParams.toString(),
+          'global',
+          search,
+          pathname,
+        );
 
         router.push(newUrl, { scroll: false });
       } else {
