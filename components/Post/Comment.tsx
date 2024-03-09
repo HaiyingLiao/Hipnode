@@ -3,7 +3,6 @@
 import { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { useUser } from '@clerk/nextjs';
-import { Comment as PostComment } from '@/prisma/generated/client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { CommentInput } from '@/components/index';
@@ -22,7 +21,7 @@ type ExtendedTypes = {
   className?: string;
 };
 
-type PostCommentsTypes = PostComment;
+type PostCommentsTypes = any;
 
 const Comment = ({
   authorImage,

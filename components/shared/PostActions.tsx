@@ -53,7 +53,7 @@ export default function PostActions({
       <DropdownMenuContent className='mr-10 border border-darkSecondary-600 bg-white-800 p-2 dark:border-darkSecondary-900 dark:bg-darkPrimary-4 md:mr-20'>
         <DropdownMenuItem>
           <Link
-            href={`/edit-post/${postType}/${postId}`}
+            href={`/edit-post/${postId}/${postType}`}
             className='flex gap-2'
           >
             <Image

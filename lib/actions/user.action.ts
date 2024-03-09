@@ -100,4 +100,4 @@ export const getUserByClerkId = cache(async (id: string) => {
   } catch (error) {
     throw new Error('An error occurred while fetching the user');
   }
-};
+});

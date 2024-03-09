@@ -1,5 +1,4 @@
 import { EditPost } from '@/components/index';
-import { checkUserStage } from '@/lib/utils';
 import { getTargetPost } from '@/lib/actions/editForm.action';
 import { InterviewType, MeeupType } from '@/types/editForm';
 
@@ -8,7 +7,6 @@ export default async function EditPostPage({
 }: {
   params: { id: string; type: string };
 }) {
-  await checkUserStage('');
   const { id, type } = params;
 
   const {
