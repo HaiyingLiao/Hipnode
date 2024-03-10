@@ -2,6 +2,7 @@
 
 import { getInterviewById } from './interviews.action';
 import { getMeetupById } from './meetups.action';
+import { getPodcastById } from './podcasts.action';
 
 export async function getTargetPost(postType: string, id: string) {
   try {
@@ -14,8 +15,7 @@ export async function getTargetPost(postType: string, id: string) {
         // implement your logic here
         break;
       case 'podcasts':
-        // implement your logic here
-        break;
+        return await getPodcastById(id);
       default:
         break;
     }

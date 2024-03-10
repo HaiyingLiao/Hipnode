@@ -1,6 +1,6 @@
 import { EditPost } from '@/components/index';
 import { getTargetPost } from '@/lib/actions/editForm.action';
-import { InterviewType, MeeupType } from '@/types/editForm';
+import { InterviewType, MeeupType, PodcastType } from '@/types/editForm';
 
 export default async function EditPostPage({
   params,
@@ -21,7 +21,10 @@ export default async function EditPostPage({
     authorclerkId,
     companyName,
     description,
-  } = (await getTargetPost(type, id)) as InterviewType & MeeupType;
+    audio,
+  } = (await getTargetPost(type, id)) as InterviewType &
+    MeeupType &
+    PodcastType;
 
   return (
     <section className='mx-auto my-[90px] w-full rounded-2xl bg-white p-5 dark:bg-darkPrimary-3 md:max-w-[900px] md:p-[30px] lg:my-[100px]'>
@@ -50,6 +53,17 @@ export default async function EditPostPage({
           createType={type}
           postId={id}
           companyName={companyName}
+        />
+      ) : type === 'podcasts' ? (
+        <EditPost
+          image={image}
+          title={title}
+          post={post}
+          category={category}
+          authorclerkId={authorclerkId}
+          createType={type}
+          postId={id}
+          audio={audio}
         />
       ) : (
         ''

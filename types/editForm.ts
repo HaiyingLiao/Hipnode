@@ -31,6 +31,23 @@ export interface MeeupType {
   authorclerkId: string;
 }
 
+export interface PodcastType {
+  author: {
+    image: string;
+    name: string;
+  };
+  id: string;
+  title: string;
+  location: string;
+  post: string;
+  category: string;
+  image: string;
+  audio: string;
+  createdAt: Date;
+  updateAt: Date;
+  authorclerkId: string;
+}
+
 // for the component
 export interface EditPostProps {
   image: string;
@@ -40,7 +57,7 @@ export interface EditPostProps {
   updates?: number;
   website?: string;
   category: string;
-  tags: string[];
+  tags?: string[];
   authorclerkId: string;
   createType: string;
   postId: string;
@@ -51,9 +68,20 @@ export interface EditMeetupProps {
   title: string;
   post: string;
   category: string;
-  tags: string[];
+  tags?: string[];
   authorclerkId: string;
   createType: string;
   postId: string;
   companyName?: string;
+}
+
+export interface EditPodcastProps {
+  title: string;
+  post: string;
+  category: string;
+  image: string;
+  audio?: string;
+  createType: string;
+  postId: string;
+  authorclerkId: string;
 }

@@ -3,6 +3,8 @@
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import Link from 'next/link';
 
+import { PostActions } from '@/components/index';
+
 interface PodcastChipProps {
   title: string;
   post: string;
@@ -22,12 +24,16 @@ const PodcastChip = ({
 }: PodcastChipProps) => {
   return (
     <div className='mb-3 w-full overflow-hidden rounded-2xl bg-white p-5 transition-all hover:shadow-md dark:bg-darkPrimary-3'>
-      <Link
-        href={`/podcasts/${id}`}
-        className='heading3 mb-2.5 text-darkSecondary-900 dark:text-white'
-      >
-        {title}
-      </Link>
+      <div className='flex justify-between'>
+        <Link
+          href={`/podcasts/${id}`}
+          className='heading3 mb-2.5 text-darkSecondary-900 dark:text-white'
+        >
+          {title}
+        </Link>
+        <PostActions postId={id} postType='podcasts' />
+      </div>
+
       <p className='body-regular text-darkSecondary-800 dark:text-white-700'>
         {post}
       </p>
