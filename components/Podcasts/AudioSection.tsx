@@ -78,24 +78,23 @@ const AudioSection = ({ audio, author }: PlayBtnProps) => {
           {`${playtime || '00:00'} | ${duration || '00:00'}`}
         </p>
       </div>
-      <div className='flex'>
-        <Button
-          onClick={() => {
-            setIsPlaying((prev) => !prev);
-            playAudio();
-          }}
-          className='!hover:bg-secondary-blue-90 display-semibold rounded-[20px] !bg-secondary-blue !text-white'
-        >
-          <Image
-            className='mr-2'
-            src='/icons/playIcon.svg'
-            width={16}
-            height={16}
-            alt='playIcon'
-          />
-          Play Now
-        </Button>
-      </div>
+
+      <Button
+        onClick={() => {
+          setIsPlaying((prev) => !prev);
+          playAudio();
+        }}
+        className='!hover:bg-secondary-blue-90 display-semibold flex rounded-[20px] !bg-secondary-blue !text-white'
+      >
+        <Image
+          className='mr-2'
+          src={isPlaying ? '/pause.png' : '/icons/playIcon.svg'}
+          width={16}
+          height={16}
+          alt='playIcon'
+        />
+        {isPlaying ? 'Pause' : 'Play Now'}
+      </Button>
     </div>
   );
 };
