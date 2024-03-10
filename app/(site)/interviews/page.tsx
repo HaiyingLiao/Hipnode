@@ -30,7 +30,7 @@ export default async function Interviews({
       </aside>
 
       <div className='flex flex-wrap gap-5'>
-        <section className='space-y-5 pb-5 max-[1350px]:w-full lg:max-w-[700px]'>
+        <section className=' pb-5 max-[1350px]:w-full lg:max-w-[700px]'>
           {interviews.map((post) => (
             <InterviewPostCard
               key={post.title}

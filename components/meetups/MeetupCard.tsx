@@ -26,7 +26,7 @@ export default function MeetupCard({
   updateAt,
 }: MeetupCardProps) {
   return (
-    <div className='w-full rounded-2xl bg-white p-5 shadow-md dark:bg-darkPrimary-3'>
+    <div className='mb-3 w-full rounded-2xl bg-white p-5 shadow-md dark:bg-darkPrimary-3'>
       {/* Meetup Quick Informatio */}
       <article className='flex items-center justify-between'>
         <div className='flex'>

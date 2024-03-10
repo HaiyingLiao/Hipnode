@@ -27,7 +27,7 @@ export default function InterviewsPostCard({
   id,
 }: InterviewPostCardProps) {
   return (
-    <div className='flex w-full flex-col gap-2.5 rounded-2xl bg-white p-5 dark:bg-darkPrimary-4 max-lg:max-w-full'>
+    <div className='mb-3 flex w-full flex-col gap-2.5 rounded-2xl bg-white p-5 dark:bg-darkPrimary-4 max-lg:max-w-full'>
       <div className='flex w-full items-start justify-between gap-[30px]'>
         <div className='flex w-full flex-col gap-5'>
           <header className='flex justify-between'>

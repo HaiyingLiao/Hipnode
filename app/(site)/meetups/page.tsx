@@ -33,7 +33,7 @@ export default async function Meetups({ searchParams }: SearchParamsProps) {
               <Filter />
             </aside>
             <div className='w-full flex-1'>
-              <section className='flex w-full flex-col gap-3'>
+              <section className='flex w-full flex-col'>
                 {meetups?.length > 0 ? (
                   meetups.map((meetupData) => (
                     <MeetupCard

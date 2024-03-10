@@ -172,3 +172,43 @@ export async function deleteInterviewById(id: string) {
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
+
+export async function getInterviewsByUser(
+  page: number = 1,
+  pageSize: number = 10,
+  authorclerkId: string,
+) {
+  try {
+    if (page < 1 || pageSize < 1)
+      throw new Error('Invalid pagination parameters.');
+
+    const totalPosts = await prisma.interviews.count({
+      where: { authorclerkId },
+    });
+    const totalPages = Math.ceil(totalPosts / pageSize);
+
+    const data = await prisma.interviews.findMany({
+      take: pageSize,
+      skip: pageSize * (page - 1),
+      include: {
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      where: { authorclerkId },
+    });
+
+    if (!data) throw new Error('Interviews not found.');
+
+    return { data, totalPages };
+  } catch (error) {
+    console.error('Error in getInterviews:', error);
+    throw new Error(error instanceof Error ? error.message : 'Unknown error');
+  }
+}

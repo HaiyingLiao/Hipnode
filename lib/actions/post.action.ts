@@ -415,3 +415,39 @@ export async function sharePost(id: string, path: string) {
     throw error;
   }
 }
+
+export async function getPostsByUser(
+  sort: 'popular' | 'newest' = 'popular',
+  page: number = 1,
+  pageSize: number = 10,
+  authorclerkId: string,
+) {
+  try {
+    const totalPosts = await prisma.post.count({ where: { authorclerkId } });
+    const totalPages = Math.ceil(totalPosts / pageSize);
+
+    const data = await prisma.post.findMany({
+      where: { authorclerkId },
+      take: pageSize,
+      skip: (page - 1) * pageSize,
+      orderBy: sort === 'newest' ? { createdAt: 'desc' } : [{ views: 'desc' }],
+      include: {
+        comments: true,
+        author: {
+          select: {
+            name: true,
+            image: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    return {
+      data,
+      totalPages,
+    };
+  } catch (error) {
+    throw error;
+  }
+}

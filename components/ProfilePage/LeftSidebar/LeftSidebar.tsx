@@ -1,28 +1,35 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { auth } from '@clerk/nextjs';
 
 import { socialIcons } from '@/constants';
 import ContactBtns from './ContactBtns';
 import Following from './Following';
+import { getUserByClerkId } from '@/lib/actions/user.action';
+import { timeAgo } from '@/lib/utils';
 
-const LeftSidebar = () => {
+const LeftSidebar = async () => {
+  const { userId } = auth();
+  if (!userId) return;
+  const user = await getUserByClerkId(userId);
+  if (!user) return;
+
   return (
     <aside className='w-full rounded-2xl bg-white text-center dark:bg-darkPrimary-3 lg:sticky lg:top-[100px] lg:w-[210px]'>
       <div className="h-[106px] w-full rounded-t-2xl bg-[url('../public/left-sidebar-bg.svg')]" />
       <div className='px-5 py-[30px]'>
         <div className='relative'>
-          <div className='flexCenter absolute inset-x-0 -top-24 mx-auto h-[130px] w-[130px] rounded-full border-4 border-white bg-secondary-yellow-30 dark:border-darkPrimary-3'>
-            <Image
-              src='user-avatar.svg'
-              alt='user-img'
-              width={90}
-              height={90}
-            />
-          </div>
+          <Image
+            src={user?.image ? user.image : 'user-avatar.svg'}
+            className='flexCenter absolute inset-x-0 -top-24 mx-auto h-[130px] w-[130px] rounded-full border-4 border-white bg-secondary-yellow-30 dark:border-darkPrimary-3'
+            alt='user-img'
+            width={90}
+            height={90}
+          />
         </div>
 
         <h1 className='heading1-semibold mt-[44px] text-darkSecondary dark:text-white'>
-          AR. Jakir
+          {user?.name}
         </h1>
         <h2 className='display-regular text-darkSecondary-900 dark:text-darkSecondary-800'>
           User Interface Designer
@@ -37,7 +44,7 @@ const LeftSidebar = () => {
         <Following />
 
         <p className='body-semibold text-darkSecondary-800 dark:text-darkSecondary-800'>
-          Hey there... I&apos;m AR Jakir! I&apos;m here to learn from and
+          Hey there... I&apos;m {user.name}! I&apos;m here to learn from and
           support the other members of this community!
         </p>
 
@@ -75,7 +82,7 @@ const LeftSidebar = () => {
         <div className='mx-auto my-[30px] max-w-[170px] border-b-[1px] border-white-800 dark:border-darkSecondary-800' />
 
         <p className='body-semibold text-darkSecondary-800 dark:text-white-700'>
-          joined 2 years ago
+          joined {timeAgo(user.createdAt)}
         </p>
       </div>
     </aside>

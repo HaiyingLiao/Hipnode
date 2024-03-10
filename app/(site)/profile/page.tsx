@@ -6,12 +6,20 @@ import {
   HostMeetupCard,
   Pagination,
   InterviewPostCard,
+  MeetupCard,
+  PodcastChip,
 } from '@/components/index';
 import { cardBtns } from '@/constants';
 import { getProfilePosts } from '@/lib/actions/profile.action';
 import { timeAgo, formatDate } from '@/lib/utils';
 import { SearchParamsProps } from '@/types/searchParamsProps';
-import { Interview, Post, ProfilePostsResult } from '@/types/profilePageType';
+import {
+  Interview,
+  Post,
+  ProfilePostsResult,
+  Meetup,
+  Podcast,
+} from '@/types/profilePageType';
 
 export default async function ProfilePage({ searchParams }: SearchParamsProps) {
   const { type, page } = searchParams;
@@ -19,7 +27,7 @@ export default async function ProfilePage({ searchParams }: SearchParamsProps) {
   const { data: posts, totalPages } = (await getProfilePosts(
     type,
     page,
-  )) as ProfilePostsResult<Interview & Post>;
+  )) as ProfilePostsResult<Interview & Post & Meetup & Podcast>;
 
   return (
     <div className='flex flex-col items-start justify-center gap-6 py-[90px] lg:flex-row lg:py-[100px]'>
@@ -29,7 +37,7 @@ export default async function ProfilePage({ searchParams }: SearchParamsProps) {
         <HostMeetupCard cardBtns={cardBtns} />
       </div>
 
-      <main className='flex w-full flex-col lg:max-w-[785px]'>
+      <main className='flex w-full flex-col lg:max-w-[785px] '>
         <OptionBar />
         <div>
           {posts?.map((post) => {
@@ -61,10 +69,36 @@ export default async function ProfilePage({ searchParams }: SearchParamsProps) {
                     image={post.image}
                     createdAt={timeAgo(post.createdAt)}
                     avatar={post.author.image}
-                    // comments={post.comments}
+                    commentsLength={post.comments.length}
                     online={true}
                     id={post.id}
                     likes={post.likes}
+                  />
+                );
+              case 'meetups':
+                return (
+                  <MeetupCard
+                    key={post.id}
+                    id={post.id}
+                    title={post.title}
+                    companyName={post.companyName}
+                    location={post.companyName}
+                    description={post.description}
+                    tags={post.tags}
+                    image={post.image}
+                    updateAt={post.updateAt}
+                  />
+                );
+              case 'podcasts':
+                return (
+                  <PodcastChip
+                    title={post.title}
+                    post={post.post}
+                    avatar={post.author.image}
+                    location={post.location}
+                    author={post.author.name}
+                    id={post.id}
+                    key={post.id}
                   />
                 );
               default:
@@ -79,7 +113,7 @@ export default async function ProfilePage({ searchParams }: SearchParamsProps) {
                     image={post.image}
                     createdAt={timeAgo(post.createdAt)}
                     avatar={post.author.image}
-                    // comments={post.comments}
+                    commentsLength={post.comments.length}
                     online={true}
                     id={post.id}
                     likes={post.likes}

@@ -12,6 +12,7 @@ export interface Interview {
   updates: number;
   website: string;
   category: string;
+  comments: string[];
   authorclerkId: string;
   author: {
     name: string;
@@ -30,6 +31,37 @@ export interface Post {
   views: number;
   authorclerkId: string;
   likes: string[];
+  author: {
+    email: string;
+    name: string;
+  };
+}
+
+export interface Meetup {
+  id: string;
+  title: string;
+  companyName: string;
+  location: string;
+  description: string;
+  tags: string[];
+  image: string;
+  category: string;
+  updateAt: Date;
+  author: {
+    email: string;
+    name: string;
+  };
+}
+
+export interface Podcast {
+  id: string;
+  title: string;
+  location: string;
+  post: string;
+  category: string;
+  image: string;
+  audio: string;
+
   author: {
     email: string;
     name: string;
