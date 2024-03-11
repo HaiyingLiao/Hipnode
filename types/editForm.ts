@@ -48,6 +48,35 @@ export interface PodcastType {
   authorclerkId: string;
 }
 
+export interface HomePostType {
+  post: {
+    author: {
+      createdAt: Date;
+      image: string;
+      name: string;
+      email: string;
+    };
+    comments: string[];
+    id: string;
+    title: string;
+    body: string;
+    role: string;
+    views: number;
+    likes: string[];
+    altText: string;
+    image: string;
+    tags: string[];
+    groupId: string | null;
+    share: number;
+    country: string;
+    createdAt: Date;
+    updateAt: Date;
+    authorclerkId: string;
+    _count: { comments: number; report: number };
+  };
+  totalComments: number;
+}
+
 // for the component
 export interface EditPostProps {
   image: string;
@@ -56,7 +85,7 @@ export interface EditPostProps {
   revenue?: number;
   updates?: number;
   website?: string;
-  category: string;
+  category?: string;
   tags?: string[];
   authorclerkId: string;
   createType: string;
@@ -67,7 +96,7 @@ export interface EditMeetupProps {
   image: string;
   title: string;
   post: string;
-  category: string;
+  category?: string;
   tags?: string[];
   authorclerkId: string;
   createType: string;
@@ -78,7 +107,7 @@ export interface EditMeetupProps {
 export interface EditPodcastProps {
   title: string;
   post: string;
-  category: string;
+  category?: string;
   image: string;
   audio?: string;
   createType: string;

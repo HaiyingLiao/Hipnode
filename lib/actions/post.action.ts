@@ -169,7 +169,7 @@ export async function getCommentsReply(postId: string, parentId: string) {
   }
 }
 
-export async function deletePost(id: string) {
+export async function deletePostById(id: string) {
   try {
     const session = await getCurrentUser();
     if (!session) throw new Error('You must sign in to perform this action');
