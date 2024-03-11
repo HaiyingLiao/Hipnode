@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import { getPodcastById } from '@/lib/actions/podcasts.action';
 import { AudioSection } from '@/components/index';
+import parse from 'html-react-parser';
 
 const Podcast = async ({ params: { id } }: { params: { id: string } }) => {
   const { audio, author, title, post } = await getPodcastById(id);
@@ -37,7 +38,7 @@ const Podcast = async ({ params: { id } }: { params: { id: string } }) => {
 
         <div className='pt-5 text-darkSecondary-800 '>
           <h3 className='display-semibold'>EPISODE DETAILS</h3>
-          <p className='display-regular py-6'>{post}</p>
+          <p className='display-regular py-6'>{parse(post)}</p>
         </div>
       </section>
     </div>

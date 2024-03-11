@@ -2,6 +2,7 @@
 
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import Link from 'next/link';
+import parse from 'html-react-parser';
 
 import { PostActions } from '@/components/index';
 
@@ -35,7 +36,7 @@ const PodcastChip = ({
       </div>
 
       <p className='body-regular text-darkSecondary-800 dark:text-white-700'>
-        {post}
+        {parse(post)}
       </p>
 
       <main className='mt-5 flex items-center'>
