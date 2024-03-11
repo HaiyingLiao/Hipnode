@@ -149,13 +149,14 @@ const CreatePost = ({
               category: modifiedCategory || 'free',
               post,
               audio,
+              tags,
             });
         }
 
         toast({
           title: 'Success!🎉 Your post has been uploaded.',
         });
-        router.push(`/${createType === 'post' ? '/' : createType}`);
+        router.push(`/${createType === 'post' ? '' : createType}`);
       } else {
         toast({
           title: 'Please log in to create posts',

@@ -46,6 +46,7 @@ export interface PodcastType {
   createdAt: Date;
   updateAt: Date;
   authorclerkId: string;
+  tags: string[];
 }
 
 export interface HomePostType {
@@ -86,7 +87,7 @@ export interface EditPostProps {
   updates?: number;
   website?: string;
   category?: string;
-  tags?: string[];
+  tags: string[];
   authorclerkId: string;
   createType: string;
   postId: string;
@@ -97,7 +98,7 @@ export interface EditMeetupProps {
   title: string;
   post: string;
   category?: string;
-  tags?: string[];
+  tags: string[];
   authorclerkId: string;
   createType: string;
   postId: string;

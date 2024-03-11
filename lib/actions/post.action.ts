@@ -9,12 +9,7 @@ import { revalidatePath } from 'next/cache';
 import { notFound } from 'next/navigation';
 
 import prisma from '@/prisma';
-import {
-  PostsSchema,
-  UpdatePostSchemaType,
-  PostsType,
-  PostSchema,
-} from '../validations';
+import { PostsSchema, PostsType } from '../validations';
 import {
   CreateCommentTye,
   createCommentSchema,
@@ -216,15 +211,9 @@ async function removeTagOrUpdatePostIds(title: string, postId: string) {
   }
 }
 
-export async function updatePost({
-  data,
-  id,
-}: {
-  data: UpdatePostSchemaType;
-  id: string;
-}) {
+export async function updatePost(id: string, postData: PostsType) {
   try {
-    const parsedData = PostSchema.safeParse(data);
+    const parsedData = PostsSchema.safeParse(postData);
     if (!parsedData.success) throw new Error(parsedData.error.message);
 
     const session = await getCurrentUser();
@@ -238,8 +227,15 @@ export async function updatePost({
 
     await prisma.post.update({
       where: { id: foundPost.id },
-      // @ts-ignore
-      data,
+      data: {
+        authorclerkId: postData.authorclerkId,
+        altText: postData.title,
+        body: postData.post,
+        image: postData.image,
+        role: 'Developer',
+        title: postData.title,
+        country: postData.country,
+      },
     });
     revalidatePath('/');
   } catch (error) {

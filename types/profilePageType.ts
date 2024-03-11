@@ -61,7 +61,7 @@ export interface Podcast {
   category: string;
   image: string;
   audio: string;
-
+  tags: string[];
   author: {
     email: string;
     name: string;

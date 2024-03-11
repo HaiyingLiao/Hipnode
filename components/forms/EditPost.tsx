@@ -34,6 +34,7 @@ import GroupSelectContent from './GroupSelectContent';
 import { updateInterview } from '@/lib/actions/interviews.action';
 import { updateMeetup } from '@/lib/actions/meetups.action';
 import { updatePodcast } from '@/lib/actions/podcasts.action';
+import { updatePost } from '@/lib/actions/post.action';
 import { getUserCountry } from '@/lib/utils';
 import { UploadButton } from '@/lib/uploadthing';
 import {
@@ -141,12 +142,23 @@ export default function EditPost({
             category: category || 'free',
             post,
             audio: editedAudio,
+            tags,
+          });
+          break;
+        case 'post':
+          await updatePost(postId, {
+            image: imagePreview,
+            authorclerkId,
+            tags,
+            title,
+            post,
+            country: userCountry?.region,
           });
       }
       toast({
         title: 'Success!🎉 Your post has been updated.',
       });
-      router.push(`/${createType}`);
+      router.push(`/${createType === 'post' ? '' : createType}`);
     } catch (error) {
       console.error('Error in form:', error);
       if (error instanceof Error) {

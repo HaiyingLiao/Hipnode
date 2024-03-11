@@ -70,6 +70,7 @@ export default async function EditPostPage({
           createType={type}
           postId={id}
           audio={audio}
+          tags={tags}
         />
       ) : type === 'post' ? (
         <EditPost
