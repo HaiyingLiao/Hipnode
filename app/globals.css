@@ -353,7 +353,7 @@
   /* Post Card on Home Page */
 
   .postCardGrid {
-    @apply grid grid-cols-[2.3fr_1fr_1.8fr_1fr_2fr_1fr] md:grid-rows-[1fr_0.6fr] grid-rows-[0.95fr] gap-x-0 gap-y-0 mx-auto my-5 max-w-[785px] rounded-2xl bg-white p-3.5 dark:bg-darkPrimary-3 md:p-5;
+    @apply grid grid-cols-[2.3fr_1fr_1.8fr_1fr_2fr_1fr] md:grid-rows-[1fr_0.6fr] grid-rows-[0.95fr] gap-x-0 gap-y-0 mb-3 max-w-[785px] rounded-2xl bg-white p-3.5 dark:bg-darkPrimary-3 md:p-5;
   }
 
   .postCardGridItem1 {

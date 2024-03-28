@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { deleteInterviewById } from '@/lib/actions/interviews.action';
 import { deleteMeetupById } from '@/lib/actions/meetups.action';
+import { deletePostById } from '@/lib/actions/post.action';
+import { deletePodcastById } from '@/lib/actions/podcasts.action';
 import { useToast } from '@/components/ui/use-toast';
 
 export default function PostActions({
@@ -30,6 +32,12 @@ export default function PostActions({
 
         case 'meetups':
           return await deleteMeetupById(id);
+
+        case 'post':
+          return await deletePostById(id);
+
+        case 'podcasts':
+          return await deletePodcastById(id);
       }
 
       toast({

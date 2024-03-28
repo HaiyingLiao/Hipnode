@@ -5,7 +5,7 @@ export {
   introductionItems,
   programmingLevels,
 } from './questionaire';
-export { podcastDatas } from './podcastDatas';
+
 export { sidebarContents } from './group';
 export { socialIcons, demoPerformance, optionBar } from './profileData';
 export { interviewCards } from './interviews';
@@ -23,4 +23,3 @@ export {
   pinnedGroups,
   popularTags,
 } from './homeLeftSidebar';
-export { podcasts } from './podcasts';

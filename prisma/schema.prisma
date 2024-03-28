@@ -113,6 +113,7 @@ model User {
 
   notifications Notification[]
   Meetups       Meetups[]
+  Podcasts      Podcasts[]
 }
 
 model Meetups {
@@ -124,6 +125,21 @@ model Meetups {
   tags          String[]
   image         String
   category      String
+  createdAt     DateTime @default(now())
+  updateAt      DateTime @default(now()) @updatedAt
+  author        User     @relation(fields: [authorclerkId], references: [clerkId], onDelete: Cascade)
+  authorclerkId String
+}
+
+model Podcasts {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  location      String
+  post          String
+  category      String
+  image         String
+  audio         String
+  tags          String[]
   createdAt     DateTime @default(now())
   updateAt      DateTime @default(now()) @updatedAt
   author        User     @relation(fields: [authorclerkId], references: [clerkId], onDelete: Cascade)

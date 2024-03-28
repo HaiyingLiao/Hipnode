@@ -5,20 +5,21 @@ import {
   Pagination,
   PodcastChip,
 } from '@/components/index';
-import { podcastDatas } from '@/constants';
+import { cardBtns } from '@/constants';
+import { getPodcasts } from '@/lib/actions/podcasts.action';
 
-const cardBtns = [
-  {
-    name: 'Host a Podcast',
-    link: '/host-podcast',
-  },
-  {
-    name: 'Code of Conduct',
-    link: '/code-of-conduct',
-  },
-];
+interface SearchParamsProps {
+  searchParams: {
+    page: string;
+    category: string;
+  };
+}
 
-const Podcasts = async () => {
+export default async function Podcasts({ searchParams }: SearchParamsProps) {
+  const page = Number(searchParams.page) || 1;
+  const category = searchParams.category;
+  const { data: podcasts, totalPages } = await getPodcasts(page, 10, category);
+
   return (
     <>
       <section className='flex flex-col gap-4 bg-white-700 pb-12 pt-28 dark:bg-darkPrimary-2 md:flex-row'>
@@ -34,8 +35,16 @@ const Podcasts = async () => {
               </aside>
               <div className='w-full lg:w-5/6'>
                 <div className='columns-1 md:columns-2'>
-                  {podcastDatas?.map((podcast) => (
-                    <PodcastChip podcastData={podcast} key={podcast.author} />
+                  {podcasts?.map((podcast) => (
+                    <PodcastChip
+                      title={podcast.title}
+                      post={podcast.post}
+                      avatar={podcast.author.image}
+                      location={podcast.location}
+                      author={podcast.author.name}
+                      id={podcast.id}
+                      key={podcast.id}
+                    />
                   ))}
                 </div>
               </div>
@@ -50,9 +59,7 @@ const Podcasts = async () => {
           </div>
         </div>
       </section>
-      <Pagination totalPages={10} />
+      <Pagination totalPages={totalPages} />
     </>
   );
-};
-
-export default Podcasts;
+}

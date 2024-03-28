@@ -145,7 +145,7 @@ export default async function Home({ searchParams }: URLProps) {
                   image={post.image}
                   createdAt={timeAgo(post.createdAt)}
                   avatar={post.author.image}
-                  // comments={post.comments}
+                  commentsLength={post.comments.length}
                   online={true}
                   id={post.id}
                   likes={post.likes}

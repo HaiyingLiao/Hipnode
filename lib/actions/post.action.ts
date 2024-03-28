@@ -9,12 +9,7 @@ import { revalidatePath } from 'next/cache';
 import { notFound } from 'next/navigation';
 
 import prisma from '@/prisma';
-import {
-  PostsSchema,
-  UpdatePostSchemaType,
-  PostsType,
-  PostSchema,
-} from '../validations';
+import { PostsSchema, PostsType } from '../validations';
 import {
   CreateCommentTye,
   createCommentSchema,
@@ -129,6 +124,7 @@ export async function getPostById(id: string) {
               name: true,
               image: true,
               email: true,
+              createdAt: true,
             },
           },
           comments: {
@@ -168,14 +164,14 @@ export async function getCommentsReply(postId: string, parentId: string) {
   }
 }
 
-export async function deletePost(id: string) {
+export async function deletePostById(id: string) {
   try {
     const session = await getCurrentUser();
     if (!session) throw new Error('You must sign in to perform this action');
 
     const foundPost = await prisma.post.findFirst({ where: { id } });
 
-    if (session.emailAddresses[0].emailAddress !== foundPost?.authorEmail)
+    if (session.id !== foundPost?.authorclerkId)
       throw new Error('You are not allowed to delete this post');
 
     const tags = await prisma.tag.findMany();
@@ -215,15 +211,9 @@ async function removeTagOrUpdatePostIds(title: string, postId: string) {
   }
 }
 
-export async function updatePost({
-  data,
-  id,
-}: {
-  data: UpdatePostSchemaType;
-  id: string;
-}) {
+export async function updatePost(id: string, postData: PostsType) {
   try {
-    const parsedData = PostSchema.safeParse(data);
+    const parsedData = PostsSchema.safeParse(postData);
     if (!parsedData.success) throw new Error(parsedData.error.message);
 
     const session = await getCurrentUser();
@@ -232,13 +222,20 @@ export async function updatePost({
     const foundPost = await prisma.post.findFirst({ where: { id } });
     if (!foundPost) return notFound();
 
-    if (foundPost?.authorEmail !== session.emailAddresses[0].emailAddress)
+    if (foundPost?.authorclerkId !== session.id)
       throw new Error('You not allowed edit this post');
 
     await prisma.post.update({
       where: { id: foundPost.id },
-      // @ts-ignore
-      data,
+      data: {
+        authorclerkId: postData.authorclerkId,
+        altText: postData.title,
+        body: postData.post,
+        image: postData.image,
+        role: 'Developer',
+        title: postData.title,
+        country: postData.country,
+      },
     });
     revalidatePath('/');
   } catch (error) {
@@ -358,11 +355,11 @@ export async function likeComments(
   }
 }
 
-export async function getRelatedPosts(authorName: string, title: string) {
+export async function getRelatedPosts(authorclerkId: string, title: string) {
   try {
     return await prisma.post.findMany({
       where: {
-        authorName,
+        authorclerkId,
         title: {
           not: title,
         },
@@ -410,6 +407,42 @@ export async function sharePost(id: string, path: string) {
       data: { share: { increment: 1 } },
     });
     revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getPostsByUser(
+  sort: 'popular' | 'newest' = 'popular',
+  page: number = 1,
+  pageSize: number = 10,
+  authorclerkId: string,
+) {
+  try {
+    const totalPosts = await prisma.post.count({ where: { authorclerkId } });
+    const totalPages = Math.ceil(totalPosts / pageSize);
+
+    const data = await prisma.post.findMany({
+      where: { authorclerkId },
+      take: pageSize,
+      skip: (page - 1) * pageSize,
+      orderBy: sort === 'newest' ? { createdAt: 'desc' } : [{ views: 'desc' }],
+      include: {
+        comments: true,
+        author: {
+          select: {
+            name: true,
+            image: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    return {
+      data,
+      totalPages,
+    };
   } catch (error) {
     throw error;
   }

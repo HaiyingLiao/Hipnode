@@ -4,46 +4,44 @@ import prisma from '@/prisma';
 import { revalidatePath } from 'next/cache';
 import { currentUser } from '@clerk/nextjs/server';
 
-import { InterviewsSchema, InterviewsType } from '../validations';
+import { PodcastsType, PodcastsSchema } from '../validations';
 
-export async function createInterview(interviewData: InterviewsType) {
+export async function createPodcast(podcastData: PodcastsType) {
   try {
-    const validation = InterviewsSchema.safeParse(interviewData);
+    const validation = PodcastsSchema.safeParse(podcastData);
     if (!validation.success) throw new Error(validation.error.message);
 
     const {
-      image,
       title,
-      post,
-      revenue,
-      updates,
-      website,
+      location,
       authorclerkId,
       category,
+      post,
+      image,
+      audio,
       tags,
-    } = interviewData;
-    const interview = await prisma.interviews.create({
+    } = podcastData;
+    const podcast = await prisma.podcasts.create({
       data: {
-        image,
         title,
-        post,
-        revenue,
-        updates,
-        website,
+        location,
         authorclerkId,
         category,
+        post,
+        image,
+        audio,
         tags,
       },
     });
 
-    return interview;
+    return podcast;
   } catch (error) {
-    console.error('Error in createInterview:', error);
+    console.error('Error in createPodcast:', error);
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
 
-export async function getInterviews(
+export async function getPodcasts(
   page: number = 1,
   pageSize: number = 10,
   category: string = '',
@@ -58,12 +56,12 @@ export async function getInterviews(
     const whereClause =
       categories.length > 0 ? { category: { in: categories } } : {};
 
-    const totalPosts = await prisma.interviews.count({
+    const totalPosts = await prisma.podcasts.count({
       where: whereClause,
     });
     const totalPages = Math.ceil(totalPosts / pageSize);
 
-    const data = await prisma.interviews.findMany({
+    const data = await prisma.podcasts.findMany({
       take: pageSize,
       skip: pageSize * (page - 1),
       include: {
@@ -80,18 +78,18 @@ export async function getInterviews(
       where: whereClause,
     });
 
-    if (!data) throw new Error('Interviews not found.');
+    if (!data) throw new Error('Podcasts not found.');
 
     return { data, totalPages };
   } catch (error) {
-    console.error('Error in getInterviews:', error);
+    console.error('Error in getPodcasts:', error);
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
 
-export async function getInterviewById(id: string) {
+export async function getPodcastById(id: string) {
   try {
-    const foundInterview = await prisma.interviews.findUnique({
+    const foundPodcast = await prisma.podcasts.findUnique({
       where: { id },
       include: {
         author: {
@@ -103,77 +101,87 @@ export async function getInterviewById(id: string) {
       },
     });
 
-    if (!foundInterview) throw new Error('Interview not found.');
+    if (!foundPodcast) throw new Error('Interview not found.');
 
-    return foundInterview;
+    return foundPodcast;
   } catch (error) {
-    console.error('Error in getInterviewById:', error);
+    console.error('Error in getPodcastById:', error);
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
 
-export async function updateInterview(id: string, updateData: InterviewsType) {
+export async function updatePodcast(id: string, updateData: PodcastsType) {
   try {
     const user = await currentUser();
     if (!user) throw new Error('You must sign in to perform this action');
 
-    const validation = InterviewsSchema.safeParse(updateData);
+    const validation = PodcastsSchema.safeParse(updateData);
     if (!validation.success) throw new Error('validation not successful');
 
     if (user.id !== updateData.authorclerkId)
       throw new Error('You are not allowed to delete this post');
 
-    const updatedInterview = await prisma.interviews.update({
+    const {
+      title,
+      location,
+      authorclerkId,
+      category,
+      post,
+      image,
+      audio,
+      tags,
+    } = updateData;
+
+    const updatedPodcast = await prisma.podcasts.update({
       where: {
         id,
       },
       data: {
-        title: updateData.title,
-        image: updateData.image,
-        post: updateData.post,
-        revenue: updateData.revenue,
-        updates: updateData.updates,
-        website: updateData.website,
-        authorclerkId: updateData.authorclerkId,
-        category: updateData.category,
-        tags: updateData.tags,
+        title,
+        location,
+        authorclerkId,
+        category,
+        post,
+        image,
+        audio,
+        tags,
       },
     });
 
-    return updatedInterview;
+    return updatedPodcast;
   } catch (error) {
-    console.error('Error in updateInterview:', error);
+    console.error('Error in updatePodcast:', error);
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
 
-export async function deleteInterviewById(id: string) {
+export async function deletePodcastById(id: string) {
   const user = await currentUser();
   if (!user) throw new Error('You must sign in to perform this action');
 
-  const foundInterview = await prisma.interviews.findFirst({ where: { id } });
+  const foundPodcast = await prisma.podcasts.findFirst({ where: { id } });
 
-  if (user.id !== foundInterview?.authorclerkId)
+  if (user.id !== foundPodcast?.authorclerkId)
     throw new Error('You are not allowed to delete this post');
 
   try {
-    const deleteinterview = await prisma.interviews.delete({
+    const deletedpodcast = await prisma.podcasts.delete({
       where: {
         id,
       },
     });
 
-    if (!deleteinterview) {
-      throw new Error('Interview not found or could not be deleted.');
+    if (!deletedpodcast) {
+      throw new Error('Podcast not found or could not be deleted.');
     }
-    revalidatePath('/interviews');
+    revalidatePath('/podcasts');
   } catch (error) {
-    console.error('Error in deleteInterview:', error);
+    console.error('Error in deletePodcast:', error);
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }
 
-export async function getInterviewsByUser(
+export async function getPodcastsByUser(
   page: number = 1,
   pageSize: number = 10,
   authorclerkId: string,
@@ -182,12 +190,12 @@ export async function getInterviewsByUser(
     if (page < 1 || pageSize < 1)
       throw new Error('Invalid pagination parameters.');
 
-    const totalPosts = await prisma.interviews.count({
+    const totalPosts = await prisma.podcasts.count({
       where: { authorclerkId },
     });
     const totalPages = Math.ceil(totalPosts / pageSize);
 
-    const data = await prisma.interviews.findMany({
+    const data = await prisma.podcasts.findMany({
       take: pageSize,
       skip: pageSize * (page - 1),
       include: {
@@ -204,11 +212,11 @@ export async function getInterviewsByUser(
       where: { authorclerkId },
     });
 
-    if (!data) throw new Error('Interviews not found.');
+    if (!data) throw new Error('Podcasts not found.');
 
     return { data, totalPages };
   } catch (error) {
-    console.error('Error in getInterviews:', error);
+    console.error('Error in getPodcasts:', error);
     throw new Error(error instanceof Error ? error.message : 'Unknown error');
   }
 }

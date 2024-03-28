@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import parse from 'html-react-parser';
 
 import { Badge } from '../ui/badge';
 import { getMonth, getDay } from '@/lib/utils';
@@ -26,7 +27,7 @@ export default function MeetupCard({
   updateAt,
 }: MeetupCardProps) {
   return (
-    <div className='w-full rounded-2xl bg-white p-5 shadow-md dark:bg-darkPrimary-3'>
+    <div className='mb-3 w-full rounded-2xl bg-white p-5 shadow-md dark:bg-darkPrimary-3'>
       {/* Meetup Quick Informatio */}
       <article className='flex items-center justify-between'>
         <div className='flex'>
@@ -60,7 +61,7 @@ export default function MeetupCard({
 
       {/* Description about meetup card */}
       <div className='bodyMd-regular md:body-regular my-6 text-darkSecondary-900 dark:text-white'>
-        {description}
+        {parse(description)}
       </div>
 
       <figcaption className='flex justify-between'>

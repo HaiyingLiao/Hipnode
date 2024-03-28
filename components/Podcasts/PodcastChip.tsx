@@ -1,46 +1,61 @@
 'use client';
 
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
+import Link from 'next/link';
+import parse from 'html-react-parser';
 
-interface PodcastProps {
-  podcastData: {
-    title: string;
-    description: string;
-    avatar: string;
-    location: string;
-    author: string;
-  };
+import { PostActions } from '@/components/index';
+
+interface PodcastChipProps {
+  title: string;
+  post: string;
+  avatar: string;
+  location: string;
+  author: string;
+  id: string;
 }
 
-const PodcastChip = ({ podcastData }: PodcastProps) => {
+const PodcastChip = ({
+  title,
+  post,
+  avatar,
+  location,
+  author,
+  id,
+}: PodcastChipProps) => {
   return (
-    <section className='mb-3 w-full overflow-hidden rounded-2xl bg-white p-5 transition-all hover:shadow-md dark:bg-darkPrimary-3'>
-      <h3 className='heading3 mb-2.5 text-darkSecondary-900 dark:text-white'>
-        {podcastData.title}
-      </h3>
+    <div className='mb-3 w-full overflow-hidden rounded-2xl bg-white p-5 transition-all hover:shadow-md dark:bg-darkPrimary-3'>
+      <div className='flex justify-between'>
+        <Link
+          href={`/podcasts/${id}`}
+          className='heading3 mb-2.5 text-darkSecondary-900 dark:text-white'
+        >
+          {title}
+        </Link>
+        <PostActions postId={id} postType='podcasts' />
+      </div>
+
       <p className='body-regular text-darkSecondary-800 dark:text-white-700'>
-        {podcastData.description}
+        {parse(post)}
       </p>
 
       <main className='mt-5 flex items-center'>
         <Avatar>
           <AvatarImage
             className='w-8 rounded-full'
-            src='https://github.com/shadcn.png'
+            src={avatar}
             alt='user-ava'
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className='ml-2.5'>
           <h4 className='body-semibold text-darkSecondary-900 dark:text-white'>
-            Moshkur Alom
+            {author}
           </h4>
-          <p className='bodySm-regular text-darkSecondary-800'>
-            Sylhet, Bangladesh
-          </p>
+          <p className='bodySm-regular text-darkSecondary-800'>{location}</p>
         </div>
       </main>
-    </section>
+    </div>
   );
 };
 

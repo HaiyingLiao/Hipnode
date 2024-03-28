@@ -36,6 +36,7 @@ import { createPost } from '@/lib/actions/post.action';
 import { createMeetup } from '@/lib/actions/meetups.action';
 import { filterWords, getUserCountry } from '@/lib/utils';
 import { UploadButton } from '@/lib/uploadthing';
+import { createPodcast } from '@/lib/actions/podcasts.action';
 
 const CreatePost = ({
   authorclerkId,
@@ -49,6 +50,7 @@ const CreatePost = ({
   const { toast } = useToast();
 
   const [imagePreview, setImagePreview] = useState<string>('');
+  const [audio, setAudio] = useState<string>('');
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
     resolver: zodResolver(CreatePostSchema),
@@ -66,7 +68,7 @@ const CreatePost = ({
     },
   });
 
-  // interview and meetup post related field show up based on selectedType
+  // related field show up based on selectedType
   const selectedType = form.watch('createType');
 
   async function onSubmit(values: z.infer<typeof CreatePostSchema>) {
@@ -112,7 +114,6 @@ const CreatePost = ({
               website: website || '',
               category: modifiedCategory || 'free',
             });
-
             break;
 
           case 'post':
@@ -124,7 +125,6 @@ const CreatePost = ({
               post,
               country: userCountry?.region,
             });
-            router.push('/');
             break;
 
           case 'meetups':
@@ -138,13 +138,25 @@ const CreatePost = ({
               description: post,
               category: modifiedCategory || 'free',
             });
-            router.push('/meetups');
             break;
+
+          case 'podcasts':
+            await createPodcast({
+              image: imagePreview,
+              title,
+              location: userCountry?.region,
+              authorclerkId,
+              category: modifiedCategory || 'free',
+              post,
+              audio,
+              tags,
+            });
         }
+
         toast({
           title: 'Success!🎉 Your post has been uploaded.',
         });
-        router.push(`/${createType === 'post' ? '/' : createType}`);
+        router.push(`/${createType === 'post' ? '' : createType}`);
       } else {
         toast({
           title: 'Please log in to create posts',
@@ -264,10 +276,6 @@ const CreatePost = ({
             endpoint='imageUploader'
             onClientUploadComplete={(
               res: Array<{
-                fileKey: string;
-                fileName: string;
-                fileSize: number;
-                fileUrl: string;
                 key: string;
                 name: string;
                 size: number;
@@ -302,6 +310,51 @@ const CreatePost = ({
               },
             }}
           />
+
+          {selectedType === 'podcasts' && (
+            <UploadButton
+              appearance={{
+                button:
+                  'px-2.5 py-2 text-darkSecondary-900 bodyXs-regular md:body-semibold dark:bg-darkPrimary-4 dark:text-white-800 ut-uploading:cursor-not-allowed rounded-r-none bg-white-800 bg-none',
+              }}
+              endpoint='audioUploader'
+              onClientUploadComplete={(
+                res: Array<{
+                  key: string;
+                  name: string;
+                  size: number;
+                  url: string;
+                }>,
+              ) => {
+                setAudio(res[0].url);
+              }}
+              onUploadError={(error: Error) => {
+                toast({
+                  title: `ERROR! ${error.message}`,
+                  variant: 'destructive',
+                });
+              }}
+              content={{
+                button() {
+                  return (
+                    <div className='flex items-center gap-2'>
+                      <Image
+                        src='form-podcasts.svg'
+                        alt='upload icon'
+                        width={20}
+                        height={20}
+                        className='h-5 w-5 dark:brightness-0 dark:invert'
+                      />
+                      <p>Upload Audio</p>
+                    </div>
+                  );
+                },
+                allowedContent() {
+                  return '';
+                },
+              }}
+            />
+          )}
 
           <FormField
             control={form.control}
@@ -617,6 +670,44 @@ const CreatePost = ({
               )}
             />
           </div>
+        ) : selectedType === 'podcasts' ? (
+          <FormField
+            control={form.control}
+            name='category'
+            render={({ field }) => (
+              <FormItem className='w-full'>
+                <FormLabel className='md:body-semibold bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
+                  Category
+                </FormLabel>
+
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className='inputStyle'>
+                      <SelectValue placeholder='Select or create a category...' />
+                      <Image
+                        src='form-down-arrow.svg'
+                        alt='icon'
+                        width={15}
+                        height={15}
+                        className='h-2.5 w-2.5 dark:brightness-0 dark:invert md:h-3.5 md:w-3.5'
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className='dark:bg-darkPrimary-4'>
+                    {categoryItems.map((item) => (
+                      <SelectItem value={item} key={item}>
+                        <p className='bodyMd-semibold p-2'>{item}</p>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         ) : (
           ''
         )}
