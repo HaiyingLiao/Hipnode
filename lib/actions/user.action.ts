@@ -4,6 +4,7 @@ import prisma from '@/prisma';
 
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { cache } from 'react';
+import { currentUser } from '@clerk/nextjs/server';
 
 interface ParamsType {
   clerkId: string;
@@ -90,14 +91,33 @@ export const getUserByClerkId = cache(async (id: string) => {
   if (!id) return null;
 
   try {
-    const selectedUser = await prisma.user.findFirst({
+    let selectedUser = await prisma.user.findFirst({
       where: { clerkId: id },
     });
 
-    if (!selectedUser) return;
+    // If user doesn't exist, create them automatically
+    if (!selectedUser) {
+      const clerkUser = await currentUser();
+      if (!clerkUser) return null;
+
+      selectedUser = await prisma.user.create({
+        data: {
+          clerkId: id,
+          name:
+            clerkUser.firstName && clerkUser.lastName
+              ? `${clerkUser.firstName} ${clerkUser.lastName}`
+              : clerkUser.username || 'User',
+          email: clerkUser.emailAddresses[0]?.emailAddress || '',
+          image: clerkUser.imageUrl || '',
+          onboardingProgress: '', // Start with empty onboarding progress
+          businessTypes: [], // Initialize empty array
+        },
+      });
+    }
 
     return selectedUser;
   } catch (error) {
+    console.log('Error in getUserByClerkId:', error);
     throw new Error('An error occurred while fetching the user');
   }
 });
