@@ -18,7 +18,7 @@ interface SearchParamsProps {
 export default async function Podcasts({ searchParams }: SearchParamsProps) {
   const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
-  const { data: podcasts, totalPages } = await getPodcasts(page, 10, category);
+  const { data: podcasts, totalPages } = await getPodcasts(page, 16, category);
 
   return (
     <>
@@ -47,6 +47,7 @@ export default async function Podcasts({ searchParams }: SearchParamsProps) {
                     />
                   ))}
                 </div>
+                <Pagination totalPages={totalPages} />
               </div>
             </div>
           </div>
@@ -59,7 +60,6 @@ export default async function Podcasts({ searchParams }: SearchParamsProps) {
           </div>
         </div>
       </section>
-      <Pagination totalPages={totalPages} />
     </>
   );
 }

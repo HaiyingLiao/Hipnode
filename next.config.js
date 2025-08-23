@@ -6,14 +6,18 @@ const nextConfig = {
       {
         hostname: 'hipnode-bucket.s3.amazonaws.com',
         pathname: '/*',
-        protocol: 'https'
+        protocol: 'https',
       },
       {
         hostname: 'img.clerk.com',
         pathname: '/*',
-        protocol: 'https'
+        protocol: 'https',
       },
-    ]
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,

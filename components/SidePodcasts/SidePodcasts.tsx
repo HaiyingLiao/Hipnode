@@ -10,7 +10,7 @@ const SidePodcasts = async () => {
     <section className='w-full self-center rounded-2xl bg-white p-5 pb-2.5 dark:bg-darkPrimary-3'>
       <Link
         href='/podcasts'
-        className='display-semibold flex items-baseline pb-2.5 text-darkSecondary-900 dark:text-white-800'
+        className='display-semibold flex items-center pb-2.5 text-darkSecondary-900 dark:text-white-800'
       >
         Podcasts
         <Image
@@ -18,38 +18,36 @@ const SidePodcasts = async () => {
           src='icons/rightArr.svg'
           alt='rightArr'
           width={12}
-          height={10}
+          height={12}
         />
       </Link>
 
       {podcasts?.map((item) => (
-        <section
-          key={item.id}
-          className='my-2.5 flex w-full items-center justify-between'
-        >
+        <section key={item.id} className='my-2.5 flex w-full items-start gap-3'>
           <Image
-            className='shadow-postCardImgShadow'
+            className='shadow-postCardImgShadow h-16 w-16 shrink-0 rounded-lg object-cover'
             src={item.image}
             alt={item.title}
-            width={100}
-            height={100}
+            width={64}
+            height={64}
           />
 
-          <div className='px-3'>
-            <p className='bodyMd-semibold text-darkSecondary-900 dark:text-white-800'>
+          <div className='min-w-0 flex-1'>
+            <p className='bodyMd-semibold line-clamp-2 text-darkSecondary-900 dark:text-white-800'>
               {item.title}
             </p>
-            <p className='bodySm-regular pt-1.5 text-darkSecondary-800'>
+            <p className='bodySm-regular mt-1 text-darkSecondary-800'>
               {item.author.name}
             </p>
           </div>
 
-          <div>
+          <div className='flex shrink-0 items-center'>
             <Image
               src='icons/rightArr.svg'
-              width={20}
-              height={20}
+              width={16}
+              height={16}
               alt='rightArr'
+              className='opacity-60'
             />
           </div>
         </section>
