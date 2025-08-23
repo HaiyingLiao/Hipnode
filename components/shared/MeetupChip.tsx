@@ -26,31 +26,31 @@ const MeetupChip = async () => {
       </Link>
 
       {meetups.data?.map((meetupData) => (
-        <section className='mb-5 flex' key={meetupData.companyName}>
-          <time className='dark:shadow-darkShadow mr-[14px] flex flex-col justify-center rounded-md border-[1px] border-darkSecondary-600 px-2.5 py-1 text-center dark:border-none dark:bg-darkPrimary-4'>
-            <p className='bodyMd-semibold sm:display-semibold uppercase text-darkSecondary-900 dark:text-white'>
+        <section className='mb-5 flex items-start' key={meetupData.companyName}>
+          <time className='dark:shadow-darkShadow mr-[14px] flex shrink-0 flex-col items-center rounded-md border-[1px] border-darkSecondary-600 px-2.5 py-1 text-center dark:border-none dark:bg-darkPrimary-4'>
+            <p className='bodyMd-semibold sm:display-semibold uppercase leading-tight text-darkSecondary-900 dark:text-white'>
               {getMonth(meetupData.updateAt)}
             </p>
-            <p className='display-semibold sm:heading1 text-secondary-blue'>
+            <p className='display-semibold sm:heading1 leading-tight text-secondary-blue'>
               {getDay(meetupData.updateAt)}
             </p>
           </time>
 
-          <main className='overflow-hidden'>
+          <main className='flex-1 overflow-hidden'>
             <p className='bodyMd-semibold sm:display-semibold truncate text-darkSecondary-900 dark:text-white'>
               {meetupData.title}
             </p>
 
-            <div className='flex'>
+            <div className='flex items-center'>
               <Image
-                className='mr-1.5 w-4 rounded-full'
-                width={100}
-                height={100}
+                className='mr-1.5 h-4 w-4 rounded-full object-cover'
+                width={16}
+                height={16}
                 src={meetupData.image}
                 alt='user-ava'
               />
 
-              <p className='bodySm-semibold md:body-regular mt-0.5 text-darkSecondary-800'>
+              <p className='bodySm-semibold md:body-regular text-darkSecondary-800'>
                 {meetupData.companyName} - {meetupData.location}
               </p>
             </div>

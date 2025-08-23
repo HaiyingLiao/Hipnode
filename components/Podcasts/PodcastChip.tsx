@@ -24,8 +24,8 @@ const PodcastChip = ({
   id,
 }: PodcastChipProps) => {
   return (
-    <div className='mb-3 w-full overflow-hidden rounded-2xl bg-white p-5 transition-all hover:shadow-md dark:bg-darkPrimary-3'>
-      <div className='flex justify-between'>
+    <div className='mb-3 flex min-h-[220px] w-full flex-col justify-between rounded-2xl bg-white p-5 transition-all hover:shadow-md dark:bg-darkPrimary-3'>
+      <div className='flex items-center justify-between'>
         <Link
           href={`/podcasts/${id}`}
           className='heading3 mb-2.5 text-darkSecondary-900 dark:text-white'
@@ -35,11 +35,11 @@ const PodcastChip = ({
         <PostActions postId={id} postType='podcasts' />
       </div>
 
-      <p className='body-regular text-darkSecondary-800 dark:text-white-700'>
+      <p className='body-regular line-clamp-3 text-darkSecondary-800 dark:text-white-700'>
         {parse(post)}
       </p>
 
-      <main className='mt-5 flex items-center'>
+      <div className='flex items-center'>
         <Avatar>
           <AvatarImage
             className='w-8 rounded-full'
@@ -54,7 +54,7 @@ const PodcastChip = ({
           </h4>
           <p className='bodySm-regular text-darkSecondary-800'>{location}</p>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

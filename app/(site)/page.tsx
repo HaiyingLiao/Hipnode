@@ -132,7 +132,7 @@ export default async function Home({ searchParams }: URLProps) {
             username={user?.username as string}
             imageUrl={user?.imageUrl as string}
           />
-          <section className='mb-10'>
+          <section className='mb-10 mt-6'>
             <div className='pb-2'>
               {searchResults?.map((post) => (
                 <PostCard
