@@ -26,9 +26,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang='en'>
       <ClerkProvider key={'clerk'}>
         <body
-          className={`${sourceSansPro.className} max-container bg-white-800 dark:bg-darkPrimary-2`}
+          className={`${sourceSansPro.className} bg-white-800 dark:bg-darkPrimary-2`}
         >
-          <main>
+          <main className='max-container'>
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             {children}
           </main>

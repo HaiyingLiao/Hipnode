@@ -54,7 +54,7 @@ export default function PostActions({
     }
   };
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <Image src='more.svg' alt='see more icon' width={20} height={20} />
       </DropdownMenuTrigger>
