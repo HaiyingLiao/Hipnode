@@ -2,6 +2,8 @@
 
 A modern, full-stack developer community platform built with Next.js 14, featuring social networking, content creation, and professional development tools.
 
+<img width="1705" height="974" alt="Screenshot 2025-08-24 at 11 09 17" src="https://github.com/user-attachments/assets/485edc8f-c206-4b08-ac32-0050e95c005e" />
+
 ## 🚀 Features
 
 ### Core Functionality
